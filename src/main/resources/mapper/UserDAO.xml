@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.willsea.dao.UserDAO">
+    <insert id="insert" parameterType="com.example.willsea.entity.User" keyProperty="uid">
+        insert into w_user(uid, utype, uname, upassword, uemail)
+                VALUES (#{uid, jdbcType=INTEGER}, #{type, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR},
+                        #{password, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}
+                )
+    </insert>
+</mapper>
