@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 	<head>
-		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title></title>
-		<link rel="stylesheet" href="css/amazeui.min.css" />
-		<link rel="stylesheet" href="css/admin.css" />
+        <link th:href="@{/admin/css/amazeui.min.css}" rel="stylesheet" />
+        <link th:href="@{/admin/css/admin.css}" rel="stylesheet/">
+
 	</head>
 
 		<body>
@@ -42,7 +43,6 @@
 						<table class="am-table am-table-striped am-table-hover table-main">
 							<thead>
 								<tr>
-									<th class="table-check"><input type="checkbox" id="chkAll"></th>
 									<th class="table-id">用户ID</th>
 									<th class="table-title">用户名</th>
 									<th class="table-type">注册时间</th>
@@ -51,215 +51,28 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-primary ">正常</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-primary ">正常</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-danger ">禁用</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-primary ">正常</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-danger ">禁用</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-primary ">正常</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-danger ">禁用</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-primary ">正常</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"> </td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-primary ">正常</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-primary ">正常</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-danger ">禁用</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">谢飞</a>
-									</td>
-									<td>2018-6-25</td>
-									<td class="am-hide-sm-only"><span class="am-badge  am-badge-danger ">禁用</span></td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
+                                <th:block th:each="node : ${users} ">
+                                    <tr>
+                                        <td><th:block th:text="${node.uid}"></th:block></td>
+                                        <td><th:block th:text="${node.username}"></th:block></td>
+                                        <td><p>2012.12.12</p></td>
+                                        <td><th:block th:text="${node.type}"></th:block></td>
+                                        <td>
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </th:block>
 
 							</tbody>
 						</table>
 						<div class="am-cf">
-							共 15 条记录
+                            <p><th:block th:text="${recordNum}"></th:block>></p>
 							<div class="am-fr">
 								<ul class="am-pagination">
 									<li class="am-disabled">
@@ -292,8 +105,8 @@
 			</div>
 		</div>
 
-		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="myplugs/js/plugs.js"></script>
+        <script th:src="@{/admin/js/jquery-1.11.3.min.js}"></script>
+        <script th:src="@{/admin/myplugs/js/plugs.js}"></script>
 		<script>
 			$(function() {
 				$("#chkAll").chkAll({

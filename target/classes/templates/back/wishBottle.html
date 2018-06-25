@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" href="css/amazeui.min.css" />
-		<link rel="stylesheet" href="css/admin.css" />
+		<link th:href="@{/admin/css/amazeui.min.css}" rel="stylesheet" />
+		<link th:href="@{/admin/css/admin.css}" rel="stylesheet/">
 	</head>
 
 		<body>
@@ -253,8 +253,8 @@
 			</div>
 		</div>
 
-		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="myplugs/js/plugs.js"></script>
+        <script th:src="@{/admin/js/jquery-1.11.3.min.js}"></script>
+        <script th:src="@{/admin/myplugs/js/plugs.js}"></script>
 		<script>
 			$(function() {
 				$("#chkAll").chkAll({

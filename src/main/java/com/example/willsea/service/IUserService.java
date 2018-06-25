@@ -2,6 +2,8 @@ package com.example.willsea.service;
 
 import com.example.willsea.entity.User;
 
+import java.util.List;
+
 /**
  * Created by yt on 2018/6/22.
  */
@@ -17,6 +19,10 @@ public interface IUserService {
      */
     User queryById(Integer uid);
 
+    /**
+     * 查找全部用户
+     */
+    List<User> queryAll();
     /**
      * 用户登陆
      */

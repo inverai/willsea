@@ -1,4 +1,4 @@
-package com.example.willsea.controller;
+package com.example.willsea.controller.admin;
 
 import com.example.willsea.entity.User;
 import com.example.willsea.service.IUserService;
@@ -9,29 +9,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by yt on 2018/6/22.
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/back")
 public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     @Resource
     private IUserService userService;
 
-    /**
-     * 添加用户
-     */
-
+    @GetMapping(value = "/user")
+    public String list(@RequestParam(value = "page", defaultValue = "1") int page,
+                        @RequestParam(value = "limit", defaultValue = "10") int limit, Model model){
+        List<User> users = userService.queryAll();
+        Integer recordNum = users.size();
+        model.addAttribute("users", users);
+        model.addAttribute("recordNum", recordNum);
+        return "back/user";
+    }
 
     @GetMapping(value = "")
     public String index(Model model){
-        model.addAttribute("user", new User());
-        return "user/sign";
+        return "back/index";
     }
 
+    /**
+     * 添加用户
+     */
     @PostMapping(value = "save")
     @ResponseBody
     public String saveUser(@RequestParam String type, @RequestParam String username,

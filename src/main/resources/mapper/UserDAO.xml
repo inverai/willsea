@@ -29,6 +29,12 @@
         SELECT * FROM w_user
         WHERE uname = #{username} AND upassword = #{password}
     </select>
+    
+    <select id="queryAll" resultType="com.example.willsea.entity.User">
+        SELECT * FROM w_user
+        ORDER BY uid DESC
+        LIMIT #{offset}, #{limit}
+    </select>
 
     <insert id="insertBlackRecord">
         INSERT INTO w_blacklist(source_uid, target_uid)
