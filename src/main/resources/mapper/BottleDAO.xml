@@ -8,24 +8,6 @@
                 , #{content, jdbcType=VARCHAR}, #{isPrivate, jdbcType=VARCHAR})
     </insert>
 
-
-    <select id="queryById" parameterType="Integer" resultType="Bottle">
-        SELECT *
-        FROM w_bottle
-        WHERE bid = #{bid}
-    </select>
-
-    <select id="queryAll" resultType="Bottle">
-        SELECT *
-        FROM w_bottle
-        ORDER BY blookTime DESC
-        LIMIT #{offset}, #{limit}
-    </select>
-
-
-    <!--int addLookTime();-->
-    <!--int addCommentSum();-->
-    <!--int subCommentSum();-->
     <update id="addLookTime">
         UPDATE w_bottle
         SET blookTime = blookTime + 1
@@ -43,6 +25,32 @@
         SET comment_sum = comment_sum - 1
         WHERE bid = #{bid}
     </update>
+
+    <update id="updateState">
+        UPDATE w_bottle
+        SET private = "false"
+    </update>
+
+    <select id="queryById" parameterType="Integer" resultType="com.example.willsea.entity.Bottle">
+        SELECT *
+        FROM w_bottle
+        WHERE bid = #{bid}
+    </select>
+
+    <select id="queryAll" resultType="com.example.willsea.entity.Bottle">
+        SELECT *
+        FROM w_bottle
+        ORDER BY blookTime DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="queryByAuthor" resultType="com.example.willsea.entity.Bottle">
+        SELECT *
+        FROM w_bottle
+        WHERE aid = #{aid}
+        ORDER BY blookTime DESC
+        LIMIT #{offset}, #{limit}
+    </select>
 
     <delete id="deleteById">
         DELETE FROM w_bottle

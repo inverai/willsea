@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.willsea.dao.CommentDAO">
+
+
+    <insert id="insertComment" parameterType="com.example.willsea.entity.Comment" keyProperty="cid">
+        INSERT INTO w_comment(aid, bid, ctime, content, ctype)
+                VALUES (#{aid, jdbcType=INTEGER}, #{bid, jdbcType=INTEGER}, #{ctime, jdbcType=INTEGER},
+                        #{content, jdbcType=VARCHAR}, #{ctype, jdbcType=VARCHAR}
+                )
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM w_comment
+        WHERE cid = #{cid}
+    </delete>
+
+    <select id="queryById" resultType="com.example.willsea.entity.Comment">
+        SELECT * FROM w_comment
+        WHERE cid = #{cid}
+    </select>
+
+    <select id="queryByAuthorId" resultType="com.example.willsea.entity.Comment">
+        SELECT * FROM w_comment
+        WHERE aid = #{aid}
+        ORDER BY c_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="queryByBottleId" resultType="com.example.willsea.entity.Comment">
+        SELECT * FROM w_comment
+        WHERE bid = #{bid}
+        ORDER BY c_time DESC
+        LIMIT #{offset}, #{limit}
+    </select>
 </mapper>

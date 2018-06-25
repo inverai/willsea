@@ -38,9 +38,20 @@ public interface IUserService {
     void avoidUser(Integer sourceId, Integer targetId);
 
     /**
+     * 取消拉黑用户
+     */
+
+    void deleteOneBlack(Integer black_id);
+
+    /**
+     * 取消关注
+     */
+    void deleteOneFavorite(Integer favorite_id);
+
+    /**
      * 关注用户
      */
-    void likeUser(Integer sourceId, Integer targetId);
+    void favoriteUser(Integer sourceId, Integer targetId);
 
 
 }

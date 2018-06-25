@@ -1054,10 +1054,9 @@
       <DefaultExpression>&apos;text&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="267" parent="251" name="blookTime">
+    <column id="267" parent="251" name="blookTimes">
       <Position>5</Position>
       <DataType>int(10) unsigned|0</DataType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="268" parent="251" name="comment_sum">
@@ -1129,123 +1128,117 @@
       <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="252" name="ctype">
-      <Position>6</Position>
-      <DataType>varchar(16)|0</DataType>
-      <DefaultExpression>&apos;text&apos;</DefaultExpression>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="281" parent="252" name="aid">
+    <index id="280" parent="252" name="aid">
       <ColNames>aid</ColNames>
     </index>
-    <index id="282" parent="252" name="bid">
+    <index id="281" parent="252" name="bid">
       <ColNames>bid</ColNames>
     </index>
-    <key id="283" parent="252" name="PRIMARY">
+    <key id="282" parent="252" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>cid</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="284" parent="252" name="w_comment_ibfk_1">
+    <foreign-key id="283" parent="252" name="w_comment_ibfk_1">
       <ColNames>aid</ColNames>
       <RefSchemaName>willsea</RefSchemaName>
       <RefTableName>w_user</RefTableName>
       <RefColNames>uid</RefColNames>
     </foreign-key>
-    <foreign-key id="285" parent="252" name="w_comment_ibfk_2">
+    <foreign-key id="284" parent="252" name="w_comment_ibfk_2">
       <ColNames>bid</ColNames>
       <RefSchemaName>willsea</RefSchemaName>
       <RefTableName>w_bottle</RefTableName>
       <RefColNames>bid</RefColNames>
     </foreign-key>
-    <column id="286" parent="253" name="favorite_id">
+    <column id="285" parent="253" name="favorite_id">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="253" name="source_uid">
+    <column id="286" parent="253" name="source_uid">
       <Position>2</Position>
       <DataType>int(10) unsigned|0</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="253" name="target_uid">
+    <column id="287" parent="253" name="target_uid">
       <Position>3</Position>
       <DataType>int(10) unsigned|0</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="289" parent="253" name="source_uid">
+    <index id="288" parent="253" name="source_uid">
       <ColNames>source_uid</ColNames>
     </index>
-    <index id="290" parent="253" name="target_uid">
+    <index id="289" parent="253" name="target_uid">
       <ColNames>target_uid</ColNames>
     </index>
-    <key id="291" parent="253" name="PRIMARY">
+    <key id="290" parent="253" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>favorite_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="292" parent="253" name="w_favorite_ibfk_1">
+    <foreign-key id="291" parent="253" name="w_favorite_ibfk_1">
       <ColNames>source_uid</ColNames>
       <RefSchemaName>willsea</RefSchemaName>
       <RefTableName>w_user</RefTableName>
       <RefColNames>uid</RefColNames>
     </foreign-key>
-    <foreign-key id="293" parent="253" name="w_favorite_ibfk_2">
+    <foreign-key id="292" parent="253" name="w_favorite_ibfk_2">
       <ColNames>target_uid</ColNames>
       <RefSchemaName>willsea</RefSchemaName>
       <RefTableName>w_user</RefTableName>
       <RefColNames>uid</RefColNames>
     </foreign-key>
-    <column id="294" parent="254" name="uid">
+    <column id="293" parent="254" name="uid">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="254" name="utype">
+    <column id="294" parent="254" name="utype">
       <Position>2</Position>
       <DataType>varchar(16)|0</DataType>
       <DefaultExpression>&apos;user&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="254" name="uname">
+    <column id="295" parent="254" name="uname">
       <Position>3</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="254" name="upassword">
+    <column id="296" parent="254" name="upassword">
       <Position>4</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="254" name="uemail">
+    <column id="297" parent="254" name="uemail">
       <Position>5</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="299" parent="254" name="uname">
+    <index id="298" parent="254" name="uname">
       <ColNames>uname</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="300" parent="254" name="uemail">
+    <index id="299" parent="254" name="uemail">
       <ColNames>uemail</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="301" parent="254" name="PRIMARY">
+    <key id="300" parent="254" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>uid</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="302" parent="254" name="uname">
+    <key id="301" parent="254" name="uname">
       <ColNames>uname</ColNames>
       <UnderlyingIndexName>uname</UnderlyingIndexName>
     </key>
-    <key id="303" parent="254" name="uemail">
+    <key id="302" parent="254" name="uemail">
       <ColNames>uemail</ColNames>
       <UnderlyingIndexName>uemail</UnderlyingIndexName>
     </key>

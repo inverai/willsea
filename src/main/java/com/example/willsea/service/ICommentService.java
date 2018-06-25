@@ -17,7 +17,6 @@ public interface ICommentService {
     /**
      * 获取心愿瓶下面的评论
      */
-
     ArrayList<Comment> getComments(Integer bid);
 
     /**
@@ -33,6 +32,5 @@ public interface ICommentService {
     /**
      * 更新评论
      */
-
     void updateComment(Comment comment);
 }

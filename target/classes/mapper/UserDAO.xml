@@ -7,4 +7,37 @@
                         #{password, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}
                 )
     </insert>
+
+    <delete id="deleteById">
+        DELETE FROM w_bottle
+        WHERE uid = #{uid}
+    </delete>
+
+    <update id="update">
+        UPDATE w_user SET uname = #{username}, upassword = #{password}
+        , uemail = #{email}
+        WHERE uid = #{uid}
+    </update>
+
+
+    <select id="queryById" resultType="com.example.willsea.entity.User">
+        SELECT * FROM w_user
+        WHERE uid = #{uid}
+    </select>
+
+    <select id="queryToVerify" resultType="com.example.willsea.entity.User">
+        SELECT * FROM w_user
+        WHERE uname = #{username} AND upassword = #{password}
+    </select>
+
+    <insert id="insertBlackRecord">
+        INSERT INTO w_blacklist(source_uid, target_uid)
+            VALUES (#{source, jdbcType=INTEGER}, #{target, jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertFavoriteRecord">
+        INSERT INTO w_favorite(source_uid, target_uid)
+        VALUES (#{source, jdbcType=INTEGER}, #{target, jdbcType=INTEGER})
+    </insert>
+
 </mapper>

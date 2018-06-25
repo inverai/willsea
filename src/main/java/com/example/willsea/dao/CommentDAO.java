@@ -12,14 +12,14 @@ import java.util.List;
 @Component
 public interface CommentDAO {
     // add
-    int insert(Comment comment);
+    int insertComment(Comment comment);
 
     // delete
-    int delete(Integer cid);
+    int deleteById(Integer cid);
 
 
     // select
-    Comment selectById(Integer cid);
-    List<Comment> selectByAuthorId(@Param("aid") Integer aid, @Param("offest")Integer offset, @Param("limit")Integer limit);
-    List<Comment> selectByBottleId(@Param("bid") Integer bid, @Param("offest")Integer offset, @Param("limit")Integer limit);
+    Comment queryById(Integer cid);
+    List<Comment> queryByAuthorId(@Param("aid") Integer aid, @Param("offest")Integer offset, @Param("limit")Integer limit);
+    List<Comment> queryByBottleId(@Param("bid") Integer bid, @Param("offest")Integer offset, @Param("limit")Integer limit);
 }

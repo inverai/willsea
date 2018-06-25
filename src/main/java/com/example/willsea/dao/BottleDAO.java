@@ -14,10 +14,11 @@ public interface BottleDAO {
     // add
     int insert(Bottle bottle);
 
-    // update data
+    // update
     int addLookTime(Integer bid);
     int addCommentSum(Integer bid);
     int subCommentSum(Integer bid);
+    int updateState(Integer bid);
 
     //search
     Bottle queryById(Integer bid);

@@ -1,4 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.willsea.dao.BottleDAO">
+    <insert id="insert" parameterType="com.example.willsea.entity.Bottle" keyProperty="bid">
+        insert into w_bottle(aid, btime, btype, blookTime, comment_sum, title, content, private)
+                VALUES (#{aid, jdbcType=INTEGER}, #{time, jdbcType=INTEGER}, #{type, jdbcType=VARCHAR}
+                , #{lookTimes, jdbcType=INTEGER}, #{comment_sum, jdbcType=INTEGER}, #{title, jdbcType=VARCHAR}
+                , #{content, jdbcType=VARCHAR}, #{isPrivate, jdbcType=VARCHAR})
+    </insert>
+
+    <update id="addLookTime">
+        UPDATE w_bottle
+        SET blookTime = blookTime + 1
+        WHERE bid = #{bid}
+    </update>
+
+    <update id="addCommentSum">
+        UPDATE w_bottle
+        SET comment_sum = comment_sum + 1
+        WHERE bid = #{bid}
+    </update>
+
+    <update id="subCommentSum">
+        UPDATE w_bottle
+        SET comment_sum = comment_sum - 1
+        WHERE bid = #{bid}
+    </update>
+
+    <update id="updateState">
+        UPDATE w_bottle
+        SET private = "false"
+    </update>
+
+    <select id="queryById" parameterType="Integer" resultType="com.example.willsea.entity.Bottle">
+        SELECT *
+        FROM w_bottle
+        WHERE bid = #{bid}
+    </select>
+
+    <select id="queryAll" resultType="com.example.willsea.entity.Bottle">
+        SELECT *
+        FROM w_bottle
+        ORDER BY blookTime DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="queryByAuthor" resultType="com.example.willsea.entity.Bottle">
+        SELECT *
+        FROM w_bottle
+        WHERE aid = #{aid}
+        ORDER BY blookTime DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <delete id="deleteById">
+        DELETE FROM w_bottle
+        WHERE bid = #{bid}
+    </delete>
 </mapper>

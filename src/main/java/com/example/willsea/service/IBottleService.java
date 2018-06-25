@@ -14,6 +14,12 @@ public interface IBottleService {
      */
     String publish(Bottle bottle);
 
+
+    /**
+     * 新建心愿瓶
+     */
+    int createBottle(Bottle bottle);
+
     /**
      * 批量获取漂流瓶
      */
