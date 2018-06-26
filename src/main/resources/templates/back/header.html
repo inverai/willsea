@@ -71,14 +71,14 @@
         <div class="sidebar-menu">
             <ul class="nav sidebar-nav">
                 <li>
-                    <a class="accordion-toggle" th:href="@{/back/index}">
+                    <a class="accordion-toggle" th:href="@{/back/user}">
                         <span class="glyphicons glyphicons-user"></span>
                         <span class="sidebar-title">用户管理</span>
                         <span class="caret"></span>
                     </a>
                 </li>
                 <li>
-                    <a class="accordion-toggle" th:href="@{/back/wishBottle}">
+                    <a class="accordion-toggle" th:href="@{/back/wishbottle}">
                         <span class="glyphicons glyphicons-user"></span>
                         <span class="sidebar-title">心愿瓶管理</span>
                         <span class="caret"></span>
@@ -102,4 +102,12 @@
         </div>
     </aside>
 </div>
+
+<div th:fragment="opreate-body" class="am-btn-toolbar">
+    <div class="am-btn-group am-btn-group-xs">
+        <button class="commit-operate am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 确认</button>
+        <button class="delete-operate am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+    </div>
+</div>
+
 </html>

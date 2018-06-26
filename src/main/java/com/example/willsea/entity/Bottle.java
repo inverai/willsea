@@ -65,7 +65,7 @@ public class Bottle implements Serializable{
     }
 
     public void setBid(Integer bid) {
-        bid = bid;
+        this.bid = bid;
     }
 
     public Integer getAid() {
@@ -73,7 +73,7 @@ public class Bottle implements Serializable{
     }
 
     public void setAid(Integer aid) {
-        aid = aid;
+        this.aid = aid;
     }
 
     public Integer getTime() {
