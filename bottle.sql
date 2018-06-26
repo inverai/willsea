@@ -46,6 +46,7 @@ CREATE TABLE w_comment (
 
 alter table w_bottle add content VARCHAR(36) DEFAULT '0';
 
+alter table w_bottle change btype bottleType varchar(24) DEFAULT '0';
 
 # 黑名单表
 CREATE TABLE w_blacklist(

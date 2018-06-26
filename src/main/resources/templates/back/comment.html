@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<link rel="stylesheet" href="../../static/admin/css/amazeui.min.css" />
-		<link rel="stylesheet" href="../../static/admin/css/admin.css" />
-	</head>
+	<head th:replace="back/header::head-fragment"></head>
 
 		<body>
-		<div class="谢飞-content-body">
+        <div th:replace="back/header::header-body"></div>
+		<div style="position: absolute; left: 400px; width: 800px; top: 100px">
 			<div class="am-cf am-padding am-padding-bottom-0">
 				<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">评论管理</strong><small></small></div>
 			</div>
@@ -24,17 +20,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="am-u-sm-12 am-u-md-3">
-
-				</div>
-				<div class="am-u-sm-12 am-u-md-3">
-					<div class="am-input-group am-input-group-sm">
-						<input type="text" class="am-form-field" placeholder="请输入评论信息">
-						<span class="am-input-group-btn">
-            <button class="am-btn am-btn-default" type="button">搜索</button>
-          </span>
-					</div>
-				</div>
 			</div>
 			<div class="am-g">
 				<div class="am-u-sm-12">
@@ -42,203 +27,36 @@
 						<table class="am-table am-table-striped am-table-hover table-main">
 							<thead>
 								<tr>
-									<th class="table-check"><input type="checkbox" id="chkAll"></th>
 									<th class="table-id">评论ID</th>
 									<th class="table-id">心愿瓶ID</th>
-									<!--<th class="table-title">心愿瓶ID</th>-->
-									<th class="table-type">评论人</th>
+									<th class="table-type">评论人ID</th>
+									<th class="table-type">创建时间</th>
 									<th class="table-type">内容</th>
-									<th class="table-type">时间</th>
-									<!--<th class="table-author am-hide-sm-only">内容</th>-->
 									<th class="table-set">操作</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞想要飞上上天，和太阳肩并肩</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" name="chk"></td>
-									<td>1</td>
-									<td>
-										<a href="#">U201516992</a>
-									</td>
-									<td>谢飞</td>
-									<td>谢飞飞不起来</td>
-									<td>2018-6-25</td>
-									<td>
-										<div class="am-btn-toolbar">
-											<div class="am-btn-group am-btn-group-xs">
-												<button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-												<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-
+								<th:block th:each="node : ${comments}">
+									<tr>
+										<td><th:block th:text="${node.cid}"/></td>
+										<td><th:block th:text="${node.bid}"/></td>
+										<td><th:block th:text="${node.aid}"/></td>
+                                        <td><th:block th:text="${node.ctime}"/></td>
+                                        <td><th:block th:text="${node.content}"/></td>
+                                        <td>
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                                </div>
+                                            </div>
+                                        </td>
+									</tr>
+								</th:block>
 							</tbody>
 						</table>
 						<div class="am-cf">
-							共 15 条记录
+							<p>共<th:block th:text="${recordNum}"/>条记录</p>
 							<div class="am-fr">
 								<ul class="am-pagination">
 									<li class="am-disabled">
@@ -271,8 +89,6 @@
 			</div>
 		</div>
 
-		<script type="text/javascript" src="../../static/admin/js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="../../static/admin/myplugs/js/plugs.js"></script>
 		<script>
 			$(function() {
 				$("#chkAll").chkAll({

@@ -4,11 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title></title>
-        <link th:href="@{/admin/css/amazeui.min.css}" rel="stylesheet" />
-        <link th:href="@{/admin/css/admin.css}" rel="stylesheet/">
-
 	</head>
-
 		<body>
 		<div class="2018-6-25-content-body">
 			<div class="am-cf am-padding am-padding-bottom-0">
@@ -16,7 +12,6 @@
 			</div>
 
 			<hr>
-
 			<div class="am-g">
 				<div class="am-u-sm-12 am-u-md-6">
 					<div class="am-btn-toolbar">
@@ -47,16 +42,18 @@
 									<th class="table-title">用户名</th>
 									<th class="table-type">注册时间</th>
 									<th class="table-author am-hide-sm-only">权限</th>
+									<th class="table-author am-hide-sm-only">禁用</th>
 									<th class="table-set">操作</th>
 								</tr>
 							</thead>
 							<tbody>
                                 <th:block th:each="node : ${users} ">
                                     <tr>
-                                        <td><th:block th:text="${node.uid}"></th:block></td>
-                                        <td><th:block th:text="${node.username}"></th:block></td>
-                                        <td><p>2012.12.12</p></td>
-                                        <td><th:block th:text="${node.type}"></th:block></td>
+                                        <td><th:block th:text="${node.uid}"/></td>
+                                        <td><th:block th:text="${node.username}"/></td>
+                                        <td><th:block th:text="${node.createTime}"/></td>
+                                        <td><th:block th:text="${node.type}"/></td>
+										<td><th:block th:text="${node.forbidden}"/></td>
                                         <td>
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
@@ -105,8 +102,6 @@
 			</div>
 		</div>
 
-        <script th:src="@{/admin/js/jquery-1.11.3.min.js}"></script>
-        <script th:src="@{/admin/myplugs/js/plugs.js}"></script>
 		<script>
 			$(function() {
 				$("#chkAll").chkAll({

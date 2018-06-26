@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.willsea.dao.UserDAO">
+    <resultMap id="BaseResultMap" type="com.example.willsea.entity.User">
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="upassword" jdbcType="VARCHAR" property="password" />
+        <result column="uemail" jdbcType="VARCHAR" property="email" />
+        <result column="utype" jdbcType="VARCHAR" property="type" />
+        <result column="createTime" jdbcType="INTEGER" property="createTime" />
+        <result column="forbidden" jdbcType="VARCHAR" property="forbidden"/>
+    </resultMap>
     <insert id="insert" parameterType="com.example.willsea.entity.User" keyProperty="uid">
-        insert into w_user(uid, utype, uname, upassword, uemail)
-                VALUES (#{uid, jdbcType=INTEGER}, #{type, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR},
-                        #{password, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}
+        insert into w_user(utype, username, upassword, uemail, createTime, forbidden)
+                VALUES (#{type, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR},
+                        #{password, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
+                        #{createTime, jdbcType=VARCHAR}, #{forbidden, jdbcType=VARCHAR}
                 )
     </insert>
 
@@ -14,23 +24,23 @@
     </delete>
 
     <update id="update">
-        UPDATE w_user SET uname = #{username}, upassword = #{password}
+        UPDATE w_user SET username = #{username}, upassword = #{password}
         , uemail = #{email}
         WHERE uid = #{uid}
     </update>
 
 
-    <select id="queryById" resultType="com.example.willsea.entity.User">
+    <select id="queryById" resultMap="BaseResultMap">
         SELECT * FROM w_user
         WHERE uid = #{uid}
     </select>
 
-    <select id="queryToVerify" resultType="com.example.willsea.entity.User">
+    <select id="queryToVerify" resultMap="BaseResultMap">
         SELECT * FROM w_user
-        WHERE uname = #{username} AND upassword = #{password}
+        WHERE username = #{username} AND upassword = #{password}
     </select>
     
-    <select id="queryAll" resultType="com.example.willsea.entity.User">
+    <select id="queryAll" resultMap="BaseResultMap">
         SELECT * FROM w_user
         ORDER BY uid DESC
         LIMIT #{offset}, #{limit}

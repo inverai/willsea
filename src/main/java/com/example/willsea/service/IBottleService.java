@@ -1,8 +1,10 @@
 package com.example.willsea.service;
 
 import com.example.willsea.entity.Bottle;
+import com.example.willsea.entity.Comment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yt on 2018/6/22.
@@ -14,7 +16,6 @@ public interface IBottleService {
      */
     String publish(Bottle bottle);
 
-
     /**
      * 新建心愿瓶
      */
@@ -23,7 +24,7 @@ public interface IBottleService {
     /**
      * 批量获取漂流瓶
      */
-    ArrayList<Bottle> getBottles(Integer row, Integer col);
+    List<Bottle> getBottles(Integer row, Integer col);
 
     /**
      * 根据主键查询漂流瓶
@@ -31,5 +32,10 @@ public interface IBottleService {
 
     Bottle getBottle(Integer bid);
 
+    String  addCommentToBottle(Comment comment, Bottle bottle);
+    List<Bottle> AdminGetBottles(Integer pageNo, Integer pageRowNumber);
+
+
+    List<Bottle> queryAll(Integer offset, Integer limit);
 
 }

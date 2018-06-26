@@ -15,9 +15,6 @@ public interface BottleDAO {
     int insert(Bottle bottle);
 
     // update
-    int addLookTime(Integer bid);
-    int addCommentSum(Integer bid);
-    int subCommentSum(Integer bid);
     int updateState(Integer bid);
 
     //search

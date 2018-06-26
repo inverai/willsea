@@ -30,6 +30,16 @@ public class User implements Serializable{
      */
     private String email;
 
+    /**
+     * 创建时间
+     */
+    private String createTime;
+
+    /**
+     * 是否禁用
+     */
+    private String forbidden;
+
     public Integer getUid() {
         return uid;
     }
@@ -69,6 +79,23 @@ public class User implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getForbidden() {
+        return forbidden;
+    }
+
+    public void setForbidden(String forbidden) {
+        this.forbidden = forbidden;
     }
 
     private static final long serialVersionUID = 1L;

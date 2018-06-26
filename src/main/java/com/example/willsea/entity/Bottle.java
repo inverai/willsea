@@ -27,15 +27,6 @@ public class Bottle implements Serializable{
      * 心愿内容类型
      */
     private String type;
-    /**
-     * 心愿浏览次数
-     */
-    private Integer lookTimes;
-
-    /**
-     * 所拥有评论总数
-     */
-    private Integer comment_sum;
 
     /**
      * 心愿标题
@@ -99,22 +90,6 @@ public class Bottle implements Serializable{
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Integer getLookTimes() {
-        return lookTimes;
-    }
-
-    public void setLookTimes(Integer lookTimes) {
-        this.lookTimes = lookTimes;
-    }
-
-    public Integer getComment_sum() {
-        return comment_sum;
-    }
-
-    public void setComment_sum(Integer comment_sum) {
-        this.comment_sum = comment_sum;
     }
 
     public String getTitle() {

@@ -9,68 +9,56 @@ public class Comment implements Serializable {
     /**
      * 评论ID
       */
-    private Integer Cid;
+    private Integer cid;
     /**
      * 作者ID
      */
-    private Integer Aid;
+    private Integer aid;
     /**
      * 心愿ID
      */
-    private Integer Hid;
+    private Integer bid;
     /**
      * 创建日期
      */
-    private Integer date;
+    private Integer ctime;
     /**
      * 内容
      */
     private String content;
-    /**
-     * 评论类型
-     */
-    private String type;
 
     private static final long serialVersionUID = 1L;
 
     public Integer getCid() {
-        return Cid;
+        return cid;
     }
 
     public void setCid(Integer cid) {
-        Cid = cid;
+        this.cid = cid;
     }
 
     public Integer getAid() {
-        return Aid;
+        return aid;
     }
 
     public void setAid(Integer aid) {
-        Aid = aid;
+        this.aid = aid;
     }
 
-    public Integer getHid() {
-        return Hid;
+    public Integer getBid() {
+        return bid;
     }
 
-    public void setHid(Integer hid) {
-        Hid = hid;
+    public void setBid(Integer bid) {
+        this.bid = bid;
     }
 
-    public Integer getDate() {
-        return date;
+    public Integer getCtime() {
+        return ctime;
     }
 
-    public void setDate(Integer date) {
-        this.date = date;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setCtime(Integer ctime) {
+        this.ctime = ctime;
     }
 
     public String getContent() {

@@ -33,7 +33,15 @@ public class UserController {
     }
 
     @GetMapping(value = "")
-    public String index(Model model){
+    public String index(@RequestParam(value = "page", defaultValue = "1") int page,
+                        @RequestParam(value = "limit", defaultValue = "10") int limit, Model model){
+        List<User> users = userService.queryAll();
+        Integer recordNum = users.size();
+        model.addAttribute("users", users);
+        model.addAttribute("recordNum", recordNum);
+        for (User user: users) {
+            System.out.println(user.getUsername() + " " + user.getPassword() + " " + user.getType());
+        }
         return "back/index";
     }
 

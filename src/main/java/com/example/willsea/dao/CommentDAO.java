@@ -15,11 +15,12 @@ public interface CommentDAO {
     int insertComment(Comment comment);
 
     // delete
-    int deleteById(Integer cid);
+    boolean deleteById(Integer cid);
 
 
     // select
     Comment queryById(Integer cid);
     List<Comment> queryByAuthorId(@Param("aid") Integer aid, @Param("offest")Integer offset, @Param("limit")Integer limit);
     List<Comment> queryByBottleId(@Param("bid") Integer bid, @Param("offest")Integer offset, @Param("limit")Integer limit);
+    List<Comment> queryAll(@Param("offset")Integer offset, @Param("limit")Integer limit);
 }

@@ -35,4 +35,6 @@ public interface UserDAO {
     int insertFavoriteRecord(@Param("source")Integer source, @Param("target")Integer target);
     // cancel favorite
     int deleteFavoriteRecord(Integer favorite_id);
+
+    int isInBlackList(@Param("source") Integer source,@Param("target")Integer target);
 }
