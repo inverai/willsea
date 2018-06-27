@@ -35,25 +35,26 @@
 									<th class="table-set">操作</th>
 								</tr>
 							</thead>
-							<tbody>
-								<th:block th:each="node : ${comments}">
-									<tr>
-										<td><th:block th:text="${node.cid}"/></td>
-										<td><th:block th:text="${node.bid}"/></td>
-										<td><th:block th:text="${node.aid}"/></td>
-                                        <td><th:block th:text="${node.ctime}"/></td>
-                                        <td><th:block th:text="${node.content}"/></td>
-                                        <td>
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                <tbody>
+                                    <th:block th:each="node : ${comments}">
+                                        <tr>
+                                            <!--<td><th:block th:text="${node.cid}"/></td>-->
+                                            <td><input type="text" name="cid" th:value="${node.cid}"></td>
+                                            <td><th:block th:text="${node.bid}"/></td>
+                                            <td><th:block th:text="${node.aid}"/></td>
+                                            <td><th:block th:text="${node.ctime}"/></td>
+                                            <td><input th:id="content+(${node.cid})" type="text" name="content" th:value="${node.content}"></td>
+                                            <td>
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="javascript:void(0)" th:onclick="'savePost( ' + ${node.cid} + ');'"><span class="am-icon-pencil-square-o"></span> 保存</a>
+                                                        <a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" href="javascript:void(0)" th:onclick="'delPost(' + ${node.cid} + ');'"><span class="am-icon-trash-o"></span> 删除</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-									</tr>
-								</th:block>
-							</tbody>
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                </tbody>
 						</table>
 						<div class="am-cf">
 							<p>共<th:block th:text="${recordNum}"/>条记录</p>
@@ -89,13 +90,47 @@
 			</div>
 		</div>
 
-		<script>
-			$(function() {
-				$("#chkAll").chkAll({
-					name: "chk"
-				});
-			});
-		</script>
+        <script type="text/javascript">
+            function delPost(cid) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/back/comment/delete',
+                    data: {cid: cid},
+                    dataType: 'json',
+                    success: function(){
+                        console.log("success");
+                    },
+                    error: function () {
+                        console.log("failure");
+
+                    }
+                })
+            }
+
+            function savePost(cid) {
+                var text = document.getElementById('content' + cid).value;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/back/comment/save',
+                    data: {
+                        cid: cid,
+                        content: text
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        if(result && result.success){
+                            console.log("文章保存成功");
+                        } else{
+                            console.log("文章保存失败");
+                        }
+                    },
+                    error: function () {
+                        console.log("POST执行回调函数失败");
+                    }
+                });
+            }
+        </script>
 	</body>
 
 </html>

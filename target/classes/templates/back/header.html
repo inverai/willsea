@@ -5,7 +5,7 @@
     <title><th:block th:text="${title != null ? title : '后台管理'} + 'willSea'"></th:block></title>
 
     <link th:href="@{/admin/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/admin/css/vender.css}" rel="stylesheet">
+    <link th:href="@{/admin/css/vendor.css}" rel="stylesheet">
     <link th:href="@{/admin/css/theme.css}" rel="stylesheet">
     <link th:href="@{/admin/css/utility.css}" rel="stylesheet">
     <link th:href="@{/admin/css/custom.css}" rel="stylesheet">
@@ -102,6 +102,14 @@
         </div>
     </aside>
 </div>
+
+<div th:fragment="opreate-body" class="am-btn-toolbar">
+    <div class="am-btn-group am-btn-group-xs">
+        <button class="commit-operate am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 确认</button>
+        <button class="delete-operate am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+    </div>
+</div>
+
 
 
 
