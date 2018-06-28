@@ -70,3 +70,36 @@ CREATE TABLE w_favorite(
   FOREIGN KEY (target_uid) REFERENCES w_user(uid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+  values(12, 20180601, 'text', 'helpful', 'it is content', 'true');
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(12, 20180601, 'text', 'success', 'it is content', 'true');
+
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(14, 20180601, 'text', '12312', 'it is content', 'true');
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(14, 20180601, 'text', 'asdas', 'it is content', 'true');
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(14, 20180601, 'text', 'asdsa', 'it is content', 'true');
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(13, 20180601, 'text', 'zxczxczx', 'it is content', 'true');
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(13, 20180601, 'text', 'xzcczxczxc', 'it is content', 'false');
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(13, 20180601, 'text', 'helpfzxczxul', 'it is content', 'true');
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(15, 20180601, 'text', 'xzczx', 'it is content', 'true');
+
+insert into w_bottle(aid, btime, btype, title, content, private)
+values(16, 20180601, 'text', 'xzczxczxcx', 'it is content', 'false');
+

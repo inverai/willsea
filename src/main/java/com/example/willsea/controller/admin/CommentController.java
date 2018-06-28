@@ -16,25 +16,26 @@ import java.util.List;
  * Created by yt on 2018/6/26.
  */
 @Controller
-@RequestMapping("/back")
 public class CommentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommentController.class);
 
     @Resource
     private ICommentService commentService;
 
-    @GetMapping(value = "/comment")
-    public String list(@RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "limit", defaultValue = "10") int limit, Model model){
+    @GetMapping(value = "/back/comment")
+    public String list(@RequestParam(value = "page", defaultValue = "1") int page,
+                       @RequestParam(value = "limit", defaultValue = "8") int limit, Model model){
         System.out.println("Get Next Time1");
-        List<Comment> comments = commentService.queryAll(page * limit, limit);
-        Integer recordNum = comments.size();
+        List<Comment> comments = commentService.queryAll((page - 1) * limit, limit);
+        Integer recordNum = commentService.queryTotalNumber();
         model.addAttribute("comments", comments);
         model.addAttribute("recordNum", recordNum);
+        model.addAttribute("page",page);
+        model.addAttribute("limit",limit);
         return "back/comment";
     }
 
-    @PostMapping(value = "/comment/save")
+    @PostMapping(value = "/back/comment/save")
     @ResponseBody
     public RestResponse save(@RequestParam(value = "cid")Integer cid,
                                @RequestParam(value = "content")String content) {
@@ -51,7 +52,7 @@ public class CommentController {
         return RestResponse.ok();
     }
 
-    @PostMapping(value = "/comment/delete")
+    @PostMapping(value = "/back/comment/delete")
     @ResponseBody
     public RestResponse delete(@RequestParam(value = "cid")Integer cid) {
         System.out.println("Get the commentId to be deleted: " + cid);

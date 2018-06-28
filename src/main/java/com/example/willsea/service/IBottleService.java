@@ -38,4 +38,10 @@ public interface IBottleService {
 
     List<Bottle> queryAll(Integer offset, Integer limit);
 
+    String updateBottle(Bottle bottle);
+
+    String deleteBottle(Integer bid);
+
+    Integer queryTotalNumber();
+
 }

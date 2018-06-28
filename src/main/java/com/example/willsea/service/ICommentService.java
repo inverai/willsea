@@ -50,4 +50,6 @@ public interface ICommentService {
      */
     List<Comment> queryAll(Integer offset, Integer limit);
 
+
+    Integer queryTotalNumber();
 }

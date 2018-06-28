@@ -14,8 +14,6 @@ public interface BottleDAO {
     // add
     int insert(Bottle bottle);
 
-    // update
-    int updateState(Integer bid);
 
     //search
     Bottle queryById(Integer bid);
@@ -23,7 +21,7 @@ public interface BottleDAO {
     List<Bottle> queryByAuthor(@Param("aid")Integer aid, @Param("offset")Integer offset, @Param("limit")Integer limit);
 
     // delete
-    int deleteById(Integer bid);
+    boolean deleteById(Integer bid);
 
-
+    Integer queryTotalNumber();
 }

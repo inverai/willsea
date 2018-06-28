@@ -2,93 +2,176 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="back/header::head-fragment"></head>
-		<body>
-        <div th:replace="back/header::header-body"></div>
-        <div style="position: absolute; left: 300px; width: 1000px; top: 100px">
-		<div class="2018-6-25-content-body">
-			<div class="am-cf am-padding am-padding-bottom-0">
-				<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">用户管理</strong><small></small></div>
-			</div>
+<body>
+<div th:replace="back/header::header-body"></div>
+<div style="position: absolute; left: 240px; width: 1260px; top: 60px">
+	<div class="2018-6-25-content-body">
+		<div class="am-cf am-padding am-padding-bottom-0">
+			<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">用户管理</strong><small></small></div>
+		</div>
 
-			<hr>
-
-			<div class="am-g">
-				<div class="am-u-sm-12">
-					<form class="am-form">
-						<table class="am-table am-table-striped am-table-hover table-main">
-							<thead>
-								<tr>
-									<th class="table-id">用户ID</th>
-									<th class="table-title">用户名</th>
-									<th class="table-type">注册时间</th>
-									<th class="table-author am-hide-sm-only">权限</th>
-									<th class="table-author am-hide-sm-only">禁用</th>
-									<th class="table-set">操作</th>
-								</tr>
-							</thead>
-							<tbody>
-                                <th:block th:each="node : ${users} ">
-                                    <tr>
-                                        <td><th:block th:text="${node.uid}"/></td>
-                                        <td><th:block th:text="${node.username}"/></td>
-                                        <td><th:block th:text="${node.createTime}"/></td>
-                                        <td><th:block th:text="${node.type}"/></td>
-										<td><th:block th:text="${node.forbidden}"/></td>
-                                        <td>
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                    </tr>
-                                </th:block>
-
-							</tbody>
-						</table>
-						<div class="am-cf">
-                            <p><th:block th:text="${recordNum}"></th:block>></p>
-							<div class="am-fr">
-								<ul class="am-pagination">
-									<li class="am-disabled">
-										<a href="#">«</a>
-									</li>
-									<li class="am-active">
-										<a href="#">1</a>
-									</li>
-									<li>
-										<a href="#">2</a>
-									</li>
-									<li>
-										<a href="#">3</a>
-									</li>
-									<li>
-										<a href="#">4</a>
-									</li>
-									<li>
-										<a href="#">5</a>
-									</li>
-									<li>
-										<a href="#">»</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<hr>
-					</form>
+		<hr>
+		<div class="am-g">
+			<div class="am-u-sm-12 am-u-md-6"></div>
+			<div class="am-u-sm-12 am-u-md-3"></div>
+			<div class="am-u-sm-12 am-u-md-3">
+				<div class="am-input-group am-input-group-sm">
+					<input type="text" class="am-form-field" placeholder="请输入用户信息">
+					<span class="am-input-group-btn">
+           					<button class="am-btn am-btn-default" type="button">搜索</button>
+          				</span>
 				</div>
 			</div>
 		</div>
-        </div>
-		<script>
-			$(function() {
-				$("#chkAll").chkAll({
-					name: "chk"
-				});
-			});
-		</script>
-	</body>
+
+
+
+		<div class="am-g">
+			<div class="am-u-sm-12">
+				<form class="am-form">
+					<table class="am-table am-table-striped am-table-hover table-main">
+						<thead>
+						<tr>
+							<th class="table-id">用户ID</th>
+							<th class="table-title">用户名</th>
+							<th class="table-title">邮箱</th>
+							<th class="table-type">注册时间</th>
+							<th class="table-author am-hide-sm-only">权限</th>
+							<th class="table-author am-hide-sm-only">禁用</th>
+							<th class="table-set">操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						<th:block th:each="node : ${users} ">
+							<tr>
+								<td><th:block th:text="${node.uid}"/></td>
+								<td><th:block th:text="${node.username}"/></td>
+								<td><input th:id="email+(${node.uid})" type="text" name="email" th:value="${node.email}" /> </td>
+								<td><input th:id="createTime+(${node.uid})" type="number" name="createTime" th:value="${node.createTime}" /> </td>
+								<td><th:block th:text="${node.type}"/></td>
+								<td><th:block th:switch="${node.forbidden}">
+									<input th:id="forbidden+(${node.uid})" th:case="'true'" type="checkbox" checked="checked">
+									<input th:id="forbidden+(${node.uid})" th:case="'false'" type="checkbox">
+								</th:block> </td>
+
+								<td>
+									<div class="am-btn-toolbar">
+										<div class="am-btn-group am-btn-group-xs">
+											<button class="am-btn am-btn-default am-btn-xs am-text-secondary" href="javascript:void(0)" th:onclick="'savePost('+${node.uid}+');'"><span class="am-icon-pencil-square-o"></span> 保存</button>
+											<button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" href="javascript:void(0)" th:onclick="'delPost('+${node.uid}+');'"><span class="am-icon-trash-o"></span> 删除</button>
+										</div>
+									</div>
+								</td>
+
+							</tr>
+						</th:block>
+
+						</tbody>
+					</table>
+					<div class="am-cf">
+						<p>共<th:block th:text="${recordNum}"></th:block>条记录</p>
+						<div class="am-fr">
+							<ul id="pageButtons" class="am-pagination">
+								<li>
+									<a href="#">«</a>
+								</li>
+								<script th:inline="javascript">
+                                    var recordNum=[[${recordNum}]];
+                                    var curPage=[[${page}]];
+                                    var limit=[[${limit}]];
+                                    var pages=(recordNum/limit+(recordNum%limit!=0));
+                                    for(var i=1;i<=pages;++i) {
+                                        var elem_li = document.createElement("li");
+                                        if(i==curPage)
+                                            elem_li.innerHTML="<li style='margin-right: 20px' class=\'am-active\'> <a href=\"#\" onclick=\"switchPage("+i.toString()+");\">"+i.toString()+"<\/a><\/li>";
+                                        else
+                                            elem_li.innerHTML="<li style='margin-right: 20px'><a href=\"#\" onclick=\"switchPage("+i.toString()+");\">"+i.toString()+"<\/a><\/li>";
+                                        document.getElementById("pageButtons").appendChild(elem_li);
+                                    }
+								</script>
+								<li>
+									<a href="#">»</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<hr>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    function switchPage(page) {
+        $.ajax(
+            {
+                type: 'GET',
+                url: '/back/user',
+                data: { page: page },
+                success: function ()
+                {
+                    setTimeout(function () {
+                        console.log("success");
+                        window.location.href=('/back/user?page='+page);
+                    }, 500);
+                },
+                error: function ()
+                {
+                    //DO SOMETHING
+                }
+            }
+        );
+    }
+    function delPost(uid)
+    {
+        $.ajax(
+            {
+                type: 'POST',
+                url: '/back/user/delete',
+                data: { uid: uid },
+                dataType: "json",
+                success: function ()
+                {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 500);
+
+                },
+                error: function ()
+                {
+                    //DO SOMETHING
+                }
+            }
+        );
+    }
+    function savePost(uid)
+    {
+        var ctime = document.getElementById('createTime' + uid).value;
+        var email=document.getElementById('email'+uid).value;
+        var forbidden= document.getElementById('forbidden' + uid).checked;
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: '/back/user/save',
+                data: {
+                    uid: uid,
+                    email:email,
+                    createTime: ctime,
+                    forbidden: forbidden
+                },
+                dataType: "json",
+                success: function () {
+
+
+                },
+                error: function () {
+                    //DO SOMETHING
+                }
+            }
+        );
+    }
+</script>
+</body>
 
 </html>

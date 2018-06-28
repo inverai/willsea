@@ -45,4 +45,8 @@
         ORDER BY ctime DESC
         LIMIT #{offset}, #{limit}
     </select>
+
+    <select id="queryTotalNumber" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM w_comment
+    </select>
 </mapper>

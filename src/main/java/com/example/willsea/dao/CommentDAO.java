@@ -23,4 +23,6 @@ public interface CommentDAO {
     List<Comment> queryByAuthorId(@Param("aid") Integer aid, @Param("offest")Integer offset, @Param("limit")Integer limit);
     List<Comment> queryByBottleId(@Param("bid") Integer bid, @Param("offest")Integer offset, @Param("limit")Integer limit);
     List<Comment> queryAll(@Param("offset")Integer offset, @Param("limit")Integer limit);
+
+    Integer queryTotalNumber();
 }

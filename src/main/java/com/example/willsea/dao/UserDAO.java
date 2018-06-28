@@ -37,4 +37,6 @@ public interface UserDAO {
     int deleteFavoriteRecord(Integer favorite_id);
 
     int isInBlackList(@Param("source") Integer source,@Param("target")Integer target);
+
+    Integer queryTotalNumber();
 }

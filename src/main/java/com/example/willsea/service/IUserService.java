@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface IUserService {
 
+    Integer queryTotalNumber();
+
     /**
      * 保存新用户
      */
@@ -22,7 +24,7 @@ public interface IUserService {
     /**
      * 查找全部用户
      */
-    List<User> queryAll();
+    List<User> queryAll(Integer offset, Integer limit);
     /**
      * 用户登陆
      */

@@ -77,4 +77,30 @@ public class BottleServiceImpl implements IBottleService{
         return bottleDAO.queryAll(offset, limit);
 
     }
+
+    @Override
+    public String updateBottle(Bottle bottle) {
+        if(bottleDAO.queryById(bottle.getBid()) == null) {
+            return "invalid bottle";
+        }
+        bottleDAO.deleteById(bottle.getBid());
+        bottleDAO.insert(bottle);
+        return "update success";
+    }
+
+    @Override
+    public String deleteBottle(Integer bid) {
+        if(bottleDAO.deleteById(bid) == true) {
+            return "delete success!";
+        }
+
+        return "invalid id";
+    }
+
+    @Override
+    public Integer queryTotalNumber() {
+        return bottleDAO.queryTotalNumber();
+    }
+
+
 }

@@ -26,6 +26,11 @@ public class UserServiceImpl implements IUserService{
     private UserDAO userDAO;
 
 
+    @Override
+    public Integer queryTotalNumber() {
+        return userDAO.queryTotalNumber();
+    }
+
     /**
      * 事务管理，
      * @param user
@@ -51,8 +56,8 @@ public class UserServiceImpl implements IUserService{
     }
 
     @Override
-    public List<User> queryAll() {
-        return userDAO.queryAll(0, 10);
+    public List<User> queryAll(Integer offset, Integer limit) {
+        return userDAO.queryAll(offset, limit);
     }
 
     @Override

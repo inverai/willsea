@@ -20,11 +20,6 @@
                 )
     </insert>
 
-    <update id="updateState">
-        UPDATE w_bottle
-        SET private = "false"
-    </update>
-
     <select id="queryById" parameterType="Integer" resultMap="BaseResultMap">
         SELECT *
         FROM w_bottle
@@ -50,4 +45,8 @@
         DELETE FROM w_bottle
         WHERE bid = #{bid}
     </delete>
+
+    <select id="queryTotalNumber" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM w_bottle
+    </select>
 </mapper>

@@ -19,7 +19,7 @@
     </insert>
 
     <delete id="deleteById">
-        DELETE FROM w_bottle
+        DELETE FROM w_user
         WHERE uid = #{uid}
     </delete>
 
@@ -38,6 +38,11 @@
     <select id="queryToVerify" resultMap="BaseResultMap">
         SELECT * FROM w_user
         WHERE username = #{username} AND upassword = #{password}
+    </select>
+
+
+    <select id="queryTotalNumber" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM w_user
     </select>
     
     <select id="queryAll" resultMap="BaseResultMap">

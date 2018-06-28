@@ -51,15 +51,16 @@ public class CommentServiceImpl implements ICommentService{
     public String deleteComment(Integer cid)
     {
 
-        if(commentDAO.deleteById(cid)==true)
+        if(commentDAO.deleteById(cid)==true) {
             return "delete success!";
+        }
+
         return "invalid cid";
     }
 
     @Override
     public String updateComment(Comment comment) {
-        if(commentDAO.queryById(comment.getCid())==null)
-        {
+        if(commentDAO.queryById(comment.getCid())==null) {
             return "invalid comment";
         }
         commentDAO.deleteById(comment.getCid());
@@ -80,4 +81,9 @@ public class CommentServiceImpl implements ICommentService{
         return commentDAO.queryAll(offset, limit);
     }
 
+
+    @Override
+    public Integer queryTotalNumber() {
+        return commentDAO.queryTotalNumber();
+    }
 }
