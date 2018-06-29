@@ -24,4 +24,9 @@ public interface BottleDAO {
     boolean deleteById(Integer bid);
 
     Integer queryTotalNumber();
+
+    //update Content
+    String deleteText(Integer bid);
+    String deleteAudio(Integer bid);
+    String deleteVideo(Integer bid);
 }

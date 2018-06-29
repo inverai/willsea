@@ -100,5 +100,20 @@ public class BottleServiceImpl implements IBottleService{
         return bottleDAO.queryTotalNumber();
     }
 
+    @Override
+    public String deleteText(Integer bid) {
+        return bottleDAO.deleteText(bid);
+    }
+
+    @Override
+    public String deleteAudio(Integer bid) {
+        return bottleDAO.deleteAudio(bid);
+    }
+
+    @Override
+    public String deleteVideo(Integer bid) {
+        return bottleDAO.deleteVideo(bid);
+    }
+
 
 }

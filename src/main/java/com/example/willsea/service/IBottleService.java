@@ -44,4 +44,8 @@ public interface IBottleService {
 
     Integer queryTotalNumber();
 
+    String deleteText(Integer bid);
+    String deleteAudio(Integer bid);
+    String deleteVideo(Integer bid);
+
 }

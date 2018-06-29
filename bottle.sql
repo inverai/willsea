@@ -114,3 +114,17 @@ alter TABLE w_user ADD COLUMN birthday INT(32);
 alter TABLE w_user ADD COLUMN head VARCHAR(32);
 
 alter TABLE w_user CHANGE head headImageUrl VARCHAR(32);
+
+
+insert into w_comment(aid, bid, ctime, content) values (16, 25, 20180608, 'where are you now?');
+insert into w_comment(aid, bid, ctime, content) values (16, 25, 20180607, 'Objects can be obtained by means of either dependency lookup or dependency injection.');
+insert into w_comment(aid, bid, ctime, content) values (16, 25, 20180607, ' instead a Spring configuration file defines which services and components must be called. ');
+insert into w_comment(aid, bid, ctime, content) values (16, 25, 20180607, 'This IoC is intended to increase the ease of maintenance and testing.');
+insert into w_comment(aid, bid, ctime, content) values (16, 25, 20180607, 'Spring AOP has been designed to make it able to work with cross-cutting concerns inside the Spring Framework.');
+insert into w_comment(aid, bid, ctime, content) values (16, 25, 20180607, 'Any object which is created and configured by the container can be enriched using Spring AOP.');
+insert into w_comment(aid, bid, ctime, content) values (16, 25, 20180607, 'The Spring Framework uses Spring AOP internally for transaction management, security, remote access, and JMX.');
+insert into w_comment(aid, bid, ctime, content) values (16, 25, 20180607, 'Since version 2.0 of the framework, Spring provides two approaches to the AOP configuration:');
+insert into w_comment(aid, bid, ctime, content) values (15, 24, 20180607, 'The Spring Framework uses Spring AOP internally for transaction management, security, remote access, and JMX.');
+insert into w_comment(aid, bid, ctime, content) values (15, 24, 20180607, 'Since version 2.0 of the framework, Spring provides two approaches to the AOP configuration:');
+
+update w_bottle set btext = "qewqweqasdas";

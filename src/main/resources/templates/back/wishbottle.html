@@ -40,8 +40,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<th:block th:each="node : ${bottles}">
+								<th:block th:each="node, nodeState : ${bottles}">
                                     <tr>
+                                        <!--<script th:inline="javascript">-->
+                                            <!--console.log([[${nodeState.index}]]);-->
+                                        <!--</script>-->
                                         <td><th:block th:text="${node.bid}"/></td>
                                         <td><th:block th:text="${node.aid}"/></td>
                                         <td><th:block th:text="${node.time}"/></td>
@@ -50,7 +53,7 @@
 											<!--<input th:id="content+(${node.bid})" type="text" name="content" th:value="${node.content}">-->
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
-                                                    <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="javascript:void(0)" th:onclick="'savePost(' + ${node.bid} + ');'">
+                                                    <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="javascript:void(0)" th:onclick="'getDetail(' + ${node.bid} + ');'">
                                                         <span class="am-icon-pencil-square-o"></span> 查看详情
                                                     </a>
                                                 </div>
@@ -181,6 +184,21 @@
                         console.log("failure");
                     }
                 });
+            }
+
+            function getDetail(bid) {
+			    $.ajax({
+                    type: 'GET',
+                    url: '/back/wishbottle/detail',
+                    data: {bid: bid},
+                    success: function () {
+                        console.log("get the detail");
+                        setTimeout(function() {
+                            window.location.href = '/back/wishbottle/detail?bid=' + bid;
+                        }, 500);
+                    }
+                })
+
             }
 		</script>
 

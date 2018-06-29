@@ -61,7 +61,7 @@
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
                                                         <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="javascript:void(0)" th:onclick="'savePost(' + ${node.cid} + ');'"><span class="am-icon-pencil-square-o"></span> 保存</a>
-                                                        <a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" href="javascript:void(0)" th:onclick="'delPost(' + ${node.cid} + ');'"><span class="am-icon-trash-o"></span> 删除</a>
+                                                        <a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" href="javascript:void(0)" th:onclick="'delPost(' + ${node.cid} + ',' + ${node.bid} ');'"><span class="am-icon-trash-o"></span> 删除</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -103,11 +103,14 @@
 		</div>
 
         <script type="text/javascript">
-            function delPost(cid) {
+            function delPost(cid, bid) {
                 $.ajax({
                     type: 'POST',
                     url: '/back/comment/delete',
-                    data: {cid: cid},
+                    data: {
+                        cid: cid,
+                        bid: bid
+					},
                     dataType: 'json',
                     success: function(){
                         console.log("success");

@@ -6,27 +6,97 @@
     <div style="position: absolute; left: 240px; width: 1260px; top: 60px">
         <form>
             <div class="form-group">
-                <label for="exampleInputEmail1">标题</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                <label for="exampleInputTitle">标题</label>
+                <input type="text" class="form-control" id="exampleInputTitle" th:value="${bottle.getTitle()}">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">作者</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label for="exampleInputAuthor">作者</label>
+                <input type="text" readonly="readonly" class="form-control" id="exampleInputAuthor" th:value="${username}">
             </div>
-            <div class="form-group">
-                <label for="exampleInputFile">内容</label>
-                <audio th:if="${bottle.getBaudio()} != null" th:src="${bottle.getBaudio()}" id="audioPlayer" controls="controls" loop="loop" preload="auto">浏览器不支持语音</audio>
-                <video th:if="${bottle.getBvideo()} != null" th:src="${bottle.getBvideo()}" id="videoPlayer" width="600" height="400" controls="controls" loop="loop"></video>
-                <input type="file" id="exampleInputFile">
+
+            <div th:if="${bottle.getBtext()} != null" class="form-group">
+                <div>
+                    <label style="display: inline; float: left;" for="textPlayer">文本内容</label>
+                    <button class="btn btn-info" style="display: inline; float: right;" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', text);'">删除</button>
+                </div>
+                <textarea class="form-control" id="textPlayer" rows="2" readonly="readonly" th:text="${bottle.getBtext()}"></textarea>
             </div>
-            <div class="form-group">
-                <label for="exampleInputText">评论</label>
-                <textarea class="form-control" id="exampleInputText" rows="3"></textarea>
+
+            <div th:if="${bottle.getBaudio()} != null" class="form-group">
+                <div>
+                    <label style="display: block" for="audioPlayer">音频内容</label>
+                    <button class="btn btn-info" style="display: inline; float: right;" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', audio);'">删除</button>
+                </div>
+                <audio  th:src="${bottle.getBaudio()}" id="audioPlayer" controls="controls" loop="loop" preload="auto">浏览器不支持语音</audio>
+                <!--<audio th:src="@{/user/audio/London.mp3}" id="audioPlayer" controls="controls" loop="loop" preload="auto">浏览器不支持语音</audio>-->
             </div>
+            <div th:if="${bottle.getBvideo()} != null" class="form-group">
+                <div>
+                    <label style="display: block" for="videoPlayer">视频内容</label>
+                    <button class="btn btn-info" style="display: inline; float: right" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', video);'">删除</button>
+                </div>
+                <video th:src="${bottle.getBvideo()}" id="videoPlayer" width="600" height="400" controls="controls" loop="loop">浏览器不支持视频</video>
+            </div>
+            <th:block th:each="node, nodeState : ${comments}">
+                <div class="form-group">
+                    <div>
+                        <label style="display: inline; float: left" th:for="textComment + ${node.cid}" th:text="'Comment: ' + ${nodeState.index} + ' , Author:' + ${authorNames.get(node.getCid())}"></label>
+                        <button class="btn btn-info" style="display: inline; float: right;" th:onclick="'deleteComment(' + ${node.getCid()} + ');'">删除</button>
+                    </div>
+                    <textarea class="form-control" th:id="textComment + ${node.cid}" th:text="${node.content}" rows="2" readonly="readonly"></textarea>
+                </div>
+            </th:block>
 
 
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
 </body>
+
+
+<script th:inline="javascript">
+    function deleteComment(cid) {
+        var bid = [[${bottle.getBid()}]];
+        $.ajax({
+            type: 'POST',
+            url: '/back/comment/delete',
+            data: {
+                cid: cid,
+                bid: bid
+            },
+            dataType: 'json',
+            success: function () {
+                console.log("delete successfully!");
+                setTimeout(function () {
+                    // window.location.href = '/back/wishbottle/detail?bid=' + bid;
+                }, 500);
+            },
+            error: function () {
+                console.log("failure in delete");
+            }
+        })
+    }
+
+    function deleteContent(bid, type) {
+        $.ajax({
+            type: 'POST',
+            url: '/back/wishbottle/deleteContent',
+            data: {
+                bid: bid,
+                type: type
+            },
+            dataType: 'json',
+            success: function () {
+                console.log("success");
+                setTimeout(function () {
+                    window.location.reload();
+                }, 500);
+            },
+            error: function () {
+                console.log("failure");
+            }
+        })
+    }
+</script>
+
 </html>

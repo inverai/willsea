@@ -17,9 +17,13 @@ public interface ICommentService {
     String insertComment(Comment comment);
 
     /**
-     * 获取心愿瓶下面的评论
+     *  * 获取心愿瓶下面的评论
+     * @param bid
+     * @param offset
+     * @param limit
+     * @return
      */
-    List<Comment> getCommentsByBottle(Integer bid,Integer offset,Integer limit);
+    List<Comment> getCommentsByBottle(Integer bid, Integer offset, Integer limit);
 
     /**
      * 获取用户的评论

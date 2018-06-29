@@ -11,17 +11,29 @@ import java.util.List;
  */
 @Component
 public interface CommentDAO {
-    // add
+    /**
+     *
+     * @param comment
+     * @return
+     */
     int insertComment(Comment comment);
 
-    // delete
+    /**
+     *
+     * @param cid
+     * @return
+     */
     boolean deleteById(Integer cid);
 
 
-    // select
+    /**
+     *
+     * @param cid
+     * @return
+     */
     Comment queryById(Integer cid);
-    List<Comment> queryByAuthorId(@Param("aid") Integer aid, @Param("offest")Integer offset, @Param("limit")Integer limit);
-    List<Comment> queryByBottleId(@Param("bid") Integer bid, @Param("offest")Integer offset, @Param("limit")Integer limit);
+    List<Comment> queryByAuthorId(@Param("aid") Integer aid, @Param("offset")Integer offset, @Param("limit")Integer limit);
+    List<Comment> queryByBottleId(@Param("bid") Integer bid, @Param("offset")Integer offset, @Param("limit")Integer limit);
     List<Comment> queryAll(@Param("offset")Integer offset, @Param("limit")Integer limit);
 
     Integer queryTotalNumber();

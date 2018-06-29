@@ -1,8 +1,10 @@
 package com.example.willsea.controller.admin;
 
 import com.example.willsea.dto.RestResponse;
+import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.Comment;
 import com.example.willsea.service.ICommentService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -54,19 +56,20 @@ public class CommentController {
 
     @PostMapping(value = "/back/comment/delete")
     @ResponseBody
-    public RestResponse delete(@RequestParam(value = "cid")Integer cid) {
+    public String delete(@RequestParam(value = "cid")Integer cid,
+                               @RequestParam(value = "bid")Integer bid) {
         System.out.println("Get the commentId to be deleted: " + cid);
         try{
             Comment comment = commentService.getCommentById(cid);
             if(null == comment) {
-                return RestResponse.fail("data not exists.");
+                return "data not exists.";
             }
             commentService.deleteComment(cid);
         }catch (Exception e){
             String msg = "deleting comment failed.";
             LOGGER.error(msg, e);
-            return RestResponse.fail(msg);
+            return "data not exists.";
         }
-        return RestResponse.ok();
+        return "/back/wishbottle/detail?bid=" + bid;
     }
 }
