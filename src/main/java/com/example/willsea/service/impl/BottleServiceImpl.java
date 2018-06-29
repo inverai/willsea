@@ -28,8 +28,6 @@ public class BottleServiceImpl implements IBottleService{
         bottle.setIsPrivate("false");
         bottleDAO.deleteById(bottle.getBid());
         bottleDAO.insert(bottle);
-
-        //建议 bottleDAO.update(bottle);
         return "update success!";
     }
 

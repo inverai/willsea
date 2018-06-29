@@ -24,33 +24,35 @@ public class Bottle implements Serializable{
     private Integer time;
 
     /**
-     * 心愿内容类型
-     */
-    private String type;
-
-    /**
      * 心愿标题
      */
     private String title;
 
     /**
-     * 心愿内容
-     */
-    private String content;
-
-    /**
      * 心愿是否公开
      */
     private String isPrivate;
+
+    /**
+     * 文本信息
+     */
+    private String btext;
+
+    /**
+     * 音频信息
+     */
+    private String baudio;
+
+    /**
+     * 视频信息
+     */
+    private String bvideo;
+
+
+
+
     private static final long serialVersionUID = 1L;
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public String getIsPrivate() {
         return isPrivate;
@@ -84,19 +86,35 @@ public class Bottle implements Serializable{
         this.time = time;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getBtext() {
+        return btext;
+    }
+
+    public void setBtext(String btext) {
+        this.btext = btext;
+    }
+
+    public String getBaudio() {
+        return baudio;
+    }
+
+    public void setBaudio(String baudio) {
+        this.baudio = baudio;
+    }
+
+    public String getBvideo() {
+        return bvideo;
+    }
+
+    public void setBvideo(String bvideo) {
+        this.bvideo = bvideo;
     }
 }

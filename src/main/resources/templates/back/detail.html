@@ -15,8 +15,8 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputFile">内容</label>
-                <audio th:src="" controls="controls" loop="loop" preload="auto">浏览器不支持语音</audio>
-                <video th:src="" th:poster="" id="videoPlayer" width="600" height="400" controls="controls" loop="loop"></video>
+                <audio th:if="${bottle.getBaudio()} != null" th:src="${bottle.getBaudio()}" id="audioPlayer" controls="controls" loop="loop" preload="auto">浏览器不支持语音</audio>
+                <video th:if="${bottle.getBvideo()} != null" th:src="${bottle.getBvideo()}" id="videoPlayer" width="600" height="400" controls="controls" loop="loop"></video>
                 <input type="file" id="exampleInputFile">
             </div>
             <div class="form-group">

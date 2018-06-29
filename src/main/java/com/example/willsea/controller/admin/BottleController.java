@@ -44,7 +44,7 @@ public class BottleController {
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
         for (Bottle bottle: bottles) {
-            System.out.println(bottle.getAid() + " ; " + bottle.getBid() + " ; " + bottle.getContent());
+            System.out.println(bottle.getAid() + " ; " + bottle.getBid() + " ; ");
         }
 
         return "back/wishbottle";
@@ -53,13 +53,12 @@ public class BottleController {
     @PostMapping(value = "/back/wishbottle/save")
     @ResponseBody
     public RestResponse save(@RequestParam(value = "bid")Integer bid, @RequestParam(value = "title")String title,
-                             @RequestParam(value = "content")String content, @RequestParam(value = "isPrivate")String isPrivate
+                             @RequestParam(value = "isPrivate")String isPrivate
                              ) {
         System.out.println("Get the BottleId to be saved: " + bid);
         try {
             Bottle bottle = bottleService.getBottle(bid);
             bottle.setTitle(title);
-            bottle.setContent(content);
             bottle.setIsPrivate(isPrivate);
             bottleService.updateBottle(bottle);
         } catch (Exception e){
@@ -89,8 +88,10 @@ public class BottleController {
     }
 
     @GetMapping(value = "/back/wishbottle/detail")
-    public String detail(Model model) {
+    public String detail(@RequestParam Integer bid, Model model) {
         System.out.println("show the detail message for the bottle");
+        Bottle bottle = bottleService.getBottle(bid);
+        model.addAttribute("bottle", bottle);
 
         return "back/detail";
     }

@@ -6,17 +6,19 @@
         <id column="bid" jdbcType="INTEGER" property="bid"/>
         <result column="aid" jdbcType="INTEGER" property="aid"/>
         <result column="btime" jdbcType="INTEGER" property="time"/>
-        <result column="btype" jdbcType="VARCHAR" property="type"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
-        <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="private" jdbcType="VARCHAR" property="isPrivate"/>
+        <result column="btext" jdbcType="VARCHAR" property="btext"/>
+        <result column="baudio" jdbcType="VARCHAR" property="baudio"/>
+        <result column="bvideo" jdbcType="VARCHAR" property="bvideo"/>
     </resultMap>
 
     <insert id="insert" parameterType="com.example.willsea.entity.Bottle" keyProperty="bid">
-        insert into w_bottle(aid, btime, btype, title, content, private)
+        insert into w_bottle(aid, btime, title, private, btext, baudio, bvideo)
                 VALUES (#{aid, jdbcType=INTEGER}, #{time, jdbcType=INTEGER},
-                        #{type, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR},
-                        #{content, jdbcType=VARCHAR}, #{isPrivate, jdbcType=VARCHAR}
+                        #{title, jdbcType=VARCHAR}, #{isPrivate, jdbcType=VARCHAR},
+                        #{btext, jdbcType=VARCHAR}, #{baudio, jdbcType=VARCHAR},
+                        #{bvideo, jdbcType=VARCHAR}
                 )
     </insert>
 
