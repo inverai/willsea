@@ -33,7 +33,7 @@
 									<!--<th class="table-title">心愿瓶ID</th>-->
 									<th class="table-type">创建时间</th>
 									<th class="table-type">标题</th>
-									<th class="table-type">内容</th>
+									<th class="table-type">详细信息</th>
                                     <th class="table-type">是否私有</th>
 									<!--<th class="table-author am-hide-sm-only">内容</th>-->
 									<th class="table-set">操作</th>
@@ -46,7 +46,16 @@
                                         <td><th:block th:text="${node.aid}"/></td>
                                         <td><th:block th:text="${node.time}"/></td>
                                         <td><input th:id="title+(${node.bid})" type="text" name="title" th:value="${node.title}"></td>
-                                        <td><input th:id="content+(${node.bid})" type="text" name="content" th:value="${node.content}"></td>
+                                        <td>
+											<!--<input th:id="content+(${node.bid})" type="text" name="content" th:value="${node.content}">-->
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="javascript:void(0)" th:onclick="'savePost(' + ${node.bid} + ');'">
+                                                        <span class="am-icon-pencil-square-o"></span> 查看详情
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <th:block th:switch="${node.isPrivate}">
                                                 <input th:id="private+${node.bid}" th:case="'true'" type="checkbox" checked="checked">

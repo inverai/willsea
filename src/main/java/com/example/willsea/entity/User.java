@@ -40,6 +40,32 @@ public class User implements Serializable{
      */
     private String forbidden;
 
+
+    /**
+     * 性别
+     */
+    private Integer sex;
+
+    /**
+     * 电话
+     */
+    private Integer telephone;
+
+    /**
+     * 地区
+     */
+    private String location;
+
+    /**
+     * 出生日期
+     */
+    private Integer birthday;
+
+    /**
+     * 头像
+     */
+    private String headImageUrl;
+
     public Integer getUid() {
         return uid;
     }
@@ -96,6 +122,46 @@ public class User implements Serializable{
 
     public void setForbidden(String forbidden) {
         this.forbidden = forbidden;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public Integer getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(Integer telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Integer getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Integer birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getHeadImageUrl() {
+        return headImageUrl;
+    }
+
+    public void setHeadImageUrl(String headImageUrl) {
+        this.headImageUrl = headImageUrl;
     }
 
     private static final long serialVersionUID = 1L;

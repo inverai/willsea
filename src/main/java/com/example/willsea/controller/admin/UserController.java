@@ -27,7 +27,6 @@ public class UserController {
     public RestResponse list(@RequestParam(value = "page", defaultValue = "1") int page,
                              @RequestParam(value = "limit", defaultValue = "8") int limit, Model model){
         List<User> users = userService.queryAll(page,limit);
-        System.out.println(users.get(0).getUid());
         Integer recordNum = userService.queryTotalNumber();
         model.addAttribute("users", users);
         model.addAttribute("recordNum", recordNum);
@@ -55,10 +54,9 @@ public class UserController {
     }
     @PostMapping(value = "/back/user/save")
     @ResponseBody
-    public  RestResponse save(@RequestParam(value = "uid")Integer uid,@RequestParam(value = "email") String email,@RequestParam(value = "createTime")Integer createTime,
-                              @RequestParam(value = "forbidden")String forbidden)
-    {
-        System.out.println(uid.toString()+" "+createTime.toString()+" "+forbidden);
+    public  RestResponse save(@RequestParam(value = "uid")Integer uid,
+                              @RequestParam(value = "email") String email,
+                              @RequestParam(value = "forbidden")String forbidden) {
         try {
             User user=userService.queryById(uid);
             if(user==null)
@@ -66,7 +64,6 @@ public class UserController {
                 return RestResponse.fail("data not exists");
             }
             user.setEmail(email);
-            user.setCreateTime(createTime.toString());
             user.setForbidden(forbidden);
             userService.updateUser(user);
         }catch (Exception e){
@@ -80,7 +77,6 @@ public class UserController {
     @ResponseBody
     public RestResponse delete(@RequestParam(value = "uid")Integer uid)
     {
-        System.out.println(uid);
         try {
             User user=userService.queryById(uid);
             if(user==null)

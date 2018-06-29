@@ -87,4 +87,11 @@ public class BottleController {
         }
         return RestResponse.ok();
     }
+
+    @GetMapping(value = "/back/wishbottle/detail")
+    public String detail(Model model) {
+        System.out.println("show the detail message for the bottle");
+
+        return "back/detail";
+    }
 }

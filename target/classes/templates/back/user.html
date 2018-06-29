@@ -34,9 +34,13 @@
 						<tr>
 							<th class="table-id">用户ID</th>
 							<th class="table-title">用户名</th>
-							<th class="table-title">邮箱</th>
-							<th class="table-type">注册时间</th>
-							<th class="table-author am-hide-sm-only">权限</th>
+                            <th class="table-title">性别</th>
+                            <th class="table-title">邮箱</th>
+                            <th class="table-title">手机号</th>
+                            <th class="table-title">位置</th>
+                            <th class="table-title">出生日期</th>
+                            <th class="table-type">注册时间</th>
+							<th class="table-author am-hide-sm-only">用户类型</th>
 							<th class="table-author am-hide-sm-only">禁用</th>
 							<th class="table-set">操作</th>
 						</tr>
@@ -46,8 +50,12 @@
 							<tr>
 								<td><th:block th:text="${node.uid}"/></td>
 								<td><th:block th:text="${node.username}"/></td>
+                                <td><th:block th:text="${node.sex}"/></td>
 								<td><input th:id="email+(${node.uid})" type="text" name="email" th:value="${node.email}" /> </td>
-								<td><input th:id="createTime+(${node.uid})" type="number" name="createTime" th:value="${node.createTime}" /> </td>
+                                <td><input th:id="phone+(${node.uid})" type="text" name="phone" th:value="${node.telephone}" /> </td>
+								<td><input th:id="location+(${node.uid})" type="text" name="location" th:value="${node.location}" /> </td>
+                                <td><th:block th:text="${node.birthday}"/></td>
+                                <td><th:block th:text="${node.createTime}"/></td>
 								<td><th:block th:text="${node.type}"/></td>
 								<td><th:block th:switch="${node.forbidden}">
 									<input th:id="forbidden+(${node.uid})" th:case="'true'" type="checkbox" checked="checked">
@@ -102,28 +110,7 @@
 	</div>
 </div>
 <script>
-    function switchPage(page) {
-        $.ajax(
-            {
-                type: 'GET',
-                url: '/back/user',
-                data: { page: page },
-                success: function ()
-                {
-                    setTimeout(function () {
-                        console.log("success");
-                        window.location.href=('/back/user?page='+page);
-                    }, 500);
-                },
-                error: function ()
-                {
-                    //DO SOMETHING
-                }
-            }
-        );
-    }
-    function delPost(uid)
-    {
+    function delPost(uid) {
         $.ajax(
             {
                 type: 'POST',
@@ -144,12 +131,10 @@
             }
         );
     }
-    function savePost(uid)
-    {
-        var ctime = document.getElementById('createTime' + uid).value;
+    function savePost(uid) {
         var email=document.getElementById('email'+uid).value;
         var forbidden= document.getElementById('forbidden' + uid).checked;
-
+        console.log("forbidden: " + forbidden);
         $.ajax(
             {
                 type: 'POST',
@@ -157,15 +142,34 @@
                 data: {
                     uid: uid,
                     email:email,
-                    createTime: ctime,
                     forbidden: forbidden
                 },
                 dataType: "json",
                 success: function () {
-
-
+                    console.log("save success");
                 },
                 error: function () {
+                    console.log("save failure");
+                }
+            }
+        );
+    }
+
+    function switchPage(page) {
+        $.ajax(
+            {
+                type: 'GET',
+                url: '/back/user',
+                data: { page: page },
+                success: function ()
+                {
+                    setTimeout(function () {
+                        console.log("success");
+                        window.location.href=('/back/user?page='+page);
+                    }, 500);
+                },
+                error: function ()
+                {
                     //DO SOMETHING
                 }
             }

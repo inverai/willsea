@@ -103,3 +103,14 @@ values(15, 20180601, 'text', 'xzczx', 'it is content', 'true');
 insert into w_bottle(aid, btime, btype, title, content, private)
 values(16, 20180601, 'text', 'xzczxczxcx', 'it is content', 'false');
 
+
+
+#  user   性别， 电话，  地区， 出生日期， 头像（URL）
+
+alter TABLE w_user ADD COLUMN sex INT(2);
+alter TABLE w_user ADD COLUMN telephone INT(32);
+alter TABLE w_user ADD COLUMN location VARCHAR(24);
+alter TABLE w_user ADD COLUMN birthday INT(32);
+alter TABLE w_user ADD COLUMN head VARCHAR(32);
+
+alter TABLE w_user CHANGE head headImageUrl VARCHAR(32);
