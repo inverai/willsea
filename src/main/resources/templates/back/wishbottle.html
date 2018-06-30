@@ -29,7 +29,7 @@
 							<thead>
 								<tr>
 									<th class="table-id">心愿瓶ID</th>
-									<th class="table-id">作者ID</th>
+									<th class="table-id">作者</th>
 									<!--<th class="table-title">心愿瓶ID</th>-->
 									<th class="table-type">创建时间</th>
 									<th class="table-type">标题</th>
@@ -46,7 +46,7 @@
                                             <!--console.log([[${nodeState.index}]]);-->
                                         <!--</script>-->
                                         <td><th:block th:text="${node.bid}"/></td>
-                                        <td><th:block th:text="${node.aid}"/></td>
+                                        <td><th:block th:text="${map.get(node.aid)}"/></td>
                                         <td><th:block th:text="${node.time}"/></td>
                                         <td><input th:id="title+(${node.bid})" type="text" name="title" th:value="${node.title}"></td>
                                         <td>

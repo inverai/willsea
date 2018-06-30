@@ -50,7 +50,10 @@
 							<tr>
 								<td><th:block th:text="${node.uid}"/></td>
 								<td><th:block th:text="${node.username}"/></td>
-                                <td><th:block th:text="${node.sex}"/></td>
+                                <td th:switch="${node.sex}">
+                                    <th:block th:case="1" th:text="male"/>
+                                    <th:block th:case="0" th:text="female"/>
+                                </td>
 								<td><input th:id="email+(${node.uid})" type="text" name="email" th:value="${node.email}" /> </td>
                                 <td><input th:id="phone+(${node.uid})" type="text" name="phone" th:value="${node.telephone}" /> </td>
 								<td><input th:id="location+(${node.uid})" type="text" name="location" th:value="${node.location}" /> </td>

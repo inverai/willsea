@@ -10,7 +10,7 @@
         <result column="createTime" jdbcType="INTEGER" property="createTime" />
         <result column="forbidden" jdbcType="VARCHAR" property="forbidden"/>
         <result column="sex" jdbcType="INTEGER" property="sex"/>
-        <result column="telephone" jdbcType="INTEGER" property="telephone"/>
+        <result column="telephone" jdbcType="BIGINT" property="telephone"/>
         <result column="location" jdbcType="VARCHAR" property="location"/>
         <result column="birthday" jdbcType="INTEGER" property="birthday"/>
         <result column="headImageUrl" jdbcType="VARCHAR" property="headImageUrl"/>
@@ -21,7 +21,7 @@
                 VALUES (#{type, jdbcType=VARCHAR}, #{username, jdbcType=VARCHAR},
                         #{password, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
                         #{createTime, jdbcType=VARCHAR}, #{forbidden, jdbcType=VARCHAR},
-                        #{sex, jdbcType=INTEGER},#{telephone, jdbcType=INTEGER},#{location, jdbcType=VARCHAR},
+                        #{sex, jdbcType=INTEGER},#{telephone, jdbcType=BIGINT},#{location, jdbcType=VARCHAR},
                         #{birthday, jdbcType=INTEGER},#{headImageUrl, jdbcType=VARCHAR}
                 )
     </insert>

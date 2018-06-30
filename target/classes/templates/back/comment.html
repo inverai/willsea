@@ -11,11 +11,8 @@
 			</div>
 			<hr>
             <div class="am-g">
-                <div class="am-u-sm-12 am-u-md-6">
-                </div>
-                <div class="am-u-sm-12 am-u-md-3">
-
-                </div>
+                <div class="am-u-sm-12 am-u-md-6"></div>
+                <div class="am-u-sm-12 am-u-md-3"></div>
                 <div class="am-u-sm-12 am-u-md-3">
                     <div class="am-input-group am-input-group-sm">
                         <input type="text" class="am-form-field" placeholder="请输入评论内容">
@@ -30,7 +27,6 @@
 				<div class="am-u-sm-12 am-u-md-6">
 					<div class="am-btn-toolbar">
 						<div class="am-btn-group am-btn-group-xs">
-							<!--<button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>-->
 						</div>
 					</div>
 				</div>
@@ -42,8 +38,8 @@
 							<thead>
 								<tr>
 									<th class="table-id">评论ID</th>
-									<th class="table-id">心愿瓶ID</th>
-									<th class="table-type">评论人ID</th>
+									<th class="table-id">心愿瓶</th>
+									<th class="table-type">评论人</th>
 									<th class="table-type">创建时间</th>
 									<th class="table-type">内容</th>
 									<th class="table-set">操作</th>
@@ -53,15 +49,15 @@
                                     <th:block th:each="node : ${comments}">
                                         <tr>
                                             <td><th:block th:text="${node.cid}"/></td>
-                                            <td><th:block th:text="${node.bid}"/></td>
-                                            <td><th:block th:text="${node.aid}"/></td>
+                                            <td><th:block th:text="${bottleMap.get(node.cid)}"/></td>
+                                            <td><th:block th:text="${userMap.get(node.cid)}"/></td>
                                             <td><th:block th:text="${node.ctime}"/></td>
                                             <td><input th:id="content+(${node.cid})" type="text" name="content" th:value="${node.content}"></td>
                                             <td>
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
                                                         <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="javascript:void(0)" th:onclick="'savePost(' + ${node.cid} + ');'"><span class="am-icon-pencil-square-o"></span> 保存</a>
-                                                        <a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" href="javascript:void(0)" th:onclick="'delPost(' + ${node.cid} + ',' + ${node.bid} ');'"><span class="am-icon-trash-o"></span> 删除</a>
+                                                        <a class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" href="javascript:void(0)" th:onclick="'delPost(' + ${node.cid} + ',' + ${node.bid} + ');'"><span class="am-icon-trash-o"></span> 删除</a>
                                                     </div>
                                                 </div>
                                             </td>

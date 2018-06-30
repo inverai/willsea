@@ -60,7 +60,7 @@
         UPDATE w_bottle set baudio = 'NULL' WHERE bid = #{bid}
     </update>
 
-    <update id="deleteVedio">
+    <update id="deleteVideo">
         UPDATE w_bottle set bvideo = 'NULL' WHERE bid = #{bid}
     </update>
 </mapper>

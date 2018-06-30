@@ -72,6 +72,8 @@ CREATE TABLE w_favorite(
 
 
 
+
+
 insert into w_bottle(aid, btime, btype, title, content, private)
   values(12, 20180601, 'text', 'helpful', 'it is content', 'true');
 
@@ -128,4 +130,5 @@ insert into w_comment(aid, bid, ctime, content) values (15, 24, 20180607, 'The S
 insert into w_comment(aid, bid, ctime, content) values (15, 24, 20180607, 'Since version 2.0 of the framework, Spring provides two approaches to the AOP configuration:');
 
 update w_bottle set btext = "qewqweqasdas";
+
 

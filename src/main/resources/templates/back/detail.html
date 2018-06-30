@@ -22,18 +22,18 @@
                 <textarea class="form-control" id="textPlayer" rows="2" readonly="readonly" th:text="${bottle.getBtext()}"></textarea>
             </div>
 
-            <div th:if="${bottle.getBaudio()} != null" class="form-group">
+            <div th:if="${bottle.getBaudio()} != 'NULL'" class="form-group">
                 <div>
                     <label style="display: block" for="audioPlayer">音频内容</label>
-                    <button class="btn btn-info" style="display: inline; float: right;" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', audio);'">删除</button>
+                    <button class="btn btn-info" style="display: inline; float: right;" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', \'audio\');'">删除</button>
                 </div>
                 <audio  th:src="${bottle.getBaudio()}" id="audioPlayer" controls="controls" loop="loop" preload="auto">浏览器不支持语音</audio>
                 <!--<audio th:src="@{/user/audio/London.mp3}" id="audioPlayer" controls="controls" loop="loop" preload="auto">浏览器不支持语音</audio>-->
             </div>
-            <div th:if="${bottle.getBvideo()} != null" class="form-group">
+            <div th:if="${bottle.getBvideo()} != 'NULL'" class="form-group">
                 <div>
                     <label style="display: block" for="videoPlayer">视频内容</label>
-                    <button class="btn btn-info" style="display: inline; float: right" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', video);'">删除</button>
+                    <button class="btn btn-info" style="display: inline; float: right" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', \'video\');'">删除</button>
                 </div>
                 <video th:src="${bottle.getBvideo()}" id="videoPlayer" width="600" height="400" controls="controls" loop="loop">浏览器不支持视频</video>
             </div>
@@ -46,7 +46,6 @@
                     <textarea class="form-control" th:id="textComment + ${node.cid}" th:text="${node.content}" rows="2" readonly="readonly"></textarea>
                 </div>
             </th:block>
-            <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
 </body>

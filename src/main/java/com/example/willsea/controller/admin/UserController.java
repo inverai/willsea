@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping(value = "/back/user")
     public RestResponse list(@RequestParam(value = "page", defaultValue = "1") int page,
                              @RequestParam(value = "limit", defaultValue = "8") int limit, Model model){
-        List<User> users = userService.queryAll(page,limit);
+        List<User> users = userService.queryAll((page - 1) * limit,limit);
         Integer recordNum = userService.queryTotalNumber();
         model.addAttribute("users", users);
         model.addAttribute("recordNum", recordNum);

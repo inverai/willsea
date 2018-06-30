@@ -49,7 +49,7 @@ public class User implements Serializable{
     /**
      * 电话
      */
-    private Integer telephone;
+    private long telephone;
 
     /**
      * 地区
@@ -132,11 +132,11 @@ public class User implements Serializable{
         this.sex = sex;
     }
 
-    public Integer getTelephone() {
+    public long getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(Integer telephone) {
+    public void setTelephone(long telephone) {
         this.telephone = telephone;
     }
 
