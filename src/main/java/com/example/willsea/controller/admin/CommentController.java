@@ -56,20 +56,20 @@ public class CommentController {
 
     @PostMapping(value = "/back/comment/delete")
     @ResponseBody
-    public String delete(@RequestParam(value = "cid")Integer cid,
+    public RestResponse delete(@RequestParam(value = "cid")Integer cid,
                                @RequestParam(value = "bid")Integer bid) {
         System.out.println("Get the commentId to be deleted: " + cid);
         try{
             Comment comment = commentService.getCommentById(cid);
             if(null == comment) {
-                return "data not exists.";
+                return RestResponse.fail("data not exists.");
             }
             commentService.deleteComment(cid);
         }catch (Exception e){
             String msg = "deleting comment failed.";
             LOGGER.error(msg, e);
-            return "data not exists.";
+            return RestResponse.fail(msg);
         }
-        return "/back/wishbottle/detail?bid=" + bid;
+        return RestResponse.ok(bid);
     }
 }

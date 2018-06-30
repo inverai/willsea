@@ -26,7 +26,7 @@ public interface BottleDAO {
     Integer queryTotalNumber();
 
     //update Content
-    String deleteText(Integer bid);
-    String deleteAudio(Integer bid);
-    String deleteVideo(Integer bid);
+    Integer deleteText(Integer bid);
+    Integer deleteAudio(Integer bid);
+    Integer deleteVideo(Integer bid);
 }

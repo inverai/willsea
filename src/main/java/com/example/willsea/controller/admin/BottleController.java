@@ -115,8 +115,8 @@ public class BottleController {
         return RestResponse.ok();
     }
 
-    @GetMapping(value = "/back/wishbottle/detail")
-    public String detail(@RequestParam(value = "bid") Integer bid, Model model) {
+    @GetMapping(value = "/back/wishbottle/detail/{bid}")
+    public String detail(@PathVariable Integer bid, Model model) {
         System.out.println("show the detail message for the bottle" + bid);
 
         String username = userService.queryById(bottleService.getBottle(bid).getAid()).getUsername();

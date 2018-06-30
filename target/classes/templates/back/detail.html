@@ -14,10 +14,10 @@
                 <input type="text" readonly="readonly" class="form-control" id="exampleInputAuthor" th:value="${username}">
             </div>
 
-            <div th:if="${bottle.getBtext()} != null" class="form-group">
+            <div th:if="${bottle.getBtext() != 'NULL'}" class="form-group">
                 <div>
                     <label style="display: inline; float: left;" for="textPlayer">文本内容</label>
-                    <button class="btn btn-info" style="display: inline; float: right;" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', text);'">删除</button>
+                    <button class="btn btn-info" style="display: inline; float: right;" th:onclick="'deleteContent(' + ${bottle.getBid()} + ', \'text\');'">删除</button>
                 </div>
                 <textarea class="form-control" id="textPlayer" rows="2" readonly="readonly" th:text="${bottle.getBtext()}"></textarea>
             </div>
@@ -46,8 +46,6 @@
                     <textarea class="form-control" th:id="textComment + ${node.cid}" th:text="${node.content}" rows="2" readonly="readonly"></textarea>
                 </div>
             </th:block>
-
-
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
@@ -67,8 +65,13 @@
             dataType: 'json',
             success: function () {
                 console.log("delete successfully!");
-                setTimeout(function () {
-                    // window.location.href = '/back/wishbottle/detail?bid=' + bid;
+                setTimeout(function (result) {
+                    if(result && result['success']){
+                        var data = result['data'];
+                        window.location.href = '/back/wishbottle/detail/' + data;
+                    } else{
+                        console.log("failure in result");
+                    }
                 }, 500);
             },
             error: function () {
@@ -89,7 +92,7 @@
             success: function () {
                 console.log("success");
                 setTimeout(function () {
-                    window.location.reload();
+                    window.location.href = '/back/wishbottle/detail/' + bid;
                 }, 500);
             },
             error: function () {

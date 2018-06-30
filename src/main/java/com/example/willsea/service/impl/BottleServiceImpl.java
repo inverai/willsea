@@ -101,17 +101,17 @@ public class BottleServiceImpl implements IBottleService{
     }
 
     @Override
-    public String deleteText(Integer bid) {
+    public Integer deleteText(Integer bid) {
         return bottleDAO.deleteText(bid);
     }
 
     @Override
-    public String deleteAudio(Integer bid) {
+    public Integer deleteAudio(Integer bid) {
         return bottleDAO.deleteAudio(bid);
     }
 
     @Override
-    public String deleteVideo(Integer bid) {
+    public Integer deleteVideo(Integer bid) {
         return bottleDAO.deleteVideo(bid);
     }
 
