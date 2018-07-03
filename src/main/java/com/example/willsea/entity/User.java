@@ -49,7 +49,7 @@ public class User implements Serializable{
     /**
      * 电话
      */
-    private long telephone;
+    private String telephone;
 
     /**
      * 地区
@@ -59,7 +59,7 @@ public class User implements Serializable{
     /**
      * 出生日期
      */
-    private Integer birthday;
+    private String birthday;
 
     /**
      * 头像
@@ -132,11 +132,11 @@ public class User implements Serializable{
         this.sex = sex;
     }
 
-    public long getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(long telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
@@ -148,11 +148,11 @@ public class User implements Serializable{
         this.location = location;
     }
 
-    public Integer getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Integer birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

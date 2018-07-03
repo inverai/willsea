@@ -7,12 +7,12 @@
         <result column="upassword" jdbcType="VARCHAR" property="password" />
         <result column="uemail" jdbcType="VARCHAR" property="email" />
         <result column="utype" jdbcType="VARCHAR" property="type" />
-        <result column="createTime" jdbcType="INTEGER" property="createTime" />
+        <result column="createTime" jdbcType="VARCHAR" property="createTime" />
         <result column="forbidden" jdbcType="VARCHAR" property="forbidden"/>
         <result column="sex" jdbcType="INTEGER" property="sex"/>
         <result column="telephone" jdbcType="BIGINT" property="telephone"/>
         <result column="location" jdbcType="VARCHAR" property="location"/>
-        <result column="birthday" jdbcType="INTEGER" property="birthday"/>
+        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
         <result column="headImageUrl" jdbcType="VARCHAR" property="headImageUrl"/>
     </resultMap>
     <insert id="insert" parameterType="com.example.willsea.entity.User" keyProperty="uid">
@@ -22,7 +22,7 @@
                         #{password, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
                         #{createTime, jdbcType=VARCHAR}, #{forbidden, jdbcType=VARCHAR},
                         #{sex, jdbcType=INTEGER},#{telephone, jdbcType=BIGINT},#{location, jdbcType=VARCHAR},
-                        #{birthday, jdbcType=INTEGER},#{headImageUrl, jdbcType=VARCHAR}
+                        #{birthday, jdbcType=VARCHAR},#{headImageUrl, jdbcType=VARCHAR}
                 )
     </insert>
 
@@ -46,6 +46,11 @@
     <select id="queryToVerify" resultMap="BaseResultMap">
         SELECT * FROM w_user
         WHERE username = #{username} AND upassword = #{password}
+    </select>
+
+    <select id="queryByUsername" resultMap="BaseResultMap">
+        SELECT * FROM w_user
+        WHERE username = #{username}
     </select>
 
 

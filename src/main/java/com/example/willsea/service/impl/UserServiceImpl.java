@@ -114,6 +114,11 @@ public class UserServiceImpl implements IUserService{
     }
 
     @Override
+    public User queryByUsername(String username) {
+        return userDAO.queryByUsername(username);
+    }
+
+    @Override
     public void deleteOneBlack(Integer black_id) {
         if(black_id == null){
             throw new SubException("条件错误");
@@ -129,6 +134,8 @@ public class UserServiceImpl implements IUserService{
         }
         userDAO.deleteBlackRecord(favorite_id);
     }
+
+
 
 
 }

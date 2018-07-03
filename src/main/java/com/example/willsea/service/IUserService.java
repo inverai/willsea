@@ -62,4 +62,6 @@ public interface IUserService {
     void favoriteUser(Integer sourceId, Integer targetId);
 
 
+    // 查询用户名是否重复
+    User queryByUsername(String username);
 }

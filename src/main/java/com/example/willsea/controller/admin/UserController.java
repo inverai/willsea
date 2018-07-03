@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yt on 2018/6/22.
@@ -24,7 +26,7 @@ public class UserController {
 
 
     @GetMapping(value = "/back/user")
-    public RestResponse list(@RequestParam(value = "page", defaultValue = "1") int page,
+    public String list(@RequestParam(value = "page", defaultValue = "1") int page,
                              @RequestParam(value = "limit", defaultValue = "8") int limit, Model model){
         List<User> users = userService.queryAll((page - 1) * limit,limit);
         Integer recordNum = userService.queryTotalNumber();
@@ -32,7 +34,7 @@ public class UserController {
         model.addAttribute("recordNum", recordNum);
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
-        return RestResponse.ok();
+        return "/back/user";
     }
 
     /**
@@ -75,8 +77,7 @@ public class UserController {
     }
     @PostMapping(value = "/back/user/delete")
     @ResponseBody
-    public RestResponse delete(@RequestParam(value = "uid")Integer uid)
-    {
+    public RestResponse delete(@RequestParam(value = "uid")Integer uid) {
         try {
             User user=userService.queryById(uid);
             if(user==null)
@@ -92,5 +93,43 @@ public class UserController {
         return RestResponse.ok();
     }
 
+    @PostMapping(value = "/back/user/register")
+    @ResponseBody
+    public RestResponse register(@RequestParam(value = "username")String username,
+                                 @RequestParam(value = "phone")String phone,
+                                 @RequestParam(value = "email")String email,
+                                 @RequestParam(value = "password")String password,
+                                 @RequestParam(value = "sex")String sex,
+                                 @RequestParam(value = "location")String location,
+                                 @RequestParam(value = "birthday")String birthday) {
+        System.out.println("excute register");
+        birthday = birthday.replace("-", "");
+        User user = userService.queryByUsername(username);
+        if(user == null) {
+            user = new User();
+            user.setUsername(username);
+            user.setTelephone(phone);
+            user.setCreateTime("" + new Date().getTime());
+            user.setBirthday(birthday);
+            if(sex.equals("male")){
+                user.setSex(1);
+            }else if(sex.equals("female")){
+                user.setSex(0);
+            }
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setLocation(location);
+
+            userService.insertUser(user);
+
+        } else{
+            return RestResponse.fail("用户名已经存在");
+        }
+        return RestResponse.ok();
+    }
 
 }
+
+// 1. 保持登陆状态，可以注销；
+// 2. 漂流瓶的创建功能；（文字的存储，媒体文件的存储）
+// 3. 评论的创建功能；
