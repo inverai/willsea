@@ -64,4 +64,15 @@ public interface IUserService {
 
     // 查询用户名是否重复
     User queryByUsername(String username);
+
+
+
+    Integer queryFemaleNumber();
+
+    User queryToVerify(String username,String password);  //登录验证
+
+    List<User> queryFavoriteList(User user);
+    List<User> queryBlackList(User user);
+    Integer    freeFromFavoriteList(User source,User target);
+    Integer    freeFromBlackList(User source,User target);
 }

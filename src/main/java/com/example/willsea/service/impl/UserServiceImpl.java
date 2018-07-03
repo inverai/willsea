@@ -119,6 +119,36 @@ public class UserServiceImpl implements IUserService{
     }
 
     @Override
+    public Integer queryFemaleNumber() {
+        return null;
+    }
+
+    @Override
+    public User queryToVerify(String username, String password) {
+        return  userDAO.queryToVerify(username,password);
+    }
+
+    @Override
+    public List<User> queryFavoriteList(User user) {
+        return userDAO.queryFavoriteList(user.getUid());
+    }
+
+    @Override
+    public List<User> queryBlackList(User user) {
+        return  userDAO.queryBlackList(user.getUid());
+    }
+
+    @Override
+    public Integer freeFromFavoriteList(User source, User target) {
+        return null;
+    }
+
+    @Override
+    public Integer freeFromBlackList(User source, User target) {
+        return null;
+    }
+
+    @Override
     public void deleteOneBlack(Integer black_id) {
         if(black_id == null){
             throw new SubException("条件错误");

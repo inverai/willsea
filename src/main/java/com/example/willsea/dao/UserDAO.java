@@ -41,4 +41,12 @@ public interface UserDAO {
     Integer queryTotalNumber();
 
     User queryByUsername(String username);
+
+
+    List<User> queryFavoriteList(Integer uid);
+    List<User> queryBlackList(Integer uid);
+
+    Integer freeFromFavoriteList(@Param("source") Integer source,@Param("target")Integer target);
+    Integer freeFromBlackList(@Param("source") Integer source,@Param("target")Integer target);
+
 }

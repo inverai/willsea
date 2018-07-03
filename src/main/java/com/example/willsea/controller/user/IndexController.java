@@ -21,6 +21,10 @@ public class IndexController {
         return "front/regist";
     }
 
+
+    @GetMapping(value = "/front/index")
+    public String index() { return "front/index"; }
+
 //    @PostMapping(value = "/front/post")
 //    public String loginFor() {
 //

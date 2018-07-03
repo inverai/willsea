@@ -1,7 +1,9 @@
 package com.example.willsea.controller.admin;
 
 import com.example.willsea.dto.RestResponse;
+import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.User;
+import com.example.willsea.service.IBottleService;
 import com.example.willsea.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,9 @@ public class UserController {
     @Resource
     private IUserService userService;
 
+    @Resource
+    private IBottleService bottleService;
+
 
     @GetMapping(value = "/back/user")
     public String list(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -36,6 +41,41 @@ public class UserController {
         model.addAttribute("limit",limit);
         return "/back/user";
     }
+
+
+    @GetMapping(value = "/user/sign")
+    public  String showSignIn()
+    {
+        return "/user/sign";
+    }
+
+    @PostMapping(value = "/user/sign/submit")
+    public String signInPost(@RequestParam(value="username") String username,@RequestParam(value = "password") String password) {
+        User user=userService.queryToVerify(username,password);
+        if(user!=null)
+        {
+            System.out.println(user.getUid());
+            return "redirect:/user/usercenter/1";
+        }
+        return "back/404";
+
+    }
+
+    @GetMapping(value="/user/usercenter/{uid}")    //用户中心控制器
+    public String showUserCenter(@PathVariable Integer uid, Model model) {
+        User user=userService.queryById(uid);
+        Integer pageLimit=9;
+        Integer offset=(1-1)*pageLimit;
+        List<Bottle>  bottles=bottleService.queryByAuthor(user.getUid(),offset,pageLimit);
+        List<User>  favoriteList=userService.queryFavoriteList(user);
+        List<User>  blackList=userService.queryBlackList(user);
+        model.addAttribute("user",user);
+        model.addAttribute("bottles",bottles);
+        model.addAttribute("favoriteList",favoriteList);
+        model.addAttribute("blackList",blackList);
+        return "/user/usercenter";
+    }
+
 
     /**
      * 添加用户

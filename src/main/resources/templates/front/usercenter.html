@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link th:href="@{/user/css/user.css}" rel="stylesheet">
+</head>
+<body>
+
+    <div class="main">
+
+        <div class="left">
+            <div class="userInfo">
+                <div class="picture">谢</div>
+                <div class="name-sex">
+                    <span class="name" th:text="${user.getUsername()}"></span>
+                    <span class="sex" th:text="${user.getSex()}"></span>
+                </div>
+            </div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs items" role="tablist">
+                <li role="presentation" class="active tab"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">个人信息</a></li>
+                <li role="presentation" class="tab"><a href="#attention" aria-controls="attention" role="tab" data-toggle="tab">特别关注</a></li>
+                <li role="presentation" class="tab"><a href="#blacklist" aria-controls="blacklist" role="tab" data-toggle="tab">黑名单</a></li>
+                <li role="presentation" class="tab"><a href="#wishManage" aria-controls="wishManage" role="tab" data-toggle="tab">心愿管理</a></li>
+            </ul>
+        </div>
+
+         <!-- Tab panes -->
+        <div class="tab-content right">
+            <div role="tabpanel" class="tab-pane fade in active" id="home">
+                <ul class="nav nav-tabs top" role="tablist">
+                    <li role="presentation" class="active tab"><a href="#modify-person-info" aria-controls="home" role="tab" data-toggle="tab">修改个人信息</a></li>
+                    <li role="presentation" class="tab"><a href="#modify-password" aria-controls="profile" role="tab" data-toggle="tab">修改密码</a></li>
+                </ul>
+                <div class="tab-content bottom">
+                    <div role="tabpanel" class="tab-pane fade in active" id="modify-person-info">
+                        <form class="form-horizontal form">
+                            <div class="form-group">
+                                <label for="userName" class="col-sm-2 control-label">用户名</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="userName" placeholder="谢飞">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">修改</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade in" id="modify-password">
+                        <form class="form-horizontal form">
+                            <div class="form-group">
+                                <label for="oldPassword" class="col-sm-2 control-label">旧密码</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="oldPassword" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword" class="col-sm-2 control-label">新密码</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="newPassword" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="repeatPassword" class="col-sm-2 control-label">重复密码</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" id="repeatPassword" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">修改</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="attention">
+                <div class="top"><h4>特别关注</h4></div>
+                <div class="bottom">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>#</th>
+                            <th>用户名</th>
+                            <th>操作</th>
+                        </tr>
+                        <th:block th:each="node,nodeState: ${favoriteList}">
+                            <tr>
+                                < <td th:blcok th:text="${nodeState.index}"></td>
+                                <td th:block th:id="favoriteUser+(${node.getUid()})" th:text="${node.getUsername()}"></td>
+                                <td><button type="button" class="btn btn-danger btn-xs delete">取消关注</button></td>
+                            </tr>
+                        </th:block>
+                    </table>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="blacklist">
+                <div class="top"><h4>黑名单</h4></div>
+                <div class="bottom">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>#</th>
+                            <th>用户名</th>
+                            <th>操作</th>
+                        </tr>
+                        <th:block th:each="node,nodeState: ${blackList}">
+                            <tr>
+                                <td th:blcok th:text="${nodeState.index}"></td>
+                                <td th:block th:id="blackUser+(${node.getUid()})" th:text="${node.getUsername()}"></td>
+                                <td><button type="button" class="btn btn-danger btn-xs delete">取消拉黑</button></td>
+                            </tr>
+                        </th:block>
+                    </table>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="wishManage">
+                <div class="top"><h4>心愿管理</h4></div>
+                <div class="bottom card-list">
+                    <th:block th:each="bottle:${bottles}">
+                        <div class="card">
+                            <span class="glyphicon glyphicon-bookmark authority-icon public"></span>
+                            <span class="authority-text" th:text="${bottle.getIsPrivate()}"></span>
+                            <div class="content" th:text="${bottle.getBtext()}"></div>
+                            <div class="title-operation">
+                                <div class="title" th:text="${bottle.getTitle()}"></div>
+                                <div class="operation">
+                                    <span class="glyphicon glyphicon-pencil" style="color: #ffad10;cursor: pointer;" data-toggle="modal" data-target="#edit"></span>
+                                    <span class="glyphicon glyphicon-remove delete-wish" style="color: #ff5064;cursor: pointer;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                    <div class="card" data-toggle="tooltip" data-placement="bottom" title="添加心愿"><span class="glyphicon glyphicon-plus add-wish" data-toggle="modal" data-target="#publish"></span></div>
+                </div>
+            </div>
+            <!--<div role="tabpanel" class="tab-pane fade in" id="commentManage">-->
+                <!--<div class="top"><h4>评论管理</h4></div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">编辑心愿</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal form">
+                        <div class="form-group">
+                            <label for="title" class="col-sm-3 control-label">标题</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="title" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="context" class="col-sm-3 control-label">内容</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" id="context" rows="3" placeholder=""></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">权限</label>
+                            <div class="col-sm-6">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 公开
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 私密
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-default">修改</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="publish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="publish-wish">发表心愿</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal form">
+                        <div class="form-group">
+                            <label for="publish-title" class="col-sm-3 control-label">标题</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" id="publish-title" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="publish-context" class="col-sm-3 control-label">内容</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" id="publish-context" rows="3" placeholder=""></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">权限</label>
+                            <div class="col-sm-6">
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option1"> 公开
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option2"> 私密
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-default">发表</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="js/user.js"></script>
+</body>
+</html>
