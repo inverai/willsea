@@ -82,11 +82,12 @@
         SELECT w_user.* FROM w_user,w_blacklist WHERE w_blacklist.source_uid=#{uid} AND w_blacklist.target_uid=w_user.uid
     </select>
     <delete id="freeFromFavoriteList" >
-        DELETE  FROM w_favorite WHERE source=#{source,jdbcType=INTEGER}, AND  target=#{target,jdbcType=INTEGER}
+        DELETE  FROM w_favorite WHERE source_uid=#{source} AND target_uid=#{target}
     </delete>
     <delete id="freeFromBlackList" >
-        DELETE  FROM w_black WHERE source=#{source,jdbcType=INTEGER}, AND  target=#{target,jdbcType=INTEGER}
+        DELETE  FROM w_blacklist WHERE source_uid=#{source} AND target_uid=#{target}
     </delete>
+
 
 
 

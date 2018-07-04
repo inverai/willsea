@@ -140,12 +140,15 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public Integer freeFromFavoriteList(User source, User target) {
-        return null;
+        userDAO.freeFromFavoriteList(source.getUid(),target.getUid());
+        return 1;
     }
 
     @Override
     public Integer freeFromBlackList(User source, User target) {
-        return null;
+
+        userDAO.freeFromBlackList(source.getUid(),target.getUid());
+        return 1;
     }
 
     @Override
