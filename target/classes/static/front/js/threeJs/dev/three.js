@@ -5040,7 +5040,7 @@
 		intersectsPlane: function ( plane ) {
 
 			// We compute the minimum and maximum dot product values. If those values
-			// are on the same side (back or front) of the plane, then there is no intersection.
+			// are on the same side (back or user) of the plane, then there is no intersection.
 
 			var min, max;
 
@@ -13400,7 +13400,7 @@
 
 				var thc = Math.sqrt( radius2 - d2 );
 
-				// t0 = first intersect point - entrance on front of sphere
+				// t0 = first intersect point - entrance on user of sphere
 				var t0 = tca - thc;
 
 				// t1 = second intersect point - exit point on back of sphere
@@ -13411,10 +13411,10 @@
 
 				// test to see if t0 is behind the ray:
 				// if it is, the ray is inside the sphere, so return the second exit point scaled by t1,
-				// in order to always return an intersect point that is in front of the ray.
+				// in order to always return an intersect point that is in user of the ray.
 				if ( t0 < 0 ) return this.at( t1, target );
 
-				// else t0 is in front of the ray, so return the first collision point scaled by t0
+				// else t0 is in user of the ray, so return the first collision point scaled by t0
 				return this.at( t0, target );
 
 			};
@@ -22772,11 +22772,11 @@
 
 			} else {
 
-				// opaque pass (front-to-back order)
+				// opaque pass (user-to-back order)
 
 				if ( opaqueObjects.length ) renderObjects( opaqueObjects, scene, camera );
 
-				// transparent pass (back-to-front order)
+				// transparent pass (back-to-user order)
 
 				if ( transparentObjects.length ) renderObjects( transparentObjects, scene, camera );
 
@@ -28457,7 +28457,7 @@
 			}
 
 
-			// Loop bevelSegments, 1 for the front, 1 for the back
+			// Loop bevelSegments, 1 for the user, 1 for the back
 
 			for ( b = 0; b < bevelSegments; b ++ ) {
 
@@ -28524,7 +28524,7 @@
 			}
 
 			// Add stepped vertices...
-			// Including front facing vertices
+			// Including user facing vertices
 
 			var s;
 

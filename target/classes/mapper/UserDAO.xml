@@ -74,4 +74,26 @@
         VALUES (#{source, jdbcType=INTEGER}, #{target, jdbcType=INTEGER})
     </insert>
 
+    <select id="queryFavoriteList" resultMap="BaseResultMap">
+        SELECT w_user.* FROM w_user,w_favorite WHERE w_favorite.source_uid=#{uid} AND w_favorite.target_uid=w_user.uid
+    </select>
+
+    <select id="queryBlackList" resultMap="BaseResultMap">
+        SELECT w_user.* FROM w_user,w_blacklist WHERE w_blacklist.source_uid=#{uid} AND w_blacklist.target_uid=w_user.uid
+    </select>
+    <delete id="freeFromFavoriteList" >
+        DELETE  FROM w_favorite WHERE source=#{source,jdbcType=INTEGER}, AND  target=#{target,jdbcType=INTEGER}
+    </delete>
+    <delete id="freeFromBlackList" >
+        DELETE  FROM w_black WHERE source=#{source,jdbcType=INTEGER}, AND  target=#{target,jdbcType=INTEGER}
+    </delete>
+
+
+
 </mapper>
+
+
+
+
+
+

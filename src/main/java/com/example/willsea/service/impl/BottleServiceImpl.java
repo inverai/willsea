@@ -33,6 +33,7 @@ public class BottleServiceImpl implements IBottleService{
 
     @Override
     public int createBottle(Bottle bottle) {
+        bottleDAO.insert(bottle);
         return 0;
     }
 
@@ -113,6 +114,11 @@ public class BottleServiceImpl implements IBottleService{
     @Override
     public Integer deleteVideo(Integer bid) {
         return bottleDAO.deleteVideo(bid);
+    }
+
+    @Override
+    public List<Bottle> queryByAuthor(Integer aid, Integer offset, Integer limit) {
+        return bottleDAO.queryByAuthor(aid,offset,limit);
     }
 
 

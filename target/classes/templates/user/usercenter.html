@@ -9,7 +9,6 @@
 <body>
 
     <div class="main">
-
         <div class="left">
             <div class="userInfo">
                 <div class="picture">谢</div>
@@ -20,15 +19,37 @@
             </div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs items" role="tablist">
-                <li role="presentation" class="active tab"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">个人信息</a></li>
+                <li role="presentation" class="tab"><a href="#wishManage" aria-controls="wishManage" role="tab" data-toggle="tab">树洞</a></li>
                 <li role="presentation" class="tab"><a href="#attention" aria-controls="attention" role="tab" data-toggle="tab">特别关注</a></li>
                 <li role="presentation" class="tab"><a href="#blacklist" aria-controls="blacklist" role="tab" data-toggle="tab">黑名单</a></li>
-                <li role="presentation" class="tab"><a href="#wishManage" aria-controls="wishManage" role="tab" data-toggle="tab">心愿管理</a></li>
+                <li role="presentation" class="active tab"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">个人信息</a></li>
             </ul>
         </div>
 
          <!-- Tab panes -->
         <div class="tab-content right">
+            <div role="tabpanel" class="tab-pane fade in" id="wishManage">
+                <div class="top"><h4>树洞</h4></div>
+                <div class="bottom card-list">
+                    <th:block th:each="bottle, bottleState:${bottles}">
+                        <div class="card">
+                            <span class="glyphicon glyphicon-bookmark authority-icon public"></span>
+                            <span class="authority-text" th:text="${bottle.getIsPrivate()}"></span>
+                            <div class="content" th:text="${bottle.getBtext()}"></div>
+                            <div class="title-operation">
+                                <div class="title" th:text="${bottle.getTitle()}"></div>
+                                <div class="operation">
+                                    <span class="glyphicon glyphicon-pencil" style="color: #ffad10;cursor: pointer;" data-toggle="modal" data-target="#edit" th:onclick="'editOperate(' + ${bottleState.index} + ');'"></span>
+                                    <!--<span class="glyphicon glyphicon-remove delete-wish" style="color: #ff5064;cursor: pointer;" th:onclick="'deleteOperate(' + ${bottleState.index} + ');'"></span>-->
+                                    <span class="glyphicon glyphicon-remove delete-wish" th:id="delete-wish+(${bottle.getBid()})" style="color: #ff5064;cursor: pointer;" th:onclick="'freeFromTypeList(' + ${user.getUid()}+','+${bottle.getBid()}+','+'\'bottle\'' + ');'"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                    <div class="card" data-toggle="tooltip" data-placement="bottom" title="添加心愿"><span class="glyphicon glyphicon-plus add-wish" data-toggle="modal" data-target="#publish"></span></div>
+                </div>
+            </div>
             <div role="tabpanel" class="tab-pane fade in active" id="home">
                 <ul class="nav nav-tabs top" role="tablist">
                     <li role="presentation" class="active tab"><a href="#modify-person-info" aria-controls="home" role="tab" data-toggle="tab">修改个人信息</a></li>
@@ -92,7 +113,7 @@
                             <tr>
                                 < <td th:blcok th:text="${nodeState.index}"></td>
                                 <td th:block th:id="favoriteUser+(${node.getUid()})" th:text="${node.getUsername()}"></td>
-                                <td><button type="button" class="btn btn-danger btn-xs delete">取消关注</button></td>
+                                <td><button type="button" class="btn btn-danger btn-xs delete" th:onclick="'freeFromTypeList(' + ${user.getUid()}+','+${node.getUid()}+','+'\'favorite\'' + ');'">取消关注</button></td>
                             </tr>
                         </th:block>
                     </table>
@@ -111,35 +132,14 @@
                             <tr>
                                 <td th:blcok th:text="${nodeState.index}"></td>
                                 <td th:block th:id="blackUser+(${node.getUid()})" th:text="${node.getUsername()}"></td>
-                                <td><button type="button" class="btn btn-danger btn-xs delete">取消拉黑</button></td>
+                                <td><button type="button" class="btn btn-danger btn-xs delete" th:onclick="'freeFromTypeList(' + ${user.getUid()}+','+${node.getUid()}+','+'\'black\'' + ');'">取消拉黑</button></td>
                             </tr>
                         </th:block>
                     </table>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane fade in" id="wishManage">
-                <div class="top"><h4>心愿管理</h4></div>
-                <div class="bottom card-list">
-                    <th:block th:each="bottle:${bottles}">
-                        <div class="card">
-                            <span class="glyphicon glyphicon-bookmark authority-icon public"></span>
-                            <span class="authority-text" th:text="${bottle.getIsPrivate()}"></span>
-                            <div class="content" th:text="${bottle.getBtext()}"></div>
-                            <div class="title-operation">
-                                <div class="title" th:text="${bottle.getTitle()}"></div>
-                                <div class="operation">
-                                    <span class="glyphicon glyphicon-pencil" style="color: #ffad10;cursor: pointer;" data-toggle="modal" data-target="#edit"></span>
-                                    <span class="glyphicon glyphicon-remove delete-wish" style="color: #ff5064;cursor: pointer;"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </th:block>
-                    <div class="card" data-toggle="tooltip" data-placement="bottom" title="添加心愿"><span class="glyphicon glyphicon-plus add-wish" data-toggle="modal" data-target="#publish"></span></div>
-                </div>
-            </div>
-            <!--<div role="tabpanel" class="tab-pane fade in" id="commentManage">-->
-                <!--<div class="top"><h4>评论管理</h4></div>-->
-            <!--</div>-->
+
+
         </div>
     </div>
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -151,6 +151,12 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal form">
+                        <div class="form-group" style="position: absolute; left: -1000px">
+                            <label for="title" class="col-sm-3 control-label">标题</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="modifyBottleId" placeholder="">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="title" class="col-sm-3 control-label">标题</label>
                             <div class="col-sm-6">
@@ -158,25 +164,25 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="context" class="col-sm-3 control-label">内容</label>
+                            <label for="btext" class="col-sm-3 control-label">内容</label>
                             <div class="col-sm-6">
-                                <textarea class="form-control" id="context" rows="3" placeholder=""></textarea>
+                                <textarea class="form-control" id="btext" rows="3" placeholder=""></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">权限</label>
                             <div class="col-sm-6">
                                 <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 公开
+                                    <input type="radio" id="inlineRadio1" value="option1"> 公开
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 私密
+                                    <input type="radio" id="inlineRadio2" value="option2"> 私密
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-default">修改</button>
+                                <button type="submit" class="btn btn-default" th:onclick="'saveModifyBottle();'">修改</button>
                             </div>
                         </div>
                     </form>
@@ -195,31 +201,31 @@
                 <div class="modal-body">
                     <form class="form-horizontal form">
                         <div class="form-group">
-                            <label for="publish-title" class="col-sm-3 control-label">标题</label>
+                            <label for="new-title" class="col-sm-3 control-label">标题</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control" id="publish-title" placeholder="">
+                                <input type="text" class="form-control" id="new-title" placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="publish-context" class="col-sm-3 control-label">内容</label>
+                            <label for="new-btext" class="col-sm-3 control-label">内容</label>
                             <div class="col-sm-6">
-                                <textarea class="form-control" id="publish-context" rows="3" placeholder=""></textarea>
+                                <textarea class="form-control" id="new-btext" rows="3" placeholder=""></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">权限</label>
                             <div class="col-sm-6">
                                 <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option1"> 公开
+                                    <input type="radio" id="inlineRadio3" value="option1"> 公开
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option2"> 私密
+                                    <input type="radio"id="inlineRadio4" value="option2"> 私密
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-default">发表</button>
+                                <button type="submit" class="btn btn-default" th:onclick="'makeNewBottle();'">发表</button>
                             </div>
                         </div>
                     </form>
@@ -229,6 +235,152 @@
     </div>
     <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="js/user.js"></script>
+    <script th:src="@{/user/js/user.js}"></script>
+
+    <script th:inline="javascript">
+        function editOperate(index) {
+            var bottle = [[${bottles}]][index];
+            console.log(bottle);
+            document.getElementById("title").setAttribute("value", bottle['title']);
+            document.getElementById("btext").innerText = bottle['btext'];
+            document.getElementById("modifyBottleId").setAttribute("value", bottle['bid']);
+            if(bottle['isPrivate'] == 'true'){
+                document.getElementById("inlineRadio1").checked = 'checked';
+            } else if(bottle['isPrivate'] == 'false') {
+                document.getElementById("inlineRadio2").checked = 'checked';
+            }
+        }
+
+        function deleteOperate(index) {
+            var bottle = [[${bottles}]][index];
+            var bid = bottle['bid'];
+            console.log(index);
+
+            $.ajax({
+                type: 'POST',
+                url: '/back/wishbottle/delete',
+                data:{
+                    bid: bid
+                },
+                dataType: 'json',
+                success: function (result) {
+                    if(result && result.success){
+                        console.log("delete success");
+                    }
+                },
+                error: function () {
+                    console.log("delete failure");
+                }
+            })
+        }
+        
+        function makeNewBottle() {
+            var author_id = [[${user.uid}]];
+            var title = document.getElementById("new-title").value;
+            var btext = document.getElementById("new-btext").value;
+            var res = document.getElementById("inlineRadio3").checked == 'checked';
+            var isprivate = (res == 'true');
+
+            $.ajax({
+                type: 'POST',
+                url: '/user/wishbottle/create',
+                data:{
+                    aid: author_id,
+                    title: title,
+                    btext: btext,
+                    isPrivate: isprivate
+                },
+                dataType: 'json',
+                success: function (result) {
+                    if(result && result.success){
+                        console.log("success");
+                        window.location.reload();
+                    } else{
+                        console.log("success and failure");
+                    }
+                },
+                error: function (result) {
+                    console.log("failure");
+                }
+            });
+        }
+
+        function saveModifyBottle(){
+            var bid = document.getElementById("modifyBottleId").getAttribute("value");
+            var title = document.getElementById("title").getAttribute("value");
+            var btext = document.getElementById("btext").value;
+            console.log(btext);
+            var res = document.getElementById("inlineRadio1").checked == 'checked';
+            var isprivate = (res == 'true');
+            $.ajax({
+               type: 'POST',
+               url: '/user/wishbottle/save',
+               data: {
+                   bid: bid,
+                   title: title,
+                   btext: btext,
+                   isPrivate: isprivate
+               },
+                dataType: 'json',
+                success: function (result) {
+                   if(result && result.success){
+                       console.log("success");
+                       window.location.reload();
+                   } else{
+                       console.log("success and failure");
+                   }
+                },
+                error: function (result) {
+                    console.log("failure");
+                }
+            });
+        }
+
+        function freeFromTypeList(source,target,type) {
+            if(type=="bottle")
+            {
+                if(!window.confirm("删除心愿后将不可恢复，确认要删除吗?"))
+                    return;
+                else
+                {
+                    document.getElementById("delete-wish"+target).parentNode.parentNode.parentNode.style.display="none";
+                }
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/user/usercenter/freeFromTypeList',
+                data: {source: source,target:target,type:type},
+                dataTpye: 'json',
+                success: function () {
+                    setTimeout(function () {
+                        if(type=="black") {
+                            //window.location.href = "/user/usercenter/" + source + "#blacklist";
+                        }
+                        else {
+
+                            //.location.href = "/user/usercenter/" + source + "#attention";
+                        }
+                    }, 500);
+                },
+                error: function () {
+                    console.log("failure");
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('#myTabs a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+            $('.delete').click(function () {
+                $(this).parent().parent().hide();
+            });
+
+        });
+    </script>
 </body>
 </html>

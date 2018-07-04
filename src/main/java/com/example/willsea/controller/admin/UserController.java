@@ -5,6 +5,7 @@ import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.User;
 import com.example.willsea.service.IBottleService;
 import com.example.willsea.service.IUserService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,27 @@ public class UserController {
         return "/back/user";
     }
 
+    @PostMapping(value="/user/usercenter/freeFromTypeList")
+    @ResponseBody
+    public RestResponse freeFromTypeList(@Param(value = "source")Integer source, @Param(value = "target")Integer target, @Param(value="type") String type) {
+        if (source != null && target != null) {
+            if (type.equals("bottle")) {
+                Integer bid = target;
+                bottleService.deleteBottle(target);
+
+            } else {
+                User sourceUser = userService.queryById(source);
+                User targetUser = userService.queryById(target);
+                if (type.equals("black")) {
+                    userService.freeFromBlackList(sourceUser, targetUser);
+                } else if (type.equals("favorite")) {
+                    userService.freeFromFavoriteList(sourceUser, targetUser);
+                }
+            }
+            return RestResponse.ok();
+        }
+        return RestResponse.fail();
+    }
 
     @GetMapping(value = "/user/sign")
     public  String showSignIn()
@@ -115,6 +137,7 @@ public class UserController {
         }
         return RestResponse.ok();
     }
+
     @PostMapping(value = "/back/user/delete")
     @ResponseBody
     public RestResponse delete(@RequestParam(value = "uid")Integer uid) {
@@ -166,6 +189,14 @@ public class UserController {
             return RestResponse.fail("用户名已经存在");
         }
         return RestResponse.ok();
+    }
+
+
+    private  void clearPrivateMessage(User user) {
+        user.setPassword("");
+        user.setEmail("");
+        user.setTelephone("1");
+        user.setLocation("");
     }
 
 }

@@ -1188,7 +1188,7 @@
     </column>
     <column id="294" parent="280" name="btime">
       <Position>3</Position>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>varchar(32)|0</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -1255,7 +1255,7 @@
     </column>
     <column id="306" parent="281" name="ctime">
       <Position>4</Position>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>varchar(32)|0</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>

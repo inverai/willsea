@@ -48,4 +48,6 @@ public interface IBottleService {
     Integer deleteAudio(Integer bid);
     Integer deleteVideo(Integer bid);
 
+    List<Bottle>  queryByAuthor(Integer aid,Integer offset,Integer limit);
+
 }

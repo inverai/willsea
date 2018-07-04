@@ -114,11 +114,9 @@
 		<script >
 			function savePost(bid) {
                 var title  = document.getElementById('title' + bid).value;
-                var content = document.getElementById('content' + bid).value;
                 var isPrivate = document.getElementById('private' + bid).checked;
 
                 console.log(title);
-                console.log(content);
                 console.log(isPrivate);
                 if(isPrivate == true) {
                     isPrivate = 'true';

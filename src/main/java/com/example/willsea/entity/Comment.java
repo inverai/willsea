@@ -21,7 +21,7 @@ public class Comment implements Serializable {
     /**
      * 创建日期
      */
-    private Integer ctime;
+    private String ctime;
     /**
      * 内容
      */
@@ -53,11 +53,11 @@ public class Comment implements Serializable {
         this.bid = bid;
     }
 
-    public Integer getCtime() {
+    public String getCtime() {
         return ctime;
     }
 
-    public void setCtime(Integer ctime) {
+    public void setCtime(String ctime) {
         this.ctime = ctime;
     }
 

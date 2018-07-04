@@ -21,7 +21,7 @@ public class Bottle implements Serializable{
     /**
      * 创建时间
      */
-    private Integer time;
+    private String time;
 
     /**
      * 心愿标题
@@ -78,11 +78,11 @@ public class Bottle implements Serializable{
         this.aid = aid;
     }
 
-    public Integer getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

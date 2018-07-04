@@ -14,10 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by yt on 2018/6/26.
@@ -75,6 +73,56 @@ public class BottleController {
         }
         return RestResponse.ok();
     }
+
+    @PostMapping(value = "/user/wishbottle/save")
+    @ResponseBody
+    public RestResponse userBottleSave(@RequestParam(value = "bid")Integer bid,
+                                 @RequestParam(value = "title")String title,
+                             @RequestParam(value = "btext")String btext,
+                             @RequestParam(value = "isPrivate")String isPrivate
+    ) {
+        System.out.println("Get the BottleId to be saved: " + bid);
+        System.out.println(btext);
+        try {
+            Bottle bottle = bottleService.getBottle(bid);
+            bottle.setTitle(title);
+            bottle.setIsPrivate(isPrivate);
+            bottle.setBtext(btext);
+            bottleService.updateBottle(bottle);
+        } catch (Exception e){
+            String msg = "保存心愿瓶失败";
+            LOGGER.error(msg, e);
+            return RestResponse.fail(msg);
+        }
+        return RestResponse.ok();
+    }
+
+    @PostMapping(value = "/user/wishbottle/create")
+    @ResponseBody
+    public RestResponse userBottleCreate(@RequestParam(value = "aid")Integer aid,
+                                 @RequestParam(value = "title")String title,
+                                 @RequestParam(value = "btext")String btext,
+                                 @RequestParam(value = "isPrivate")String isPrivate
+    ) {
+        System.out.println("Get the BottleId to be saved: " + aid);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Bottle bottle = new Bottle();
+            bottle.setAid(aid);
+            bottle.setTime(df.format(new Date()));
+            bottle.setTitle(title);
+            bottle.setIsPrivate(isPrivate);
+            bottle.setBtext(btext);
+            bottleService.createBottle(bottle);
+        } catch (Exception e){
+            String msg = "创建心愿瓶失败";
+            LOGGER.error(msg, e);
+            return RestResponse.fail(msg);
+        }
+        return RestResponse.ok();
+    }
+
+
 
     @PostMapping(value = "/back/wishbottle/delete")
     @ResponseBody

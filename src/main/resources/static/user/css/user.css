@@ -1,0 +1,155 @@
+body{
+    margin: 0;
+    background: rgb(230,230,230) no-repeat left top;
+    background-size:100%;
+}
+.main{
+    display: flex;
+    margin: 100px auto auto auto;
+    width: 70%;
+    background-color: #cfd2a0;
+}
+.left{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px white solid;
+}
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px white solid;
+}
+.picture{
+    margin-top: 20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: chartreuse;
+    text-align: center;
+    line-height: 100px;
+    font-size: 50px;
+}
+.autograph{
+    font-size: 16px;
+    width: 150px;
+    color: #ff15dd;
+}
+.name-sex{
+    font-size: 20px;
+}
+.sex{
+    color: deeppink;
+    font-weight: bold;
+}
+.name-sex,.autograph{
+    padding: 10px 0 5px 0;
+}
+.items{
+    display: flex;
+    flex-direction: column;
+}
+.right{
+    flex: 3.5;
+}
+.top{
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-size: 16px;
+    border-bottom: 1px white solid;
+}
+.top li{
+    padding-right: 10px;
+}
+.bottom{
+    padding-left: 20px;
+    margin-top: 20px;
+}
+.tab{
+    text-align: center;
+    padding: 10px 0;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+.card-list{
+    display: flex;
+    flex-flow: wrap;
+}
+.card{
+    display: flex;
+    position: relative;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    width: 220px;
+    height: 150px;
+    cursor: default;
+    -webkit-box-shadow:0 0 10px #80cc11;
+    -moz-box-shadow:0 0 10px #80cc11;
+    box-shadow:0 0 10px #80cc11;
+}
+.card:hover{
+    transform: scale(1.05);
+}
+.content{
+    width: 100%;
+    height: 100px;
+    font-size: 18px;
+    padding: 20px 15px;
+    border-bottom: 1px solid #80cc11;
+    text-indent: 2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.authority-icon,.authority-text{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.authority-icon{
+    font-size: 40px;
+    z-index: 2;
+}
+.public{
+    color: green;
+}
+.private{
+    color: blueviolet;
+}
+.authority-text{
+    color: white;
+    padding: 5px 0 0 10px;
+    font-size: 12px;
+    z-index: 3;
+}
+.title-operation{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    padding-left: 15px;
+}
+.title{
+    width: 120px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}
+.operation span{
+    padding-right: 5px;
+}
+.add-wish{
+    font-size: 50px;
+    cursor: pointer;
+}

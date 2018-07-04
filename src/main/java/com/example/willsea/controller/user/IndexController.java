@@ -16,16 +16,16 @@ public class IndexController {
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
 
-    @GetMapping(value = "/front/regist")
+    @GetMapping(value = "/user/regist")
     public String login() {
-        return "front/regist";
+        return "user/regist";
     }
 
 
-    @GetMapping(value = "/front/index")
-    public String index() { return "front/index"; }
+    @GetMapping(value = "/user/index")
+    public String index() { return "user/index"; }
 
-//    @PostMapping(value = "/front/post")
+//    @PostMapping(value = "/user/post")
 //    public String loginFor() {
 //
 //        System.out.println("execute post request.");

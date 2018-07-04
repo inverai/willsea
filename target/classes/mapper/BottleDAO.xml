@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.example.willsea.entity.Bottle">
         <id column="bid" jdbcType="INTEGER" property="bid"/>
         <result column="aid" jdbcType="INTEGER" property="aid"/>
-        <result column="btime" jdbcType="INTEGER" property="time"/>
+        <result column="btime" jdbcType="VARCHAR" property="time"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="private" jdbcType="VARCHAR" property="isPrivate"/>
         <result column="btext" jdbcType="VARCHAR" property="btext"/>
@@ -15,7 +15,7 @@
 
     <insert id="insert" parameterType="com.example.willsea.entity.Bottle" keyProperty="bid">
         insert into w_bottle(aid, btime, title, private, btext, baudio, bvideo)
-                VALUES (#{aid, jdbcType=INTEGER}, #{time, jdbcType=INTEGER},
+                VALUES (#{aid, jdbcType=INTEGER}, #{time, jdbcType=VARCHAR},
                         #{title, jdbcType=VARCHAR}, #{isPrivate, jdbcType=VARCHAR},
                         #{btext, jdbcType=VARCHAR}, #{baudio, jdbcType=VARCHAR},
                         #{bvideo, jdbcType=VARCHAR}

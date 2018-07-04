@@ -6,13 +6,13 @@
         <id column="cid" jdbcType="INTEGER" property="cid"/>
         <result column="aid" jdbcType="INTEGER" property="aid"/>
         <result column="bid" jdbcType="INTEGER" property="bid"/>
-        <result column="ctime" jdbcType="INTEGER" property="ctime"/>
+        <result column="ctime" jdbcType="VARCHAR" property="ctime"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
     </resultMap>
     <insert id="insertComment" parameterType="com.example.willsea.entity.Comment" keyProperty="cid">
         INSERT INTO w_comment(aid, bid, ctime, content)
                 VALUES (#{aid, jdbcType=INTEGER}, #{bid, jdbcType=INTEGER},
-                        #{ctime, jdbcType=INTEGER}, #{content, jdbcType=VARCHAR}
+                        #{ctime, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}
                 )
     </insert>
 
