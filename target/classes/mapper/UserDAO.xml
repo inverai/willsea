@@ -74,6 +74,7 @@
         VALUES (#{source, jdbcType=INTEGER}, #{target, jdbcType=INTEGER})
     </insert>
 
+
     <select id="queryFavoriteList" resultMap="BaseResultMap">
         SELECT w_user.* FROM w_user,w_favorite WHERE w_favorite.source_uid=#{uid} AND w_favorite.target_uid=w_user.uid
     </select>

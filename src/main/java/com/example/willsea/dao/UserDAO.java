@@ -38,6 +38,8 @@ public interface UserDAO {
 
     int isInBlackList(@Param("source") Integer source,@Param("target")Integer target);
 
+
+
     Integer queryTotalNumber();
 
     User queryByUsername(String username);

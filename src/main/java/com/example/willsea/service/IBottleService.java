@@ -2,6 +2,7 @@ package com.example.willsea.service;
 
 import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.Comment;
+import com.example.willsea.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,4 +51,5 @@ public interface IBottleService {
 
     List<Bottle>  queryByAuthor(Integer aid,Integer offset,Integer limit);
 
+    List<Bottle> getBottlesByUserBlackAndFavoriteList(User user);
 }

@@ -31,20 +31,20 @@
             </div>
         </div>
         <div class="hr">使用手机号/邮箱登录</div>
-        <form>
+        <form th:action="@{/user/sign/submit}" method="post">
             <div class="user">
-                <input class="input" id="username" placeholder="输入手机号或者邮箱"/>
+                <input class="input" id="username" name="username" placeholder="输入手机号或者邮箱"/>
             </div>
             <div class="password">
-                <input class="input" id="password" type="password" placeholder="输入密码"/>
+                <input class="input" id="password" name="password" type="password" placeholder="输入密码"/>
             </div>
             <div class="sign">
-                <button type="submit" class="btn" href="javascript:void(0)" th:onclick="'signIn();'">登录</button>
+                <button type="submit" class="btn">登录</button>
             </div>
         </form>
         <div class="text">
             <span><a class="link">忘记密码>></a></span>
-            <span>还没有账号？ <a href="regist.html" class="link" >点击注册>></a></span>
+            <span>还没有账号？ <a href="/user/regist" class="link" >点击注册>></a></span>
         </div>
     </div>
     <script>
@@ -61,11 +61,8 @@
                     data: { username: username,password:password },
                     dataType: "json",
                     success: function () {
-                        //SUCCESS DO SOMETHIGN
                         if(result && result.success) {
-                            console.log(" register success");
-                            window.location.href = "/user/usercenter";
-                            window.event.returnValue = false;
+
                         }
                     },
                     error: function () {

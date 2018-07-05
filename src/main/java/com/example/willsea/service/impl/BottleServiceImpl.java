@@ -5,12 +5,14 @@ import com.example.willsea.dao.CommentDAO;
 import com.example.willsea.dao.UserDAO;
 import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.Comment;
+import com.example.willsea.entity.User;
 import com.example.willsea.service.IBottleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by yt on 2018/6/22.
@@ -119,6 +121,24 @@ public class BottleServiceImpl implements IBottleService{
     @Override
     public List<Bottle> queryByAuthor(Integer aid, Integer offset, Integer limit) {
         return bottleDAO.queryByAuthor(aid,offset,limit);
+    }
+
+    @Override
+    public List<Bottle> getBottlesByUserBlackAndFavoriteList(User user) {
+        Integer totalNumber=bottleDAO.queryTotalNumber();
+        Random random=new Random();
+        Integer limit=random.nextInt(totalNumber);
+        Integer offset=random.nextInt(totalNumber);
+        List<Bottle> bottles=bottleDAO.queryAll(offset,limit);
+        System.out.println("limit"+limit);
+        System.out.println("offset"+offset);
+        System.out.println("ans size"+bottles.size());
+        if(user==null)
+        {
+            System.out.println("return nouser bottles");
+            return bottles;
+        }
+        return  bottleDAO.queryByUserFavoriteAndBlackList(user.getUid());
     }
 
 

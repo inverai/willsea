@@ -63,4 +63,9 @@
     <update id="deleteVideo">
         UPDATE w_bottle set bvideo = 'NULL' WHERE bid = #{bid}
     </update>
+
+    <select id="queryByUserFavoriteAndBlackList" resultMap="BaseResultMap">
+        SELECT w_bottle.* FROM w_bottle,w_blacklist,w_favorite WHERE w_blacklist.source_uid=#{uid} AND w_favorite.source_uid=#{uid} AND w_bottle.aid!=w_blacklist.target_uid
+        AND w_bottle.aid=w_favorite.target_uid
+    </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.example.willsea.controller.admin;
 import com.example.willsea.dto.RestResponse;
 import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.User;
+import com.example.willsea.exception.SubException;
 import com.example.willsea.service.IBottleService;
 import com.example.willsea.service.IUserService;
 import org.apache.ibatis.annotations.Param;
@@ -13,6 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.jws.soap.SOAPBinding;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +48,24 @@ public class UserController {
         model.addAttribute("limit",limit);
         return "/back/user";
     }
-
+    @PostMapping(value = "/user/detail/addToTypeList")
+    @ResponseBody
+    public RestResponse addToTypeList(@Param(value ="target")Integer target,@Param(value="type")String type,HttpServletRequest request)
+    {
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
+        if(cookieUser!=null)
+        {
+            if(target!=null)
+            {
+                if(type.equals("favorite"))
+                    userService.favoriteUser(cookieUser.getUid(),target);
+                else if(type.equals("black"))
+                    userService.avoidUser(cookieUser.getUid(),target);
+                return RestResponse.ok();
+            }
+        }
+        return RestResponse.fail();
+    }
     @PostMapping(value="/user/usercenter/freeFromTypeList")
     @ResponseBody
     public RestResponse freeFromTypeList(@Param(value = "source")Integer source, @Param(value = "target")Integer target, @Param(value="type") String type) {
@@ -66,36 +89,56 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/sign")
-    public  String showSignIn()
+    public  String showSignIn(HttpServletRequest request)
     {
-        return "/user/sign";
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
+        if(cookieUser!=null)
+        {
+            return "redirect:/user/usercenter/"+cookieUser.getUid();
+        }
+        return "user/sign";
     }
 
     @PostMapping(value = "/user/sign/submit")
-    public String signInPost(@RequestParam(value="username") String username,@RequestParam(value = "password") String password) {
+    public String signInPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        String username=request.getParameter("username");
+        String password=request.getParameter("password");
         User user=userService.queryToVerify(username,password);
         if(user!=null)
         {
-            System.out.println(user.getUid());
-            return "redirect:/user/usercenter/1";
+            request.getSession().setAttribute("cookieUser",user);
+            return "redirect:/user/usercenter/"+user.getUid();
         }
-        return "back/404";
-
+        return "error/404";
     }
+    @RequestMapping(value="/user/usercenter/{uid}")    //用户中心控制器
+    public String showUserCenter(@PathVariable Integer uid, Model model,HttpServletRequest request) {
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
+        User user=cookieUser;
 
-    @GetMapping(value="/user/usercenter/{uid}")    //用户中心控制器
-    public String showUserCenter(@PathVariable Integer uid, Model model) {
-        User user=userService.queryById(uid);
-        Integer pageLimit=9;
-        Integer offset=(1-1)*pageLimit;
-        List<Bottle>  bottles=bottleService.queryByAuthor(user.getUid(),offset,pageLimit);
-        List<User>  favoriteList=userService.queryFavoriteList(user);
-        List<User>  blackList=userService.queryBlackList(user);
-        model.addAttribute("user",user);
-        model.addAttribute("bottles",bottles);
-        model.addAttribute("favoriteList",favoriteList);
-        model.addAttribute("blackList",blackList);
-        return "/user/usercenter";
+        if(user!=null)
+        {
+            request.getSession().setAttribute("cookieUser",user);
+            Integer pageLimit=9;
+            Integer offset=(1-1)*pageLimit;
+            List<Bottle>  bottles=bottleService.queryByAuthor(user.getUid(),offset,pageLimit);
+            List<User>  favoriteList=userService.queryFavoriteList(user);
+            List<User>  blackList=userService.queryBlackList(user);
+            model.addAttribute("user",user);
+            model.addAttribute("bottles",bottles);
+            model.addAttribute("favoriteList",favoriteList);
+            model.addAttribute("blackList",blackList);
+            return "user/usercenter";
+        }
+        return "error/404";
+    }
+    @PostMapping(value="/user/index/logout")
+    public String logoutPost(@Param(value = "uid")Integer uid,HttpServletRequest request)
+    {
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
+        if(cookieUser!=null)
+            request.getSession().removeAttribute("cookieUser");
+        return "redirect:user/index";
     }
 
 
@@ -197,6 +240,45 @@ public class UserController {
         user.setEmail("");
         user.setTelephone("1");
         user.setLocation("");
+    }
+    @PostMapping(value = "/user/usercenter/modifyInfo")
+    public RestResponse modifyUserInfo(@RequestParam(value = "uid")Integer uid,
+                                       @RequestParam(value = "username")String username,
+                                       @RequestParam(value = "email")String email){
+
+        System.out.println("modifyUserInfo"+uid);
+        User user = userService.queryById(uid);
+        if(user == null){
+            return RestResponse.fail("user not exist");
+        }
+        if(userService.queryByUsername(username) != null){
+            return RestResponse.ok("username exists!");
+        }
+        user.setUsername(username);
+        user.setEmail(email);
+        userService.updateUser(user);
+        System.out.println("modify username successfully.");
+        return RestResponse.ok("modify successfully.");
+    }
+
+
+    @PostMapping(value = "/user/usercenter/modifyPassword")
+    @ResponseBody
+    public RestResponse modifyUserPassword(@RequestParam(value = "uid")Integer uid,
+                                           @RequestParam(value = "oldPassword")String oldPassword,
+                                           @RequestParam(value = "newPassword")String newPassword){
+        User user = userService.queryById(uid);
+        if(user == null){
+            throw new SubException("User does not exists!");
+        }
+        if(user.getPassword().equals(oldPassword)){
+            user.setPassword(newPassword);
+            userService.updateUser(user);
+        } else {
+            return RestResponse.fail();
+        }
+
+        return RestResponse.ok();
     }
 
 }

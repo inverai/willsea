@@ -3,6 +3,7 @@ package com.example.willsea.controller.admin;
 import com.example.willsea.dto.RestResponse;
 import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.Comment;
+import com.example.willsea.entity.User;
 import com.example.willsea.exception.SubException;
 import com.example.willsea.service.IBottleService;
 import com.example.willsea.service.ICommentService;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -162,9 +164,32 @@ public class BottleController {
         }
         return RestResponse.ok();
     }
+    @GetMapping(value="/user/detail/{bid}")
+    public String userdetail(@PathVariable Integer bid, Model model, HttpServletRequest request) {
 
+        String username = userService.queryById(bottleService.getBottle(bid).getAid()).getUsername();
+        List<Comment> comments = commentService.getCommentsByBottle(bid, 0, 8);
+        HashMap<Integer, String> authorNames = new HashMap<>();
+        for (Comment comment: comments) {
+            String name = userService.queryById(comment.getAid()).getUsername();
+            authorNames.put(comment.getCid(), name);
+        }
+
+        for(Map.Entry<Integer, String> entry: authorNames.entrySet()){
+            System.out.println("Key: " +  entry.getKey() + " value: " + entry.getValue());
+        }
+
+        Bottle bottle = bottleService.getBottle(bid);
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
+        model.addAttribute("cookieUser",cookieUser);
+        model.addAttribute("bottle", bottle);
+        model.addAttribute("username", username);
+        model.addAttribute("authorNames", authorNames);
+        model.addAttribute("comments", comments);
+        return "user/detail";
+    }
     @GetMapping(value = "/back/wishbottle/detail/{bid}")
-    public String detail(@PathVariable Integer bid, Model model) {
+    public String backdetail(@PathVariable Integer bid, Model model) {
         System.out.println("show the detail message for the bottle" + bid);
 
         String username = userService.queryById(bottleService.getBottle(bid).getAid()).getUsername();
@@ -186,4 +211,5 @@ public class BottleController {
         model.addAttribute("comments", comments);
         return "back/detail";
     }
+
 }

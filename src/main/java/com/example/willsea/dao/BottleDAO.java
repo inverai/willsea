@@ -29,4 +29,6 @@ public interface BottleDAO {
     Integer deleteText(Integer bid);
     Integer deleteAudio(Integer bid);
     Integer deleteVideo(Integer bid);
+
+    List<Bottle> queryByUserFavoriteAndBlackList(Integer uid);
 }
