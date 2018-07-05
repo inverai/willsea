@@ -125,20 +125,17 @@ public class BottleServiceImpl implements IBottleService{
 
     @Override
     public List<Bottle> getBottlesByUserBlackAndFavoriteList(User user) {
+        if(user!=null)
+            return  bottleDAO.queryByUserFavoriteAndBlackList(user.getUid());
         Integer totalNumber=bottleDAO.queryTotalNumber();
         Random random=new Random();
-        Integer limit=random.nextInt(totalNumber);
-        Integer offset=random.nextInt(totalNumber);
-        List<Bottle> bottles=bottleDAO.queryAll(offset,limit);
-        System.out.println("limit"+limit);
-        System.out.println("offset"+offset);
-        System.out.println("ans size"+bottles.size());
-        if(user==null)
-        {
-            System.out.println("return nouser bottles");
-            return bottles;
+        List<Bottle> bottles=new ArrayList<>();
+        while(bottles.size()==0) {
+            Integer limit = random.nextInt(totalNumber);
+            Integer offset = random.nextInt(totalNumber);
+            bottles=bottleDAO.queryAll(limit,offset);
         }
-        return  bottleDAO.queryByUserFavoriteAndBlackList(user.getUid());
+        return bottles;
     }
 
 

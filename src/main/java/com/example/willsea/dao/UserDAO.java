@@ -36,7 +36,6 @@ public interface UserDAO {
     // cancel favorite
     int deleteFavoriteRecord(Integer favorite_id);
 
-    int isInBlackList(@Param("source") Integer source,@Param("target")Integer target);
 
 
 
@@ -51,4 +50,7 @@ public interface UserDAO {
     Integer freeFromFavoriteList(@Param("source") Integer source,@Param("target")Integer target);
     Integer freeFromBlackList(@Param("source") Integer source,@Param("target")Integer target);
 
+    Integer isInFavoriteList(@Param("source") Integer source,@Param("target")Integer target);
+
+    Integer isInBlackList(@Param("source") Integer source,@Param("target")Integer target);
 }

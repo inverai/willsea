@@ -208,7 +208,6 @@ public class UserController {
                                  @RequestParam(value = "sex")String sex,
                                  @RequestParam(value = "location")String location,
                                  @RequestParam(value = "birthday")String birthday) {
-        System.out.println("excute register");
         birthday = birthday.replace("-", "");
         User user = userService.queryByUsername(username);
         if(user == null) {
@@ -245,8 +244,6 @@ public class UserController {
     public RestResponse modifyUserInfo(@RequestParam(value = "uid")Integer uid,
                                        @RequestParam(value = "username")String username,
                                        @RequestParam(value = "email")String email){
-
-        System.out.println("modifyUserInfo"+uid);
         User user = userService.queryById(uid);
         if(user == null){
             return RestResponse.fail("user not exist");
@@ -257,7 +254,6 @@ public class UserController {
         user.setUsername(username);
         user.setEmail(email);
         userService.updateUser(user);
-        System.out.println("modify username successfully.");
         return RestResponse.ok("modify successfully.");
     }
 

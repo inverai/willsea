@@ -151,24 +151,15 @@ public class UserServiceImpl implements IUserService{
         return 1;
     }
 
-    @Override
-    public void deleteOneBlack(Integer black_id) {
-        if(black_id == null){
-            throw new SubException("条件错误");
-        }
-        userDAO.deleteBlackRecord(black_id);
-
-    }
 
     @Override
-    public void deleteOneFavorite(Integer favorite_id) {
-        if(favorite_id == null){
-            throw new SubException("条件错误");
+    public boolean isInTypeList(Integer source, Integer target, String type) {
+        if(type.equals("black"))
+        {
+            return userDAO.isInBlackList(source,target)>0;
         }
-        userDAO.deleteBlackRecord(favorite_id);
+        return userDAO.isInFavoriteList(source,target)>0;
     }
-
-
 
 
 }

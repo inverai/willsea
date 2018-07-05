@@ -38,23 +38,13 @@ public class IndexController {
 
     @GetMapping(value = "/user/index")
     public String index(HttpServletRequest request, Model model) {
-        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
-        List<Bottle> bottles=bottleService.getBottlesByUserBlackAndFavoriteList(cookieUser);
-        System.out.println("controller bottles size"+bottles.size());
-        List<Integer>  bids=new ArrayList<>();
-        for(int i=0;i<bottles.size();++i)
+        User cookieUser = (User) request.getSession().getAttribute("cookieUser");
+        List<Bottle> bottles = bottleService.getBottlesByUserBlackAndFavoriteList(cookieUser);
+        List<Integer> bids = new ArrayList<>();
+        for (int i = 0; i < bottles.size(); ++i)
             bids.add(bottles.get(i).getBid());
-        System.out.println("controller bids size"+bids.size());
-        model.addAttribute("cookieUser",cookieUser);
-        model.addAttribute("bids",bids);
+        model.addAttribute("cookieUser", cookieUser);
+        model.addAttribute("bids", bids);
         return "user/index";
     }
-
-//    @PostMapping(value = "/user/post")
-//    public String loginFor() {
-//
-//        System.out.println("execute post request.");
-//        return "forward:/back/user";
-//    }
-
 }

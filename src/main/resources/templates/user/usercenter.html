@@ -260,28 +260,6 @@
             document.getElementById("inlineRadio2").checked = 'checked';
         }
     }
-    function deleteOperate(index) {
-        var bottle = [[${bottles}]][index];
-        var bid = bottle['bid'];
-        console.log(index);
-        $.ajax({
-            type: 'POST',
-            url: '/back/wishbottle/delete',
-            data:{
-                bid: bid
-            },
-            dataType: 'json',
-            success: function (result) {
-                if(result && result.success){
-                    console.log("delete success");
-                }
-            },
-            error: function () {
-                console.log("delete failure");
-            }
-        })
-    }
-
     function makeNewBottle() {
         var author_id = [[${user.uid}]];
         var title = document.getElementById("new-title").value;
@@ -429,9 +407,7 @@
                 }
             })
         }
-
     }
-
     function checkMail(mail) {
         var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         if (filter.test(mail))
@@ -443,7 +419,8 @@
 
 <script>
     $(document).ready(function(){
-        $('#myTabs a').click(function (e) {
+        $('#myTabs a').click(function (e)
+        {
             e.preventDefault();
             $(this).tab('show');
         });

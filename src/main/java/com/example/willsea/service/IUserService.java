@@ -45,16 +45,6 @@ public interface IUserService {
      */
     void avoidUser(Integer sourceId, Integer targetId);
 
-    /**
-     * 取消拉黑用户
-     */
-
-    void deleteOneBlack(Integer black_id);
-
-    /**
-     * 取消关注
-     */
-    void deleteOneFavorite(Integer favorite_id);
 
     /**
      * 关注用户
@@ -75,4 +65,6 @@ public interface IUserService {
     List<User> queryBlackList(User user);
     Integer    freeFromFavoriteList(User source,User target);
     Integer    freeFromBlackList(User source,User target);
+
+    boolean  isInTypeList(Integer source,Integer target,String type);
 }

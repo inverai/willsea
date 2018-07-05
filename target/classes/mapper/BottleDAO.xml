@@ -65,7 +65,8 @@
     </update>
 
     <select id="queryByUserFavoriteAndBlackList" resultMap="BaseResultMap">
-        SELECT w_bottle.* FROM w_bottle,w_blacklist,w_favorite WHERE w_blacklist.source_uid=#{uid} AND w_favorite.source_uid=#{uid} AND w_bottle.aid!=w_blacklist.target_uid
-        AND w_bottle.aid=w_favorite.target_uid
+        SELECT DISTINCT w_bottle.* FROM w_bottle WHERE w_bottle.aid NOT IN  (SELECT w_blacklist.target_uid FROM w_blacklist WHERE w_blacklist.source_uid=#{uid})
     </select>
+
+
 </mapper>

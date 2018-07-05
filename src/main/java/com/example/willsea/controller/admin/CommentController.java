@@ -3,9 +3,11 @@ package com.example.willsea.controller.admin;
 import com.example.willsea.dto.RestResponse;
 import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.Comment;
+import com.example.willsea.entity.User;
 import com.example.willsea.service.IBottleService;
 import com.example.willsea.service.ICommentService;
 import com.example.willsea.service.IUserService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,7 +40,6 @@ public class CommentController {
     @GetMapping(value = "/back/comment")
     public String list(@RequestParam(value = "page", defaultValue = "1") int page,
                        @RequestParam(value = "limit", defaultValue = "8") int limit, Model model){
-        System.out.println("Get Next Time1");
         List<Comment> comments = commentService.queryAll((page - 1) * limit, limit);
 
         HashMap<Integer, String> userMap = new HashMap<>();
@@ -56,12 +60,10 @@ public class CommentController {
         model.addAttribute("limit",limit);
         return "back/comment";
     }
-
     @PostMapping(value = "/back/comment/save")
     @ResponseBody
     public RestResponse save(@RequestParam(value = "cid")Integer cid,
                                @RequestParam(value = "content")String content) {
-        System.out.println("Get the commentId to be saved: " + cid);
         try {
             Comment comment = commentService.getCommentById(cid);
             comment.setContent(content);
@@ -78,7 +80,6 @@ public class CommentController {
     @ResponseBody
     public RestResponse delete(@RequestParam(value = "cid")Integer cid,
                                @RequestParam(value = "bid")Integer bid) {
-        System.out.println("Get the commentId to be deleted: " + cid);
         try{
             Comment comment = commentService.getCommentById(cid);
             if(null == comment) {
@@ -91,5 +92,27 @@ public class CommentController {
             return RestResponse.fail(msg);
         }
         return RestResponse.ok(bid);
+    }
+
+    @PostMapping(value = "/user/detail/addComment")
+    public  void addComment(@Param(value = "bid")Integer bid, @Param(value = "text")String text, HttpServletRequest request)
+    {
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
+        if(cookieUser!=null)
+        {
+            Bottle curbottle=bottleService.getBottle(bid);
+            User bottleAuthor=userService.queryById(curbottle.getAid());
+            if(!userService.isInTypeList(bottleAuthor.getUid(),cookieUser.getUid(),"black"))
+            {
+                Comment comment=new Comment();
+                comment.setAid(cookieUser.getUid());
+                comment.setBid(curbottle.getBid());
+                comment.setContent(text);
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                String date = df.format(new Date());
+                comment.setCtime(date);
+                bottleService.addCommentToBottle(comment,curbottle);
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ import com.example.willsea.exception.SubException;
 import com.example.willsea.service.IBottleService;
 import com.example.willsea.service.ICommentService;
 import com.example.willsea.service.IUserService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -50,10 +52,6 @@ public class BottleController {
         model.addAttribute("recordNum", recordNum);
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
-        for (Bottle bottle: bottles) {
-            System.out.println(bottle.getAid() + " ; " + bottle.getBid() + " ; ");
-        }
-
         return "back/wishbottle";
     }
 
@@ -62,7 +60,6 @@ public class BottleController {
     public RestResponse save(@RequestParam(value = "bid")Integer bid, @RequestParam(value = "title")String title,
                              @RequestParam(value = "isPrivate")String isPrivate
                              ) {
-        System.out.println("Get the BottleId to be saved: " + bid);
         try {
             Bottle bottle = bottleService.getBottle(bid);
             bottle.setTitle(title);
@@ -83,8 +80,6 @@ public class BottleController {
                              @RequestParam(value = "btext")String btext,
                              @RequestParam(value = "isPrivate")String isPrivate
     ) {
-        System.out.println("Get the BottleId to be saved: " + bid);
-        System.out.println(btext);
         try {
             Bottle bottle = bottleService.getBottle(bid);
             bottle.setTitle(title);
@@ -106,7 +101,6 @@ public class BottleController {
                                  @RequestParam(value = "btext")String btext,
                                  @RequestParam(value = "isPrivate")String isPrivate
     ) {
-        System.out.println("Get the BottleId to be saved: " + aid);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Bottle bottle = new Bottle();
@@ -129,7 +123,6 @@ public class BottleController {
     @PostMapping(value = "/back/wishbottle/delete")
     @ResponseBody
     public RestResponse delete(@RequestParam(value = "bid")Integer bid) {
-        System.out.println("Get the bottleId to be deleted: " + bid);
         try{
             Bottle bottle = bottleService.getBottle(bid);
             if(null == bottle) {
@@ -148,7 +141,6 @@ public class BottleController {
     @ResponseBody
     public RestResponse deleteContent(@RequestParam(value = "bid")Integer bid,
                                       @RequestParam(value = "type")String type) {
-        System.out.println("delete the " + type + " in bottle " + bid);
         try{
             if(type.equals("text")) {
                 bottleService.deleteText(bid);
@@ -164,23 +156,24 @@ public class BottleController {
         }
         return RestResponse.ok();
     }
-    @GetMapping(value="/user/detail/{bid}")
+    @GetMapping(value="/user/detail/{bid}")   //客户端展示心愿瓶的详细内容
     public String userdetail(@PathVariable Integer bid, Model model, HttpServletRequest request) {
-
+        Bottle bottle = bottleService.getBottle(bid);
         String username = userService.queryById(bottleService.getBottle(bid).getAid()).getUsername();
-        List<Comment> comments = commentService.getCommentsByBottle(bid, 0, 8);
-        HashMap<Integer, String> authorNames = new HashMap<>();
-        for (Comment comment: comments) {
+        List<Comment> comments = commentService.getCommentsByBottle(bid, 0, 65535);
+        HashMap<Integer, String> authorNames = new HashMap<>();  //评论ID和评论用户名对应的hash表
+        for (Comment comment: comments)
+        {
             String name = userService.queryById(comment.getAid()).getUsername();
             authorNames.put(comment.getCid(), name);
         }
 
-        for(Map.Entry<Integer, String> entry: authorNames.entrySet()){
-            System.out.println("Key: " +  entry.getKey() + " value: " + entry.getValue());
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");  //登录状态，若coolieUser为null则未登录，不为null则是当前已经登录的用户
+        if(cookieUser!=null)
+        {
+            model.addAttribute("isInFavoriteList",userService.isInTypeList(cookieUser.getUid(),bottle.getAid(),"favorite"));
+            model.addAttribute("isInBlackList",userService.isInTypeList(cookieUser.getUid(),bottle.getAid(),"black"));
         }
-
-        Bottle bottle = bottleService.getBottle(bid);
-        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
         model.addAttribute("cookieUser",cookieUser);
         model.addAttribute("bottle", bottle);
         model.addAttribute("username", username);
@@ -190,7 +183,6 @@ public class BottleController {
     }
     @GetMapping(value = "/back/wishbottle/detail/{bid}")
     public String backdetail(@PathVariable Integer bid, Model model) {
-        System.out.println("show the detail message for the bottle" + bid);
 
         String username = userService.queryById(bottleService.getBottle(bid).getAid()).getUsername();
         List<Comment> comments = commentService.getCommentsByBottle(bid, 0, 8);
@@ -200,9 +192,6 @@ public class BottleController {
             authorNames.put(comment.getCid(), name);
         }
 
-        for(Map.Entry<Integer, String> entry: authorNames.entrySet()){
-            System.out.println("Key: " +  entry.getKey() + " value: " + entry.getValue());
-        }
 
         Bottle bottle = bottleService.getBottle(bid);
         model.addAttribute("bottle", bottle);
