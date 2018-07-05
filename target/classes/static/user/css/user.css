@@ -1,58 +1,4 @@
-body{
-    margin: 0;
-    background: rgb(230,230,230) no-repeat left top;
-    background-size:100%;
-}
-.main{
-    display: flex;
-    margin: 100px auto auto auto;
-    width: 70%;
-    background-color: #cfd2a0;
-}
-.left{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px white solid;
-}
-.userInfo{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-bottom: 1px white solid;
-}
-.picture{
-    margin-top: 20px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: chartreuse;
-    text-align: center;
-    line-height: 100px;
-    font-size: 50px;
-}
-.autograph{
-    font-size: 16px;
-    width: 150px;
-    color: #ff15dd;
-}
-.name-sex{
-    font-size: 20px;
-}
-.sex{
-    color: deeppink;
-    font-weight: bold;
-}
-.name-sex,.autograph{
-    padding: 10px 0 5px 0;
-}
-.items{
-    display: flex;
-    flex-direction: column;
-}
-.right{
-    flex: 3.5;
-}
+
 .top{
     height: 70px;
     display: flex;
@@ -90,9 +36,9 @@ body{
     width: 220px;
     height: 150px;
     cursor: default;
-    -webkit-box-shadow:0 0 10px #80cc11;
-    -moz-box-shadow:0 0 10px #80cc11;
-    box-shadow:0 0 10px #80cc11;
+    -webkit-box-shadow:0 0 10px #1dd1a1;
+    -moz-box-shadow:0 0 10px #1dd1a1;
+    box-shadow:0 0 10px #1dd1a1;
 }
 .card:hover{
     transform: scale(1.05);
@@ -102,7 +48,7 @@ body{
     height: 100px;
     font-size: 18px;
     padding: 20px 15px;
-    border-bottom: 1px solid #80cc11;
+    border-bottom: 1px solid #1dd1a1;
     text-indent: 2em;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -120,7 +66,7 @@ body{
     z-index: 2;
 }
 .public{
-    color: green;
+    color: #1dd1a1;
 }
 .private{
     color: blueviolet;
@@ -152,4 +98,10 @@ body{
 .add-wish{
     font-size: 50px;
     cursor: pointer;
+}
+
+
+.self-context{
+    position: absolute;
+    left: -1000px;
 }

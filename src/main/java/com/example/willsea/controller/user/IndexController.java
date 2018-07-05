@@ -42,7 +42,11 @@ public class IndexController {
         List<Bottle> bottles = bottleService.getBottlesByUserBlackAndFavoriteList(cookieUser);
         List<Integer> bids = new ArrayList<>();
         for (int i = 0; i < bottles.size(); ++i)
-            bids.add(bottles.get(i).getBid());
+        {
+            Bottle curBottle=bottles.get(i);
+            if(curBottle.getIsPrivate().equals("false"))
+                bids.add(curBottle.getBid());
+        }
         model.addAttribute("cookieUser", cookieUser);
         model.addAttribute("bids", bids);
         return "user/index";

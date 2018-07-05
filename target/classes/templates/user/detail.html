@@ -13,21 +13,21 @@
 <div style="position: absolute; left: 240px; width: 1260px; top: 60px">
     <form>
         <div class="form-group">
-            <label for="exampleInputTitle">标题</label>
+            <!--<label for="exampleInputTitle">标题</label>-->
             <input type="text" class="form-control" id="exampleInputTitle" th:value="${bottle.getTitle()}">
+            <button th:if="${cookieUser!=null&&cookieUser.getUsername()==username}" class="btn btn-info deleteBottle" style="display: inline; float: right;" th:onclick="'deleteBottlePost(' + ${bottle.getBid()} + ');'">删除</button>
         </div>
         <div class="form-group">
-            <label for="exampleInputAuthor">作者</label>
-
+            <!--<label for="exampleInputAuthor">作者</label>-->
             <input type="text" readonly="readonly" class="form-control" id="exampleInputAuthor" th:value="${username}">
-            <button th:if="${cookieUser!=null&&!isInFavoriteList}" class="btn btn-info favorite" style="display: inline; float: right;" th:onclick="'addToTypeList(' + ${bottle.getAid()} + ', \'favorite\');'">关注</button>
-            <button th:if="${cookieUser!=null&&!isInBlackList}" class="btn btn-info black" style="display: inline; float: right;" th:onclick="'addToTypeList('+  ${bottle.getAid()}+','+'\'black\'' + ');'">拉黑</button>
+            <button th:if="${cookieUser!=null&&!isInFavoriteList&&cookieUser.getUsername()!=username}" class="btn btn-info favorite" style="display: inline; float: right;" th:onclick="'addToTypeList(' + ${bottle.getAid()} + ', \'favorite\');'">关注</button>
+            <button th:if="${cookieUser!=null&&!isInBlackList&&cookieUser.getUsername()!=username}" class="btn btn-info black" style="display: inline; float: right;" th:onclick="'addToTypeList('+  ${bottle.getAid()}+','+'\'black\'' + ');'">拉黑</button>
         </div>
 
         <div th:if="${bottle.getBtext() != 'NULL'}" class="form-group">
-            <div>
-                <label style="display: inline; float: left;" for="textPlayer">文本内容</label>
-            </div>
+            <!--<div>-->
+                <!--<label style="display: inline; float: left;" for="textPlayer">文本内容</label>-->
+            <!--</div>-->
             <textarea class="form-control" id="textPlayer" rows="2" readonly="readonly" th:text="${bottle.getBtext()}"></textarea>
         </div>
 
@@ -141,5 +141,23 @@
             }
         })
     }
+    function deleteBottlePost(bid) {
+        if (!window.confirm("删除心愿后将不可恢复，确认要删除吗?"))
+            return;
+        var uid=[[${cookieUser.getUid()}]];
+        $.ajax({
+            type: 'POST',
+            url: '/back/wishbottle/delete',
+            data: {bid: bid},
+            dataTpye: 'json',
+            success: function () {
+                window.location.href="/user/usercenter/"+uid;
+            },
+            error: function () {
+                console.log("failure");
+            }
+        });
+    }
+
 </script>
 </html>

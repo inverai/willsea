@@ -159,6 +159,11 @@ public class BottleController {
     @GetMapping(value="/user/detail/{bid}")   //客户端展示心愿瓶的详细内容
     public String userdetail(@PathVariable Integer bid, Model model, HttpServletRequest request) {
         Bottle bottle = bottleService.getBottle(bid);
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");  //登录状态，若coolieUser为null则未登录，不为null则是当前已经登录的用户
+        if(bottle==null&&cookieUser!=null)
+            return "redirect:user/usercenter/"+cookieUser.getUid();
+        else if(bottle==null&&cookieUser==null)
+            return  "redirect:/user/index";
         String username = userService.queryById(bottleService.getBottle(bid).getAid()).getUsername();
         List<Comment> comments = commentService.getCommentsByBottle(bid, 0, 65535);
         HashMap<Integer, String> authorNames = new HashMap<>();  //评论ID和评论用户名对应的hash表
@@ -167,8 +172,6 @@ public class BottleController {
             String name = userService.queryById(comment.getAid()).getUsername();
             authorNames.put(comment.getCid(), name);
         }
-
-        User cookieUser=(User)request.getSession().getAttribute("cookieUser");  //登录状态，若coolieUser为null则未登录，不为null则是当前已经登录的用户
         if(cookieUser!=null)
         {
             model.addAttribute("isInFavoriteList",userService.isInTypeList(cookieUser.getUid(),bottle.getAid(),"favorite"));

@@ -13,17 +13,17 @@ body{
     justify-content: space-between;
     align-items: center;
  }
-.logo,.sign{
+.logo{
    flex: 1;
 }
 .logo{
     padding-left: 200px;
     text-align: left;
 }
-.sign{
-    padding-right: 100px;
-    text-align: right;
-}
+/*.sign{*/
+    /*padding-right: 20px;*/
+    /*text-align: right;*/
+/*}*/
 .link{
     color: white;
     cursor: pointer;

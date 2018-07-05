@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人心愿</title>
+    <link th:href="@{/admin/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/user/css/index.css}" rel="stylesheet">
+</head>
+<body>
+<!--<div class="main">-->
+<nav class="nav">
+    <div class="logo" th:text="(${curUser.getUsername()})"></div>
+    <div th:if="${cookieUser!=null}" class="sign"><a href="/user/sign" class="link" th:text="${cookieUser.getUsername()}"></a></div>
+    <div th:if="${cookieUser!=null}" class="sign"><a href="/user/sign" class="link" th:onclick="'logout()'">登出</a></div>
+</nav>
+<!--</div>-->
+<script th:src="@{/admin/js/jquery-1.11.3.min.js}"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script th:src="@{/user/js/threeJs/dev/three.js}"></script>
+<script th:src="@{/user/js/threeJs/dev/Octree.js}"></script>
+<script th:src="@{/user/js/threeJs/controls/OrbitControls.js}"></script>
+<script th:src="@{/user/js/threeJs/script/BasicUnit.js}"></script>
+<script th:src="@{/user/js/threeJs/script/ocean.js}"></script>
+<script th:inline="javascript">
+    clearState();
+    var relativepath="../js/";
+    var totalBottleNumber=[[${bids.size()}]];
+    var bids=[[${bids}]];
+    for (var i = 0; i < totalBottleNumber; ++i) {
+        var curkey=bids[i];
+        srcUrls.push(relativepath+"threeJs/testImage/" + (i%49).toString() + ".PNG");
+        keys.push(curkey);
+    }
+    console.log(keys.length);
+    AddOceanToHtmlElement(document.body,window.innerHeight, window.innerWidth);
+    function logout(){
+        $.ajax({
+            type: 'POST',
+            url: '/user/index/logout',
+            success: function () {
+                console.log("logout");
+            },
+            error: function () {
+                console.log("failure");
+            }
+        })
+    }
+</script>
+</body>
+</html>
+

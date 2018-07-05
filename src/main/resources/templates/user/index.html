@@ -23,15 +23,16 @@
     <script th:src="@{/user/js/threeJs/script/BasicUnit.js}"></script>
     <script th:src="@{/user/js/threeJs/script/ocean.js}"></script>
     <script th:inline="javascript">
+        clearState();
         var relativepath="../user/js/";
         var totalBottleNumber=[[${bids.size()}]];
         var bids=[[${bids}]];
         for (var i = 0; i < totalBottleNumber; ++i) {
             var curkey=bids[i];
-            srcUrls.push(relativepath+"/threeJs/testImage/" + (i%49).toString() + ".PNG");
+            srcUrls.push(relativepath+"threeJs/testImage/" + (i%49).toString() + ".PNG");
             keys.push(curkey);
         }
-        Init();
+        AddOceanToHtmlElement(document.body,window.innerHeight, window.innerWidth);
         function logout(){
             $.ajax({
                 type: 'POST',

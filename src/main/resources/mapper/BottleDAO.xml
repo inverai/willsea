@@ -31,7 +31,7 @@
     <select id="queryAll" resultMap="BaseResultMap">
         SELECT *
         FROM w_bottle
-        ORDER BY bid DESC
+        ORDER BY bid ASC
         LIMIT #{offset}, #{limit}
     </select>
 
@@ -39,7 +39,7 @@
         SELECT *
         FROM w_bottle
         WHERE aid = #{aid}
-        ORDER BY bid DESC
+        ORDER BY bid ASC
         LIMIT #{offset}, #{limit}
     </select>
 

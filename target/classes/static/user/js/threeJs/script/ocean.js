@@ -3,9 +3,20 @@ var srcUrls = [];
 var pick = "";  //被选中的key
 var keys = [];
 
-function Init() {
+function clearState() {
+    textureArray=[];
+    srcUrls=[];
+    pick="";
+    keys=[];
+}
+function  AddOceanToHtmlElement(HtmlNode,height,width) {
     var imgArr = [];
     var count = srcUrls.length;
+    if(count==0)
+    {
+        Run(HtmlNode,height,width);
+        return;
+    }
     for (var i = 0; i < count; ++i) {
         var img = new Image();
         img.src = srcUrls[i];
@@ -22,13 +33,12 @@ function Init() {
                     ctx.drawImage(img, 0, 0, 128, 128);
                     textureArray.push(new THREE.Texture(c));
                 }
-                console.log(textureArray.length);
-                Run(window.innerHeight, window.innerWidth, 40);
+                Run(HtmlNode,height,width, 40);
             }
         }
     }
 }
-function Run(height, width, distributionRadius)
+function Run(HtmlNode,height, width, distributionRadius)
 {
     var scene, camera, renderer, orbitControl;   //场景，摄像机，渲染器，控制器
     var envmap;       //环境贴图
@@ -68,11 +78,11 @@ function Run(height, width, distributionRadius)
         mouse = new THREE.Vector2(0, 0);
 
         renderer.domElement.addEventListener("click", onDocumentMouseClick, false);
-        document.body.appendChild(renderer.domElement);
+        HtmlNode.appendChild(renderer.domElement);
     }
     function InitSkybox()  //初始化背景
     {
-        var path = relativepath+"/threeJs/cubetexture/";
+        var path = relativepath+"threeJs/cubetexture/";
         var names = ["px", "nx", "py", "ny", "pz", "nz"];
         var format = ".jpg";
         var urls = [
@@ -113,9 +123,6 @@ function Run(height, width, distributionRadius)
         orbitControl.update();
         renderer.render(scene, camera);
     }
-    function onWindowResize() {
-        
-    }
     function onDocumentMouseClick(event)
     {
         mouse.x = ((event.clientX - renderer.domElement.offsetLeft) / width) * 2 - 1;
@@ -131,6 +138,8 @@ function Run(height, width, distributionRadius)
         }
         else
             pick = "";
+      
+        
     }
     function animate() {
         requestAnimationFrame(animate);

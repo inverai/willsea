@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    background: url("/user/img/loginBg.jpg") no-repeat left top;
+    background: url("../img/loginBg.jpg") no-repeat left top;
     background-size:100%;
 }
 .main{

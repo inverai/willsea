@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import javax.annotation.Resource;
 import javax.jws.soap.SOAPBinding;
@@ -19,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,7 @@ public class UserController {
         }
         return RestResponse.fail();
     }
+
     @PostMapping(value="/user/usercenter/freeFromTypeList")
     @ResponseBody
     public RestResponse freeFromTypeList(@Param(value = "source")Integer source, @Param(value = "target")Integer target, @Param(value="type") String type) {
@@ -122,10 +125,17 @@ public class UserController {
             Integer pageLimit=9;
             Integer offset=(1-1)*pageLimit;
             List<Bottle>  bottles=bottleService.queryByAuthor(user.getUid(),offset,pageLimit);
+            List<Integer> bids=new ArrayList<>();
+            for (int i = 0; i < bottles.size(); ++i)
+            {
+                Bottle curBottle=bottles.get(i);
+                bids.add(curBottle.getBid());
+            }
             List<User>  favoriteList=userService.queryFavoriteList(user);
             List<User>  blackList=userService.queryBlackList(user);
             model.addAttribute("user",user);
             model.addAttribute("bottles",bottles);
+            model.addAttribute("bids",bids);
             model.addAttribute("favoriteList",favoriteList);
             model.addAttribute("blackList",blackList);
             return "user/usercenter";
@@ -256,8 +266,6 @@ public class UserController {
         userService.updateUser(user);
         return RestResponse.ok("modify successfully.");
     }
-
-
     @PostMapping(value = "/user/usercenter/modifyPassword")
     @ResponseBody
     public RestResponse modifyUserPassword(@RequestParam(value = "uid")Integer uid,
@@ -276,7 +284,28 @@ public class UserController {
 
         return RestResponse.ok();
     }
+    @GetMapping(value = "/user/personalOcean/{uid}")
+    public String showPersonalOcean(@PathVariable Integer uid,Model model,HttpServletRequest request)
+    {
+        System.out.println(uid);
+        User cookieUser = (User) request.getSession().getAttribute("cookieUser");  //当前登录的用户
+        User curUser=userService.queryById(uid);  //要访问的用户
+        Integer offset=0;
+        Integer limit=65535;
+        List<Bottle> bottles=bottleService.queryByAuthor(uid,offset,limit);
 
+        List<Integer> bids=new ArrayList<>();
+        for(Integer i=0;i<bottles.size();++i)
+        {
+            if(bottles.get(i).getIsPrivate().equals("false"))
+                bids.add(bottles.get(i).getBid());
+        }
+        System.out.println("public bottle size"+bids.size());
+        model.addAttribute("cookieUser", cookieUser);
+        model.addAttribute("bids", bids);
+        model.addAttribute("curUser",curUser);
+        return "user/personalOcean";
+    }
 }
 
 // 1. 保持登陆状态，可以注销；
