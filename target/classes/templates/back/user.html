@@ -164,16 +164,14 @@
                 type: 'GET',
                 url: '/back/user',
                 data: { page: page },
-                success: function ()
-                {
+                success: function () {
                     setTimeout(function () {
                         console.log("success");
                         window.location.href=('/back/user?page='+page);
                     }, 500);
                 },
-                error: function ()
-                {
-                    //DO SOMETHING
+                error: function () {
+
                 }
             }
         );

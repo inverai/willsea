@@ -31,15 +31,16 @@
             </div>
         </div>
         <div class="hr">使用手机号/邮箱登录</div>
-        <form>
+        <form th:action="@{/user/submit}" method="post">
             <div class="user">
-                <input class="input" id="username" placeholder="输入手机号或者邮箱"/>
+                <input class="input" id="username" name="username" placeholder="输入手机号或者邮箱"/>
             </div>
             <div class="password">
-                <input class="input" id="password" type="password" placeholder="输入密码"/>
+                <input class="input" id="password" name="password" type="password" placeholder="输入密码"/>
             </div>
             <div class="sign">
-                <button type="submit" class="btn" href="javascript:void(0)" th:onclick="'signIn();'">登录</button>
+                <!--<button type="submit" class="btn" th:onclick="'signIn();'">登录</button>-->
+                <button type="submit" class="btn">登录</button>
             </div>
         </form>
         <div class="text">
@@ -48,28 +49,25 @@
         </div>
     </div>
     <script>
-        function  signIn()
-        {
+        function signIn() {
             var username=document.getElementById("username").value;
-
             console.log(username);
             var password=document.getElementById("password").value;
-            $.ajax(
-                {
+            $.ajax({
                     type: 'POST',
-                    url: '/user/sign/submit',
-                    data: { username: username,password:password },
+                    url: '/user/submit',
+                    data: {
+                        username: username,
+                        password: password
+                    },
                     dataType: "json",
                     success: function () {
-                        //SUCCESS DO SOMETHIGN
-                        if(result && result.success) {
-                            console.log(" register success");
-                            window.location.href = "/user/usercenter";
-                            window.event.returnValue = false;
-                        }
+                        console.log(" login success");
+                        window.location.href = "/user/usercenter";
+                        window.event.returnValue = false;
                     },
                     error: function () {
-                        //DO SOMETHING
+                        console.log("error in");
                     }
                 }
             );

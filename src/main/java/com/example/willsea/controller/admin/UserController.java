@@ -3,16 +3,23 @@ package com.example.willsea.controller.admin;
 import com.example.willsea.dto.RestResponse;
 import com.example.willsea.entity.Bottle;
 import com.example.willsea.entity.User;
+import com.example.willsea.exception.SubException;
 import com.example.willsea.service.IBottleService;
 import com.example.willsea.service.IUserService;
+import com.sun.deploy.net.HttpResponse;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,36 +73,40 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/sign")
-    public  String showSignIn()
-    {
+    public  String showSignIn() {
         return "/user/sign";
     }
 
-    @PostMapping(value = "/user/sign/submit")
-    public String signInPost(@RequestParam(value="username") String username,@RequestParam(value = "password") String password) {
-        User user=userService.queryToVerify(username,password);
-        if(user!=null)
-        {
+    @PostMapping(value = "/user/submit")
+    public String signInPost(HttpServletRequest request, HttpServletResponse response) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        User user= userService.queryToVerify(username,password);
+        if(user != null) {
             System.out.println(user.getUid());
-            return "redirect:/user/usercenter/1";
+            // 1.ModelAndView
+            // 2. redirect
+            // 3.
+//            RestResponse.ok(user.getUid());
+           return "redirect:/user/usercenter/" + user.getUid();
         }
-        return "back/404";
-
+//        return RestResponse.fail();
+        return "/error/500";
     }
-
-    @GetMapping(value="/user/usercenter/{uid}")    //用户中心控制器
+    @GetMapping(value = "/user/usercenter/{uid}")    //用户中心控制器
     public String showUserCenter(@PathVariable Integer uid, Model model) {
-        User user=userService.queryById(uid);
-        Integer pageLimit=9;
-        Integer offset=(1-1)*pageLimit;
-        List<Bottle>  bottles=bottleService.queryByAuthor(user.getUid(),offset,pageLimit);
-        List<User>  favoriteList=userService.queryFavoriteList(user);
-        List<User>  blackList=userService.queryBlackList(user);
-        model.addAttribute("user",user);
-        model.addAttribute("bottles",bottles);
-        model.addAttribute("favoriteList",favoriteList);
-        model.addAttribute("blackList",blackList);
-        return "/user/usercenter";
+            User user=userService.queryById(uid);
+            System.out.println("into usercenter");
+            Integer pageLimit=9;
+            Integer offset=(1-1)*pageLimit;
+            List<Bottle>  bottles=bottleService.queryByAuthor(user.getUid(),offset,pageLimit);
+            List<User>  favoriteList=userService.queryFavoriteList(user);
+            List<User>  blackList=userService.queryBlackList(user);
+            model.addAttribute("user",user);
+            model.addAttribute("bottles",bottles);
+            model.addAttribute("favoriteList",favoriteList);
+            model.addAttribute("blackList",blackList);
+            return "/user/usercenter";
     }
 
 
@@ -188,6 +199,46 @@ public class UserController {
         } else{
             return RestResponse.fail("用户名已经存在");
         }
+        return RestResponse.ok();
+    }
+
+
+    @PostMapping(value = "/user/modifyInfo")
+    public RestResponse modifyUserInfo(@RequestParam(value = "uid")Integer uid,
+                                 @RequestParam(value = "username")String username,
+                                       @RequestParam(value = "email")String email){
+
+        User user = userService.queryById(uid);
+        if(user == null){
+            return RestResponse.fail("user not exist");
+        }
+        if(userService.queryByUsername(username) != null){
+            return RestResponse.ok("username exists!");
+        }
+        user.setUsername(username);
+        user.setEmail(email);
+        userService.updateUser(user);
+        System.out.println("modify username successfully.");
+        return RestResponse.ok("modify successfully.");
+    }
+
+
+    @PostMapping(value = "/user/modifyPassword")
+    @ResponseBody
+    public RestResponse modifyUserPassword(@RequestParam(value = "uid")Integer uid,
+                                     @RequestParam(value = "oldPassword")String oldPassword,
+                                       @RequestParam(value = "newPassword")String newPassword){
+        User user = userService.queryById(uid);
+        if(user == null){
+            throw new SubException("User does not exists!");
+        }
+        if(user.getPassword().equals(oldPassword)){
+            user.setPassword(newPassword);
+            userService.updateUser(user);
+        } else {
+            return RestResponse.fail();
+        }
+
         return RestResponse.ok();
     }
 
