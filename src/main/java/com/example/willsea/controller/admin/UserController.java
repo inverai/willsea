@@ -7,22 +7,33 @@ import com.example.willsea.exception.SubException;
 import com.example.willsea.service.IBottleService;
 import com.example.willsea.service.IUserService;
 import com.sun.deploy.net.HttpResponse;
+import jdk.internal.util.xml.impl.Input;
 import org.apache.ibatis.annotations.Param;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by yt on 2018/6/22.
@@ -240,6 +251,147 @@ public class UserController {
         }
 
         return RestResponse.ok();
+    }
+
+
+    @PostMapping(value = "/user/uploadFile")
+    public String uploadFiles(HttpServletRequest request, HttpServletResponse response){
+        HashMap<String, String> hashMap = new HashMap<>();
+        System.out.println("into upload");
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        File tempDirectory = new File("E:\\WEB\\springBoot");
+        factory.setRepository(tempDirectory);
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        upload.setHeaderEncoding("UTF-8");
+        System.out.println("parse request");
+        // parse request
+        upload.setFileSizeMax(1024*1024*1000);
+
+        try {
+            List<FileItem> items = upload.parseRequest(request);
+            for (FileItem item: items) {
+                if(item.isFormField()){
+                    String name = item.getFieldName();
+                    String value = item.getString();
+
+                    hashMap.put(name, value);
+                    System.out.println("parse data" + name + value);
+                } else {
+                    String fieldName = item.getFieldName();
+                    String fileName = item.getString();
+
+                    InputStream in = item.getInputStream();
+                    byte[] buffer = new byte[4096];
+                    int len = 0;
+
+                    fileName = "E:\\WEB\\springBoot\\willsea\\src\\main\\resources\\static\\user\\" + hashMap.get("uid") + "\\" + fileName;
+                    System.out.println(fileName);
+                    hashMap.put(fieldName,fileName);
+                    OutputStream out = new FileOutputStream(fileName);
+                    while((len = in.read(buffer)) != -1){
+                        out.write(buffer,0, len);
+                    }
+
+                    out.close();
+                    in.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Bottle bottle = new Bottle();
+        bottle.setAid(Integer.valueOf(hashMap.get("uid")));
+        bottle.setTitle(hashMap.get("myTitle"));
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = df.format(new Date());
+        bottle.setTime(date);
+        bottle.setBtext(hashMap.get("myText"));
+        bottle.setBaudio(hashMap.get("myAudio"));
+        bottle.setBvideo(hashMap.get("myVideo"));
+        if(hashMap.get("myPrivate").equals("checked")){
+            bottle.setIsPrivate("true");
+        } else {
+            bottle.setIsPrivate("false");
+        }
+
+        return "upload success";
+    }
+
+
+    @PostMapping(value = "/user/upload")
+    public String upload(HttpServletRequest request, HttpServletResponse response){
+        StandardMultipartHttpServletRequest req = (StandardMultipartHttpServletRequest) request;
+        HashMap<String, String> map = new HashMap<>();
+        List<String> audios = new ArrayList<String>();
+        List<String> videos = new ArrayList<>();
+        audios.add("mp3");
+        audios.add("wav");
+        audios.add("midi");
+        videos.add("mp4");
+        videos.add("avi");
+        videos.add("wma");
+        videos.add("flash");
+        try {
+            Iterator<String> iterator = req.getFileNames();
+            String uid = req.getParameter("uid");
+            System.out.println(uid);
+            while (iterator.hasNext()) {
+                MultipartFile file = req.getFile(iterator.next());
+                String fileName = file.getOriginalFilename();
+                if(!fileName.equals("")){
+                    int split = fileName.lastIndexOf(".");
+
+                    byte[] bytes = file.getBytes();
+
+
+                    String root = System.getProperty("user.dir");
+                    String resourcePath = root + "\\src\\main\\resources\\static\\user\\";
+                    System.out.println("real root path: " + root);
+                    File direct = new File(resourcePath + uid);
+                    if(!direct.exists()){
+                        direct.mkdir();
+                    }
+                    fileName = resourcePath + uid + "\\" + fileName;
+                    System.out.println(fileName);
+                    File temp = new File(fileName);
+                    OutputStream out = new FileOutputStream(temp);
+
+                    out.write(bytes, 0, bytes.length);
+                    out.close();
+
+                    int splitPath = fileName.lastIndexOf("user");
+                    String format = fileName.substring(splitPath - 1,fileName.length());
+                    if(audios.contains(format)){
+                        map.put("audio", format);
+                    } else {
+                        map.put("video", format);
+                    }
+                }
+            }
+        }catch (Exception e){
+            System.out.println("warning in access");
+        }
+
+        Bottle bottle = new Bottle();
+        bottle.setAid(Integer.valueOf(req.getParameter("uid")));
+        bottle.setTitle(req.getParameter("myTitle"));
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = df.format(new Date());
+        bottle.setTime(date);
+        bottle.setBtext(req.getParameter("myText"));
+        bottle.setBaudio(map.get("audio"));
+        bottle.setBvideo(map.get("video"));
+        if(req.getParameter("myPrivate") == null){
+            bottle.setIsPrivate("false");
+        }else {
+            bottle.setIsPrivate("true");
+        }
+
+        bottleService.createBottle(bottle);
+        return "/user/usercenter/" + req.getParameter("uid");
     }
 
 

@@ -13,7 +13,6 @@
                 <label for="exampleInputAuthor">作者</label>
                 <input type="text" readonly="readonly" class="form-control" id="exampleInputAuthor" th:value="${username}">
             </div>
-
             <div th:if="${bottle.getBtext() != 'NULL'}" class="form-group">
                 <div>
                     <label style="display: inline; float: left;" for="textPlayer">文本内容</label>
@@ -21,7 +20,6 @@
                 </div>
                 <textarea class="form-control" id="textPlayer" rows="2" readonly="readonly" th:text="${bottle.getBtext()}"></textarea>
             </div>
-
             <div th:if="${bottle.getBaudio()} != 'NULL'" class="form-group">
                 <div>
                     <label style="display: block" for="audioPlayer">音频内容</label>

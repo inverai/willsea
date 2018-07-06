@@ -21,20 +21,6 @@
     <script th:src="@{/user/js/threeJs/script/ocean.js}"></script>
 
     <script type="text/javascript">
-
-        document.getElementById("eidtButton").addEventListener("click", function () {
-            $.ajax({
-                type: 'GET',
-                url: '/back/bottle/detail/' + id,
-                success: function (result) {
-
-                },
-                error: function (result) {
-                    console.log(result)
-                }
-            })
-        })
-        
         
         function logout(){
             $.ajax({

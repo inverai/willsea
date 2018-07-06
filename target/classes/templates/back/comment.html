@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 	<head th:replace="back/header::head-fragment"></head>
-
-		<body>
+    <body>
         <div th:replace="back/header::header-body"></div>
         <div style="position: absolute; left: 240px; width: 1260px; top: 60px">
 			<div class="am-cf am-padding am-padding-bottom-0">
-				<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">评论管理</strong><small></small></div>
+				<div class="am-fl am-cf">
+					<strong class="am-text-primary am-text-lg">评论管理</strong><small></small>
+                </div>
 			</div>
 			<hr>
             <div class="am-g">
                 <div class="am-u-sm-12 am-u-md-6"></div>
                 <div class="am-u-sm-12 am-u-md-3"></div>
                 <div class="am-u-sm-12 am-u-md-3">
-                    <div class="am-input-group am-input-group-sm">
-                        <input type="text" class="am-form-field" placeholder="请输入评论内容">
-                        <span class="am-input-group-btn">
-           					<button class="am-btn am-btn-default" type="button">搜索</button>
-          				</span>
-                    </div>
-                </div>
+					<div class="am-input-group am-input-group-sm">
+						<input type="text" class="am-form-field" placeholder="请输入评论内容">
+						<span class="am-input-group-btn">
+							<button class="am-btn am-btn-default" type="button">搜索</button>
+						</span>
+					</div>
+				</div>
             </div>
-
 			<div class="am-g">
 				<div class="am-u-sm-12 am-u-md-6">
 					<div class="am-btn-toolbar">
-						<div class="am-btn-group am-btn-group-xs">
-						</div>
+						<div class="am-btn-group am-btn-group-xs"></div>
 					</div>
 				</div>
 			</div>
@@ -97,7 +95,6 @@
 				</div>
 			</div>
 		</div>
-
         <script type="text/javascript">
             function delPost(cid, bid) {
                 $.ajax({

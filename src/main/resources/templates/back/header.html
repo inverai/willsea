@@ -3,7 +3,6 @@
 <head th:fragment="head-fragment">
     <meta charset="UTF-8">
     <title><th:block th:text="${title != null ? title : '后台管理'} + 'willSea'"></th:block></title>
-
     <link th:href="@{/admin/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/admin/css/vendor.css}" rel="stylesheet">
     <link th:href="@{/admin/css/theme.css}" rel="stylesheet">
@@ -23,9 +22,7 @@
                 <div class="media-body">
                     <h5 class="media-heading mt5 mbn fw700 cursor">admin<span class="caret ml5"></span></h5>
                     <div class="media-links fs11">
-                        <!--<a href="#">销售部</a><i class="fa fa-circle text-muted fs3 p8 va-m"></i>-->
                         <a href="screen-lock.html">退出</a>
-
                     </div>
                 </div>
             </div>
