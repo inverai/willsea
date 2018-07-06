@@ -83,12 +83,13 @@ function Run(HtmlNode,height, width, distributionRadius)
     function InitSkybox()  //初始化背景
     {
         var path = relativepath+"threeJs/cubetexture/";
+        var randomPick = Math.floor(Math.random() * 100) % 4;
         var names = ["px", "nx", "py", "ny", "pz", "nz"];
         var format = ".jpg";
         var urls = [
-            path + "px" + format, path + "nx" + format,
-            path + "py" + format, path + "ny" + format,
-            path + "pz" + format, path + "nz" + format
+            path + randomPick + "px" + format, path + randomPick + "nx" + format,
+            path + randomPick + "py" + format, path + randomPick + "ny" + format,
+            path + randomPick + "pz" + format, path + randomPick + "nz" + format
         ];
         envmap = new THREE.CubeTextureLoader().load(urls);
         scene.background = envmap;

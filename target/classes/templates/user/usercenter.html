@@ -14,6 +14,12 @@
     <script th:src="@{/user/js/threeJs/controls/OrbitControls.js}"></script>
     <script th:src="@{/user/js/threeJs/script/BasicUnit.js}"></script>
     <script th:src="@{/user/js/threeJs/script/ocean.js}"></script>
+    <script th:src="@{/user/js/vendor/modernizr-2.6.2.min.js}"></script>
+    <script th:src="@{/user/js/vendor/jquery-1.10.2.min.js}"></script>
+    <script th:src="@{/user/js/user.js}"></script>
+    <script th:src="@{/user/js/app.js}"></script>
+    <script th:src="@{/user/js/amazeui.min.js}"></script>
+
 </head>
 <body>
 
@@ -36,7 +42,22 @@
                 <li><a href="javascript:void(0)" th:onclick="'convert(\'attention\');'"><i class="fa fa-pencil"></i>特别关注</a></li>
                 <li><a href="javascript:void(0)" th:onclick="'convert(\'blacklist\');'"><i class="fa fa-paperclip"></i>黑名单</a></li>
                 <li><a href="javascript:void(0)" th:onclick="'convert(\'home\');'"><i class="fa fa-link"></i>个人信息</a></li>
+                <li><a href="javascript:void(0)" th:onclick="'convert(\'newWill\');'"><i class="fa fa-link"></i>新的心愿</a></li>
                 <li><a th:href="@{/user/index}"><i class="fa fa-link"></i>心愿海</a></li>
+                <li>
+                    <div class="tpl-skiner">
+                        <div class="tpl-skiner-toggle am-icon-cog"></div>
+                        <div class="tpl-skiner-content">
+                            <div class="tpl-skiner-content-title">
+                                选择主题
+                            </div>
+                            <div class="tpl-skiner-content-bar">
+                                <span class="skiner-color skiner-white" data-color="theme-white"></span>
+                                <span class="skiner-color skiner-black" data-color="theme-black"></span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="social-icons">
@@ -54,7 +75,7 @@
     <div class="main-content">
         <div class="fluid-container">
             <div class="content-wrapper">
-                <div class="page-section" id="wishManage">
+                <div class="page-section self-context" id="wishManage">
                     <div class="top"><h4>树洞</h4></div>
                     <div class="bottom" id="privateBottleDiv">
                         <script th:inline="javascript">
@@ -81,7 +102,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>用户名</th>
-                                <th>操作</th>
+                                <th> </th>
+                                <th> </th>
                             </tr>
                             <th:block th:each="node,nodeState: ${favoriteList}">
                                 <tr>
@@ -152,6 +174,86 @@
                         </div>
                     </div>
                 </div>
+                <div class="page-section self-context" id="newWill">
+                    <div class="top"><h4>新的心愿</h4></div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-body am-fr">
+                                <form id="myForm" th:action="@{/user/upload}" class="am-form tpl-form-line-form" enctype="multipart/form-data" method="post">
+
+                                    <div class="self-context">
+                                        <input name="uid" th:value="${user.uid}">
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">标题 <span class="tpl-form-line-small-title">Title</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" class="tpl-form-input" id="user-name" name="myTitle" placeholder="请输入标题文字">
+                                            <small>请填写标题文字10-20字左右。</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-intro" class="am-u-sm-3 am-form-label">私有</label>
+                                        <div class="am-u-sm-9">
+                                            <div class="tpl-switch">
+                                                <input type="checkbox" name="myPrivate" class="ios-switch bigswitch tpl-switch-btn" checked="">
+                                                <div class="tpl-switch-btn-view">
+                                                    <div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label class="am-u-sm-3 am-form-label">音频<span class="tpl-form-line-small-title">Audio</span></label>
+                                        <div class="am-u-sm-9">
+                                            <div class="am-form-group am-form-file">
+                                                <div class="tpl-form-file-img">
+                                                    <!--<img src="" alt="">-->
+                                                </div>
+                                                <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                                    <i class="am-icon-cloud-upload"></i> 添加音频
+                                                </button>
+                                                <input id="audio-file"  name="myAudio" type="file" multiple=""  accept="audio/*">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label class="am-u-sm-3 am-form-label">视频<span class="tpl-form-line-small-title">Video</span></label>
+                                        <div class="am-u-sm-9">
+                                            <div class="am-form-group am-form-file">
+                                                <div class="tpl-form-file-img">
+                                                    <!--<img src="" alt="">-->
+                                                </div>
+                                                <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                                    <i class="am-icon-cloud-upload"></i> 添加视频
+                                                </button>
+                                                <input id="video-file" name="muVideo" type="file" multiple=""  accept="video/*">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-intro" class="am-u-sm-3 am-form-label">文章内容</label>
+                                        <div class="am-u-sm-9">
+                                            <textarea class="" rows="5" name="myText" id="user-intro" placeholder="请输入文章内容"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            <button type="submit" form="myForm" class="am-btn am-btn-primary tpl-btn-bg-color-success">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="page-section self-context" id="blacklist">
                     <div class="top"><h4>黑名单</h4></div>
                     <div class="bottom">
@@ -174,8 +276,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -224,48 +324,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="publish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="publish-wish">发表心愿</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal form">
-                        <div class="form-group">
-                            <label for="new-title" class="col-sm-3 control-label">标题</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="new-title" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="new-btext" class="col-sm-3 control-label">内容</label>
-                            <div class="col-sm-6">
-                                <textarea class="form-control" id="new-btext" rows="3" placeholder=""></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">权限</label>
-                            <div class="col-sm-6">
-                                <label class="radio-inline">
-                                    <input type="radio" id="inlineRadio3" value="option1"> 公开
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio"id="inlineRadio4" value="option2"> 私密
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-default" th:onclick="'makeNewBottle();'">发表</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <script th:src="@{/user/js/vendor/jquery-1.10.2.min.js}"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -486,9 +545,26 @@
             node.classList.remove("self-context");
             console.log("node : " + node.classList);
             console.log("execute done!");
-            
         }
-
+        function addToTypeList(uid,type)
+        {
+            console.log(uid);
+            console.log(type);
+            $.ajax({
+                type: 'POST',
+                url: '/user/detail/addToTypeList',
+                data: {target:uid,type:type},
+                dataTpye: 'json',
+                success: function () {
+                    if(type=="favorite")
+                        document.getElementsByClassName(".favorite")[0].style.display="none";
+                    else
+                        document.getElementsByClassName(".black")[0].style.display="none";
+                },
+                error: function () {
+                }
+            });
+        }
     </script>
 
     <script>

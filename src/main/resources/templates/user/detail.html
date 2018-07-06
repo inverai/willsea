@@ -9,19 +9,27 @@
 <link th:href="@{/admin/css/admin.css}" rel="stylesheet/">
 <script th:src="@{/admin/js/jquery-1.11.3.min.js}"></script>
 <script th:src="@{/admin/myplugs/js/plugs.js}"></script>
-<body>
+<body >
 <div style="position: absolute; left: 240px; width: 1260px; top: 60px">
     <form>
         <div class="form-group">
-            <!--<label for="exampleInputTitle">标题</label>-->
-            <input type="text" class="form-control" id="exampleInputTitle" th:value="${bottle.getTitle()}">
+            <div>
+            <th:block th:switch="${cookieUser==null}" >
+                <a th:case="false" class="am-btn am-btn-default am-btn-xs am-text-secondary" th:href="@{'/user/usercenter/' + ${cookieUser.getUid()}}"><span class="am-icon-pencil-square-o">个人中心</span></a>
+                <a  th:case="true" class="am-btn am-btn-default am-btn-xs am-text-secondary" th:href="@{'/user/index'}"><span class="am-icon-pencil-square-o">心愿海</span></a>
+            </th:block>
+            </div>
+            <label for="exampleInputTitle">标题</label>
+            <button th:if="${cookieUser!=null&&bottle.getAid()==cookieUser.getUid()&&bottle.getIsPrivate().equals('true')}" class="btn btn-info deleteBottle" style="display: inline; float: right;" th:onclick="'publishBottle(' + ${bottle.getBid()} + ');'">发布</button>
             <button th:if="${cookieUser!=null&&cookieUser.getUsername()==username}" class="btn btn-info deleteBottle" style="display: inline; float: right;" th:onclick="'deleteBottlePost(' + ${bottle.getBid()} + ');'">删除</button>
+            <input type="text" class="form-control" id="exampleInputTitle" th:value="${bottle.getTitle()}">
+
         </div>
         <div class="form-group">
             <!--<label for="exampleInputAuthor">作者</label>-->
             <input type="text" readonly="readonly" class="form-control" id="exampleInputAuthor" th:value="${username}">
-            <button th:if="${cookieUser!=null&&!isInFavoriteList&&cookieUser.getUsername()!=username}" class="btn btn-info favorite" style="display: inline; float: right;" th:onclick="'addToTypeList(' + ${bottle.getAid()} + ', \'favorite\');'">关注</button>
-            <button th:if="${cookieUser!=null&&!isInBlackList&&cookieUser.getUsername()!=username}" class="btn btn-info black" style="display: inline; float: right;" th:onclick="'addToTypeList('+  ${bottle.getAid()}+','+'\'black\'' + ');'">拉黑</button>
+            <button th:if="${cookieUser!=null&&!isInFavoriteList&&!isInBlackList&&cookieUser.getUsername()!=username}" class="btn btn-info favorite" style="display: inline; float: right;" th:onclick="'addToTypeList(' + ${bottle.getAid()} + ', \'favorite\');'">关注</button>
+            <button th:if="${cookieUser!=null&&!isInBlackList&&!isInFavoriteList&&cookieUser.getUsername()!=username}" class="btn btn-info black" style="display: inline; float: right;" th:onclick="'addToTypeList('+  ${bottle.getAid()}+','+'\'black\'' + ');'">拉黑</button>
         </div>
 
         <div th:if="${bottle.getBtext() != 'NULL'}" class="form-group">
@@ -142,21 +150,39 @@
         })
     }
     function deleteBottlePost(bid) {
-        if (!window.confirm("删除心愿后将不可恢复，确认要删除吗?"))
-            return;
-        var uid=[[${cookieUser.getUid()}]];
-        $.ajax({
-            type: 'POST',
-            url: '/back/wishbottle/delete',
-            data: {bid: bid},
-            dataTpye: 'json',
-            success: function () {
-                window.location.href="/user/usercenter/"+uid;
-            },
-            error: function () {
-                console.log("failure");
-            }
-        });
+        if (window.confirm("删除心愿后将不可恢复，确认要删除吗?")) {
+            var uid = [[${cookieUser.getUid()}]];
+            $.ajax({
+                type: 'POST',
+                url: '/back/wishbottle/delete',
+                data: {bid: bid},
+                dataTpye: 'json',
+                success: function () {
+                    window.location.href = "/user/usercenter/" + uid;
+                },
+                error: function () {
+                    console.log("failure");
+                }
+            });
+        }
+    }
+    function publishBottle(bid) {
+        if(window.confirm("发布后所有人都能看见您的心愿，确认要发布吗?"))
+        {
+            var uid = [[${cookieUser.getUid()}]];
+            $.ajax({
+                type: 'POST',
+                url: '/user/detail/publish',
+                data: {bid: bid},
+                dataTpye: 'json',
+                success: function () {
+                    window.location.href = "/user/usercenter/" + uid;
+                },
+                error: function () {
+                    console.log("failure");
+                }
+            });
+        }
     }
 
 </script>

@@ -194,8 +194,6 @@ public class BottleController {
             String name = userService.queryById(comment.getAid()).getUsername();
             authorNames.put(comment.getCid(), name);
         }
-
-
         Bottle bottle = bottleService.getBottle(bid);
         model.addAttribute("bottle", bottle);
         model.addAttribute("username", username);
@@ -203,5 +201,17 @@ public class BottleController {
         model.addAttribute("comments", comments);
         return "back/detail";
     }
-
+    @PostMapping(value = "/user/detail/publish")
+    @ResponseBody
+    public  RestResponse publish(@Param(value = "bid")Integer bid,HttpServletRequest request)
+    {
+        Bottle curBottle=bottleService.getBottle(bid);
+        bottleService.publish(curBottle);
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
+        if(cookieUser!=null)
+        {
+          return RestResponse.ok();
+        }
+        return RestResponse.fail();
+    }
 }

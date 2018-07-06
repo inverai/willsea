@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import javax.annotation.Resource;
@@ -19,11 +21,12 @@ import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by yt on 2018/6/22.
@@ -133,6 +136,7 @@ public class UserController {
             }
             List<User>  favoriteList=userService.queryFavoriteList(user);
             List<User>  blackList=userService.queryBlackList(user);
+             model.addAttribute("cookieUser",cookieUser);
             model.addAttribute("user",user);
             model.addAttribute("bottles",bottles);
             model.addAttribute("bids",bids);
@@ -244,12 +248,6 @@ public class UserController {
     }
 
 
-    private  void clearPrivateMessage(User user) {
-        user.setPassword("");
-        user.setEmail("");
-        user.setTelephone("1");
-        user.setLocation("");
-    }
     @PostMapping(value = "/user/usercenter/modifyInfo")
     public RestResponse modifyUserInfo(@RequestParam(value = "uid")Integer uid,
                                        @RequestParam(value = "username")String username,
@@ -284,6 +282,83 @@ public class UserController {
 
         return RestResponse.ok();
     }
+
+
+    @PostMapping(value = "/user/upload")
+    public String upload(HttpServletRequest request, HttpServletResponse response){
+        StandardMultipartHttpServletRequest req = (StandardMultipartHttpServletRequest) request;
+        HashMap<String, String> map = new HashMap<>();
+        List<String> audios = new ArrayList<String>();
+        List<String> videos = new ArrayList<>();
+        audios.add("mp3");
+        audios.add("wav");
+        audios.add("midi");
+        videos.add("mp4");
+        videos.add("avi");
+        videos.add("wma");
+        videos.add("flash");
+        try {
+            Iterator<String> iterator = req.getFileNames();
+            String uid = req.getParameter("uid");
+            System.out.println(uid);
+            while (iterator.hasNext()) {
+                MultipartFile file = req.getFile(iterator.next());
+                String fileName = file.getOriginalFilename();
+                if(!fileName.equals("")){
+                    int split = fileName.lastIndexOf(".");
+
+                    byte[] bytes = file.getBytes();
+
+
+                    String root = System.getProperty("user.dir");
+                    String resourcePath = root + "\\src\\main\\resources\\static\\user\\";
+                    System.out.println("real root path: " + root);
+                    File direct = new File(resourcePath + uid);
+                    if(!direct.exists()){
+                        direct.mkdir();
+                    }
+                    fileName = resourcePath + uid + "\\" + fileName;
+                    System.out.println(fileName);
+                    File temp = new File(fileName);
+                    OutputStream out = new FileOutputStream(temp);
+
+                    out.write(bytes, 0, bytes.length);
+                    out.close();
+
+                    int splitPath = fileName.lastIndexOf("user");
+                    String format = fileName.substring(splitPath - 1,fileName.length());
+                    if(audios.contains(format)){
+                        map.put("audio", format);
+                    } else {
+                        map.put("video", format);
+                    }
+                }
+            }
+        }catch (Exception e){
+            System.out.println("warning in access");
+        }
+
+        Bottle bottle = new Bottle();
+        bottle.setAid(Integer.valueOf(req.getParameter("uid")));
+        bottle.setTitle(req.getParameter("myTitle"));
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = df.format(new Date());
+        bottle.setTime(date);
+        bottle.setBtext(req.getParameter("myText"));
+        bottle.setBaudio(map.get("audio"));
+        bottle.setBvideo(map.get("video"));
+        if(req.getParameter("myPrivate") == null){
+            bottle.setIsPrivate("false");
+        }else {
+            bottle.setIsPrivate("true");
+        }
+
+        bottleService.createBottle(bottle);
+        return "/user/usercenter/" + req.getParameter("uid");
+    }
+
+
     @GetMapping(value = "/user/personalOcean/{uid}")
     public String showPersonalOcean(@PathVariable Integer uid,Model model,HttpServletRequest request)
     {
@@ -293,7 +368,6 @@ public class UserController {
         Integer offset=0;
         Integer limit=65535;
         List<Bottle> bottles=bottleService.queryByAuthor(uid,offset,limit);
-
         List<Integer> bids=new ArrayList<>();
         for(Integer i=0;i<bottles.size();++i)
         {
