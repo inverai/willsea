@@ -10,7 +10,13 @@
 <script th:src="@{/admin/js/jquery-1.11.3.min.js}"></script>
 <script th:src="@{/admin/myplugs/js/plugs.js}"></script>
 <body >
-<div style="position: absolute; left: 240px; width: 1260px; top: 60px">
+<div style="margin: 0 auto; width: 800px; padding-top: 100px; opacity: 0.8">
+    <script th:inline="javascript">
+        var randomNumber= Math.floor(Math.random()*100)%9;
+        var path="../img/bottleDetailBg/"+randomNumber.toString()+".png";
+       document.body.style.background="url('"+path+"')";
+        window.event.returnValue=false;
+    </script>
     <form>
         <div class="form-group">
             <div>
@@ -97,7 +103,7 @@
             dataTpye: 'json',
             success: function () {
                 window.location.reload();
-                window.event.returnValue=false;
+
             },
             error: function () {
             }

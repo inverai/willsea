@@ -54,7 +54,6 @@ public class BottleController {
         model.addAttribute("limit",limit);
         return "back/wishbottle";
     }
-
     @PostMapping(value = "/back/wishbottle/save")
     @ResponseBody
     public RestResponse save(@RequestParam(value = "bid")Integer bid, @RequestParam(value = "title")String title,

@@ -282,8 +282,6 @@ public class UserController {
 
         return RestResponse.ok();
     }
-
-
     @PostMapping(value = "/user/upload")
     public String upload(HttpServletRequest request, HttpServletResponse response){
         StandardMultipartHttpServletRequest req = (StandardMultipartHttpServletRequest) request;
@@ -308,8 +306,6 @@ public class UserController {
                     int split = fileName.lastIndexOf(".");
 
                     byte[] bytes = file.getBytes();
-
-
                     String root = System.getProperty("user.dir");
                     String resourcePath = root + "\\src\\main\\resources\\static\\user\\";
                     System.out.println("real root path: " + root);
@@ -321,16 +317,19 @@ public class UserController {
                     System.out.println(fileName);
                     File temp = new File(fileName);
                     OutputStream out = new FileOutputStream(temp);
-
                     out.write(bytes, 0, bytes.length);
                     out.close();
 
                     int splitPath = fileName.lastIndexOf("user");
-                    String format = fileName.substring(splitPath - 1,fileName.length());
-                    if(audios.contains(format)){
-                        map.put("audio", format);
-                    } else {
-                        map.put("video", format);
+                    String savePath = fileName.substring(splitPath - 1,fileName.length());
+                    String format=savePath.substring(savePath.lastIndexOf(".")+1);
+                    if(audios.contains(format))
+                    {
+                        map.put("audio",savePath);
+                    }
+                    else if(videos.contains(format))
+                    {
+                        map.put("video", savePath);
                     }
                 }
             }
@@ -346,8 +345,14 @@ public class UserController {
         String date = df.format(new Date());
         bottle.setTime(date);
         bottle.setBtext(req.getParameter("myText"));
-        bottle.setBaudio(map.get("audio"));
-        bottle.setBvideo(map.get("video"));
+        if(map.get("audio")!=null)
+            bottle.setBaudio(map.get("audio"));
+        else
+            bottle.setBaudio("NULL");
+        if(map.get("video")!=null)
+            bottle.setBvideo(map.get("video"));
+        else
+            bottle.setBvideo("NULL");
         if(req.getParameter("myPrivate") == null){
             bottle.setIsPrivate("false");
         }else {
@@ -355,7 +360,7 @@ public class UserController {
         }
 
         bottleService.createBottle(bottle);
-        return "/user/usercenter/" + req.getParameter("uid");
+        return "redirect:/user/usercenter/" + req.getParameter("uid");
     }
 
 
