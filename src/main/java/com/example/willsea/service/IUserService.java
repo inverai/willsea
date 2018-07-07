@@ -56,15 +56,16 @@ public interface IUserService {
     User queryByUsername(String username);
 
 
-
+    //获取sex为female的用户总数
     Integer queryFemaleNumber();
 
     User queryToVerify(String username,String password);  //登录验证
-
+    //获取user的黑白名单
     List<User> queryFavoriteList(User user);
     List<User> queryBlackList(User user);
+    //删除user的黑白名单
     Integer    freeFromFavoriteList(User source,User target);
     Integer    freeFromBlackList(User source,User target);
-
+    //判断是否在黑白名单中
     boolean  isInTypeList(Integer source,Integer target,String type);
 }

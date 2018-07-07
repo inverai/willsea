@@ -31,25 +31,33 @@ public interface IBottleService {
      * 根据主键查询漂流瓶
      */
 
-    Bottle getBottle(Integer bid);
 
+    //在bottle下添加评论
     String  addCommentToBottle(Comment comment, Bottle bottle);
-    List<Bottle> AdminGetBottles(Integer pageNo, Integer pageRowNumber);
 
 
-    List<Bottle> queryAll(Integer offset, Integer limit);
 
+
+    //更新心愿瓶
     String updateBottle(Bottle bottle);
 
+
+
+
+
+    //删除瓶子，text，audio，video
     String deleteBottle(Integer bid);
-
-    Integer queryTotalNumber();
-
     Integer deleteText(Integer bid);
     Integer deleteAudio(Integer bid);
     Integer deleteVideo(Integer bid);
-
+    //查询区间心愿瓶
+    List<Bottle> queryAll(Integer offset, Integer limit);
+    //查询总数
+    Integer queryTotalNumber();
+    //主键查询
+    Bottle getBottle(Integer bid);
+    //作者查询
     List<Bottle>  queryByAuthor(Integer aid,Integer offset,Integer limit);
-
+    //根据user黑白名单获取心愿海中的内容
     List<Bottle> getBottlesByUserBlackAndFavoriteList(User user);
 }

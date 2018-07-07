@@ -37,6 +37,13 @@ public class BottleController {
     @Resource
     private ICommentService commentService;
 
+    /**
+     * 后台管理瓶子列表展示
+     * @param page
+     * @param limit
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/back/wishbottle")
     public String list(@RequestParam(value = "page", defaultValue = "1") int page,
                        @RequestParam(value = "limit", defaultValue = "8") int limit, Model model){
@@ -54,11 +61,19 @@ public class BottleController {
         model.addAttribute("limit",limit);
         return "back/wishbottle";
     }
+
+    /**
+     * 后台管理瓶子信息修改
+     * @param bid
+     * @param title
+     * @param isPrivate
+     * @return
+     */
     @PostMapping(value = "/back/wishbottle/save")
     @ResponseBody
     public RestResponse save(@RequestParam(value = "bid")Integer bid, @RequestParam(value = "title")String title,
                              @RequestParam(value = "isPrivate")String isPrivate
-                             ) {
+    ) {
         try {
             Bottle bottle = bottleService.getBottle(bid);
             bottle.setTitle(title);
@@ -72,12 +87,20 @@ public class BottleController {
         return RestResponse.ok();
     }
 
+    /**
+     * 用户界面瓶子信息修改
+     * @param bid
+     * @param title
+     * @param btext
+     * @param isPrivate
+     * @return
+     */
     @PostMapping(value = "/user/wishbottle/save")
     @ResponseBody
     public RestResponse userBottleSave(@RequestParam(value = "bid")Integer bid,
-                                 @RequestParam(value = "title")String title,
-                             @RequestParam(value = "btext")String btext,
-                             @RequestParam(value = "isPrivate")String isPrivate
+                                       @RequestParam(value = "title")String title,
+                                       @RequestParam(value = "btext")String btext,
+                                       @RequestParam(value = "isPrivate")String isPrivate
     ) {
         try {
             Bottle bottle = bottleService.getBottle(bid);
@@ -93,12 +116,20 @@ public class BottleController {
         return RestResponse.ok();
     }
 
+    /**
+     * 用户端创建瓶子
+     * @param aid
+     * @param title
+     * @param btext
+     * @param isPrivate
+     * @return
+     */
     @PostMapping(value = "/user/wishbottle/create")
     @ResponseBody
     public RestResponse userBottleCreate(@RequestParam(value = "aid")Integer aid,
-                                 @RequestParam(value = "title")String title,
-                                 @RequestParam(value = "btext")String btext,
-                                 @RequestParam(value = "isPrivate")String isPrivate
+                                         @RequestParam(value = "title")String title,
+                                         @RequestParam(value = "btext")String btext,
+                                         @RequestParam(value = "isPrivate")String isPrivate
     ) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -117,8 +148,11 @@ public class BottleController {
         return RestResponse.ok();
     }
 
-
-
+    /**
+     * 后台删除瓶子
+     * @param bid
+     * @return
+     */
     @PostMapping(value = "/back/wishbottle/delete")
     @ResponseBody
     public RestResponse delete(@RequestParam(value = "bid")Integer bid) {
@@ -136,6 +170,12 @@ public class BottleController {
         return RestResponse.ok();
     }
 
+    /**
+     * 后台删除特定瓶子的评论
+     * @param bid
+     * @param type
+     * @return
+     */
     @PostMapping(value = "/back/wishbottle/deleteContent")
     @ResponseBody
     public RestResponse deleteContent(@RequestParam(value = "bid")Integer bid,
@@ -155,17 +195,29 @@ public class BottleController {
         }
         return RestResponse.ok();
     }
-    @GetMapping(value="/user/detail/{bid}")   //客户端展示心愿瓶的详细内容
+
+    /**
+     * 客户端展示心愿瓶的详细内容
+     * @param bid
+     * @param model
+     * @param request
+     * @return
+     */
+    @GetMapping(value="/user/detail/{bid}")
     public String userdetail(@PathVariable Integer bid, Model model, HttpServletRequest request) {
         Bottle bottle = bottleService.getBottle(bid);
-        User cookieUser=(User)request.getSession().getAttribute("cookieUser");  //登录状态，若coolieUser为null则未登录，不为null则是当前已经登录的用户
-        if(bottle==null&&cookieUser!=null)
+        //登录状态，若coolieUser为null则未登录，不为null则是当前已经登录的用户
+        User cookieUser=(User)request.getSession().getAttribute("cookieUser");
+        if(bottle==null&&cookieUser!=null) {
             return "redirect:user/usercenter/"+cookieUser.getUid();
-        else if(bottle==null&&cookieUser==null)
+        }
+        else if(bottle==null&&cookieUser==null){
             return  "redirect:/user/index";
+        }
         String username = userService.queryById(bottleService.getBottle(bid).getAid()).getUsername();
         List<Comment> comments = commentService.getCommentsByBottle(bid, 0, 65535);
-        HashMap<Integer, String> authorNames = new HashMap<>();  //评论ID和评论用户名对应的hash表
+        //评论ID和评论用户名对应的hash表
+        HashMap<Integer, String> authorNames = new HashMap<>();
         for (Comment comment: comments)
         {
             String name = userService.queryById(comment.getAid()).getUsername();
@@ -183,6 +235,13 @@ public class BottleController {
         model.addAttribute("comments", comments);
         return "user/detail";
     }
+
+    /**
+     * 后台访问瓶子详细信息
+     * @param bid
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/back/wishbottle/detail/{bid}")
     public String backdetail(@PathVariable Integer bid, Model model) {
 
@@ -200,6 +259,13 @@ public class BottleController {
         model.addAttribute("comments", comments);
         return "back/detail";
     }
+
+    /**
+     * 用户发布瓶子
+     * @param bid
+     * @param request
+     * @return
+     */
     @PostMapping(value = "/user/detail/publish")
     @ResponseBody
     public  RestResponse publish(@Param(value = "bid")Integer bid,HttpServletRequest request)
@@ -209,7 +275,7 @@ public class BottleController {
         User cookieUser=(User)request.getSession().getAttribute("cookieUser");
         if(cookieUser!=null)
         {
-          return RestResponse.ok();
+            return RestResponse.ok();
         }
         return RestResponse.fail();
     }

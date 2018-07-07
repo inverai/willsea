@@ -37,6 +37,9 @@ public class CommentController {
     @Resource
     private IBottleService bottleService;
 
+    /*
+        根据页序号找到数据库中对应的一段心愿瓶
+     */
     @GetMapping(value = "/back/comment")
     public String list(@RequestParam(value = "page", defaultValue = "1") int page,
                        @RequestParam(value = "limit", defaultValue = "8") int limit, Model model){
@@ -45,12 +48,15 @@ public class CommentController {
         HashMap<Integer, String> userMap = new HashMap<>();
         HashMap<Integer, String> bottleMap = new HashMap<>();
 
+        //用hash表保存<uid,uername>对应关系
         for (Comment comment: comments) {
             String userName = userService.queryById(comment.getAid()).getUsername();
             String bottleName = bottleService.getBottle(comment.getBid()).getTitle();
             userMap.put(comment.getCid(), userName);
             bottleMap.put(comment.getCid(), bottleName);
         }
+
+        //传到前端
         Integer recordNum = commentService.queryTotalNumber();
         model.addAttribute("comments", comments);
         model.addAttribute("userMap", userMap);
@@ -60,6 +66,9 @@ public class CommentController {
         model.addAttribute("limit",limit);
         return "back/comment";
     }
+    /*
+           对信息心愿瓶的修改进行保存
+     */
     @PostMapping(value = "/back/comment/save")
     @ResponseBody
     public RestResponse save(@RequestParam(value = "cid")Integer cid,
@@ -76,7 +85,7 @@ public class CommentController {
         return RestResponse.ok();
     }
 
-    @PostMapping(value = "/back/comment/delete")
+    @PostMapping(value = "/back/comment/delete")  //删除心愿瓶
     @ResponseBody
     public RestResponse delete(@RequestParam(value = "cid")Integer cid,
                                @RequestParam(value = "bid")Integer bid) {
@@ -93,15 +102,20 @@ public class CommentController {
         }
         return RestResponse.ok(bid);
     }
+    /*
+        用户端，在心愿瓶下添加的注释
+     */
 
     @PostMapping(value = "/user/detail/addComment")
-    public  void addComment(@Param(value = "bid")Integer bid, @Param(value = "text")String text, HttpServletRequest request)
+    public  String addComment(@Param(value = "bid")Integer bid, @Param(value = "text")String text, HttpServletRequest request)
     {
+        //当前的登录状态,cookieUser不为null才能进行评论
         User cookieUser=(User)request.getSession().getAttribute("cookieUser");
         if(cookieUser!=null)
         {
             Bottle curbottle=bottleService.getBottle(bid);
             User bottleAuthor=userService.queryById(curbottle.getAid());
+            //如果cookieUser不在心愿瓶作者的黑名单内才能评论
             if(!userService.isInTypeList(bottleAuthor.getUid(),cookieUser.getUid(),"black"))
             {
                 Comment comment=new Comment();
@@ -112,7 +126,9 @@ public class CommentController {
                 String date = df.format(new Date());
                 comment.setCtime(date);
                 bottleService.addCommentToBottle(comment,curbottle);
+                return "redirect:/user/detail/"+bid;
             }
         }
+        return "error/404";
     }
 }

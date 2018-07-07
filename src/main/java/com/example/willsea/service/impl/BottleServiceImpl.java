@@ -66,12 +66,6 @@ public class BottleServiceImpl implements IBottleService{
         return "add comment success";
     }
 
-    @Override
-    public List<Bottle> AdminGetBottles(Integer pageNo, Integer pageRowNumber) {
-        Integer offset=(pageNo-1)*pageRowNumber;
-        Integer  limit=pageRowNumber;
-        return bottleDAO.queryAll(offset,limit);
-    }
 
     @Override
     public List<Bottle> queryAll(Integer offset, Integer limit) {
@@ -125,11 +119,14 @@ public class BottleServiceImpl implements IBottleService{
 
     @Override
     public List<Bottle> getBottlesByUserBlackAndFavoriteList(User user) {
+        //如果传入的user不为空，根据uid进行查询
         if(user!=null)
             return  bottleDAO.queryByUserFavoriteAndBlackList(user.getUid());
+        //否则随机展示区间段中的内容
         Integer totalNumber=bottleDAO.queryTotalNumber();
         Random random=new Random();
         List<Bottle> bottles=new ArrayList<>();
+
         while(bottles.size()==0) {
             Integer limit = random.nextInt(totalNumber);
             Integer offset = random.nextInt(totalNumber);
